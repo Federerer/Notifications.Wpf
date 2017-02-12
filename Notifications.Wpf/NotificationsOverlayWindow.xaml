@@ -1,0 +1,18 @@
+﻿<Window x:Class="Notifications.Wpf.NotificationsOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls1="clr-namespace:Notifications.Wpf.Controls"
+        mc:Ignorable="d"
+        Title="ToastWindow"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Topmost="True"
+        ShowActivated="False"
+        d:DesignWidth="900"
+        d:DesignHeight="600">
+    <controls1:NotificationArea HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"/>
+</Window>
