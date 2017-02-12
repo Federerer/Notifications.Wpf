@@ -7,11 +7,11 @@
         xmlns:controls="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600">
-    <DockPanel LastChildFill="False">
+    <DockPanel>
         <UniformGrid DockPanel.Dock="Bottom" Rows="1">
             <Button Content="Show" Click="Button_Click"/>
             <Button Content="Show in window" Click="Button_Click_1" />
         </UniformGrid>
-        <controls:NotificationArea x:Name="WindowArea" DockPanel.Dock="Right" VerticalAlignment="Bottom" Margin="8" MaxItems="3"/>
+        <controls:NotificationArea x:Name="WindowArea" Position="TopLeft" MaxItems="3"/>
     </DockPanel>
 </Window>

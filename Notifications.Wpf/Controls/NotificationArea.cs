@@ -10,13 +10,26 @@ namespace Notifications.Wpf.Controls
 {
     public class NotificationArea : Control
     {
+
+
+
+        public NotificationPosition Position
+        {
+            get { return (NotificationPosition)GetValue(PositionProperty); }
+            set { SetValue(PositionProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Position.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PositionProperty =
+            DependencyProperty.Register("Position", typeof(NotificationPosition), typeof(NotificationArea), new PropertyMetadata(NotificationPosition.BottomRight));
+
+
         public int MaxItems
         {
             get { return (int)GetValue(MaxItemsProperty); }
             set { SetValue(MaxItemsProperty, value); }
         }
-
-        // Using a DependencyProperty as the backing store for MaxItems.  This enables animation, styling, binding, etc...
+        
         public static readonly DependencyProperty MaxItemsProperty =
             DependencyProperty.Register("MaxItems", typeof(int), typeof(NotificationArea), new PropertyMetadata(int.MaxValue));
 
@@ -102,5 +115,13 @@ namespace Notifications.Wpf.Controls
             }
         }
 #endif
+    }
+
+    public enum NotificationPosition
+    {
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight
     }
 }

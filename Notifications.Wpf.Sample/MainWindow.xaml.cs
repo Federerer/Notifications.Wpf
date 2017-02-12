@@ -26,8 +26,10 @@ namespace Notifications.Wpf.Sample
         public MainWindow()
         {
             InitializeComponent();
+
             _notificationManager = new NotificationManager();
-            var timer = new Timer {Interval = 5000};
+
+            var timer = new Timer {Interval = 3000};
             timer.Elapsed += (sender, args) => _notificationManager.Show("From another thread!");
             timer.Start();
         }

@@ -59,10 +59,31 @@
     </Style>
     
     <Style TargetType="{x:Type controls:NotificationArea}">
+        <Setter Property="Margin" Value="0,0,8,8"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:NotificationArea}">
-                    <controls:ReversibleStackPanel x:Name="PART_Items" ReverseOrder="True"/>
+                    <controls:ReversibleStackPanel x:Name="PART_Items"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Position" Value="TopLeft">
+                            <Setter TargetName="PART_Items" Property="VerticalAlignment" Value="Top"/>
+                            <Setter TargetName="PART_Items" Property="HorizontalAlignment" Value="Left"/>
+                        </Trigger>
+                        <Trigger Property="Position" Value="TopRight">
+                            <Setter TargetName="PART_Items" Property="VerticalAlignment" Value="Top"/>
+                            <Setter TargetName="PART_Items" Property="HorizontalAlignment" Value="Right"/>
+                        </Trigger>
+                        <Trigger Property="Position" Value="BottomLeft">
+                            <Setter TargetName="PART_Items" Property="ReverseOrder" Value="True"/>
+                            <Setter TargetName="PART_Items" Property="VerticalAlignment" Value="Bottom"/>
+                            <Setter TargetName="PART_Items" Property="HorizontalAlignment" Value="Left"/>
+                        </Trigger>
+                        <Trigger Property="Position" Value="BottomRight">
+                            <Setter TargetName="PART_Items" Property="ReverseOrder" Value="True"/>
+                            <Setter TargetName="PART_Items" Property="VerticalAlignment" Value="Bottom"/>
+                            <Setter TargetName="PART_Items" Property="HorizontalAlignment" Value="Right"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

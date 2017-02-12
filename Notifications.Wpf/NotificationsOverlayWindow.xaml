@@ -14,5 +14,5 @@
         ShowActivated="False"
         d:DesignWidth="900"
         d:DesignHeight="600">
-    <controls1:NotificationArea HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8"/>
+    <controls1:NotificationArea Position="BottomRight" Margin="8"/>
 </Window>
