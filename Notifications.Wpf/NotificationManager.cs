@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
 using Notifications.Wpf.Controls;
 
 namespace Notifications.Wpf
@@ -10,32 +11,37 @@ namespace Notifications.Wpf
     {
         private static readonly List<NotificationArea> Areas = new List<NotificationArea>();
         private static NotificationsOverlayWindow _window;
-      
-        public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null, Action onClose = null)
+
+        public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
+            Action onClose = null)
         {
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                Application.Current.Dispatcher.BeginInvoke(
+                    new Action(() => Show(content, areaName, expirationTime, onClick, onClose)));
+                return;
+            }
+
             if (expirationTime == null) expirationTime = TimeSpan.FromSeconds(5);
 
             if (areaName == string.Empty && _window == null)
             {
                 var workArea = SystemParameters.WorkArea;
 
-                Application.Current.Dispatcher.Invoke(() =>
+                _window = new NotificationsOverlayWindow
                 {
-                    _window = new NotificationsOverlayWindow
-                    {
-                        Left = workArea.Left,
-                        Top = workArea.Top,
-                        Width = workArea.Width,
-                        Height = workArea.Height
-                    };
+                    Left = workArea.Left,
+                    Top = workArea.Top,
+                    Width = workArea.Width,
+                    Height = workArea.Height
+                };
 
-                    _window.Show();
-                });
+                _window.Show();
             }
 
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
-                area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
+                area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
             }
         }
 
@@ -43,6 +49,5 @@ namespace Notifications.Wpf
         {
             Areas.Add(area);
         }
-       
     }
 }
