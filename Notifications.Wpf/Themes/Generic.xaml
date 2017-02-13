@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Notifications.Wpf.Controls">
+                    xmlns:controls="clr-namespace:Notifications.Wpf.Controls"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:wpf="clr-namespace:Notifications.Wpf">
 
     <Style TargetType="Button" x:Key="CloseButtonStyle">
         <Setter Property="Template">
@@ -37,25 +39,56 @@
             </Grid>
         </Border>
     </ControlTemplate>
-
+    
     <Style TargetType="{x:Type controls:Notification}">
         <Setter Property="Height" Value="100"/>
         <Setter Property="Width" Value="300"/>
-        <Setter Property="Background" Value="DodgerBlue"/>
+        <Setter Property="Background" Value="#444444"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template" Value="{StaticResource NotificationTemplate}"/>
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding}"/>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect BlurRadius="5" Direction="0" ShadowDepth="0" Opacity=".25"/>
             </Setter.Value>
         </Setter>
+        <Style.Resources>
+            <DataTemplate DataType="{x:Type system:String}">
+                <Border Background="{Binding RelativeSource={RelativeSource AncestorType=controls:Notification}, Path=Background}">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}"/>
+                </Border>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type wpf:NotificationContent}">
+                <!--TODO: icons-->
+                <Border>
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="16" Text="&#xE10B;" FontFamily="Segoe UI Symbol" FontSize="30" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Message}"/>
+                    </Grid>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Type}" Value="Information">
+                                    <Setter Property="Background" Value="CornflowerBlue"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Type}" Value="Success">
+                                    <Setter Property="Background" Value="LimeGreen"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                    <Setter Property="Background" Value="Orange"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Type}" Value="Alarm">
+                                    <Setter Property="Background" Value="OrangeRed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+            </DataTemplate>
+        </Style.Resources>
     </Style>
     
     <Style TargetType="{x:Type controls:NotificationArea}">

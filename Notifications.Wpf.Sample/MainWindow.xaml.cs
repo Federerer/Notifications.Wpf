@@ -36,12 +36,12 @@ namespace Notifications.Wpf.Sample
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _notificationManager.Show("Sample notification");
+            _notificationManager.Show(new  NotificationContent { Message = "Sample notification", Type = NotificationType.Information});
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            _notificationManager.Show("Sample notification", areaName: "WindowArea");
+            _notificationManager.Show("Sample notification", areaName: "WindowArea", onClick: () => _notificationManager.Show(new NotificationContent { Message = "Notification Clicked" , Type = NotificationType.Success}));
         }
     }
 }

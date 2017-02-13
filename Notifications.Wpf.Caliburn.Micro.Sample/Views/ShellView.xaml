@@ -1,0 +1,16 @@
+﻿<Window x:Class="Notifications.Wpf.Caliburn.Micro.Sample.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="600">
+    <DockPanel>
+        <UniformGrid DockPanel.Dock="Bottom" Rows="1">
+            <Button x:Name="Show" Content="Show" />
+            <Button x:Name="ShowInWindow" Content="Show in window" />
+        </UniformGrid>
+        <controls:NotificationArea x:Name="WindowArea" Position="TopLeft" MaxItems="3"/>
+    </DockPanel>
+</Window>

@@ -61,11 +61,17 @@ namespace Notifications.Wpf.Controls
         {
             var notification = new Notification
             {
-                Content = content,
-                Foreground = Brushes.White
+                Content = content
             };
             
-            notification.MouseLeftButtonDown += (sender, args) => onClick?.Invoke();
+            notification.MouseLeftButtonDown += (sender, args) =>
+            {
+                if (onClick != null)
+                {
+                    onClick.Invoke();
+                    (sender as Notification)?.Close();
+                }
+            };
             notification.NotificationClosed += (sender, args) => onClose?.Invoke();
             notification.NotificationClosed += OnNotificationClosed;
 
