@@ -35,14 +35,17 @@
                 Margin="8,8,0,0">
             <Grid>
                 <ContentPresenter/>
-                <Button x:Name="PART_CloseButton" Style="{StaticResource CloseButtonStyle}" Margin="8" Foreground="{TemplateBinding Foreground}"/>
+                <Button x:Name="PART_CloseButton" Style="{StaticResource CloseButtonStyle}" Margin="16" Foreground="{TemplateBinding Foreground}" Opacity=".8"/>
             </Grid>
         </Border>
     </ControlTemplate>
     
     <Style TargetType="{x:Type controls:Notification}">
-        <Setter Property="Height" Value="100"/>
-        <Setter Property="Width" Value="300"/>
+        <!--<Setter Property="Height" Value="100"/>-->
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Width" Value="350"/>
+        <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="Background" Value="#444444"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template" Value="{StaticResource NotificationTemplate}"/>
@@ -53,20 +56,23 @@
         </Setter>
         <Style.Resources>
             <DataTemplate DataType="{x:Type system:String}">
-                <Border Background="{Binding RelativeSource={RelativeSource AncestorType=controls:Notification}, Path=Background}">
+                <Border Background="{Binding RelativeSource={RelativeSource AncestorType=controls:Notification}, Path=Background}" MinHeight="80">
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}"/>
                 </Border>
             </DataTemplate>
             <DataTemplate DataType="{x:Type wpf:NotificationContent}">
                 <!--TODO: icons-->
-                <Border>
-                    <Grid VerticalAlignment="Center">
+                <Border Padding="16">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Margin="16" Text="&#xE10B;" FontFamily="Segoe UI Symbol" FontSize="30" HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Message}"/>
+                        <Ellipse Height="24" Width="24" Fill="White" VerticalAlignment="Top" Margin="0,0,8,0"/>
+                        <DockPanel Grid.Column="1">
+                            <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Margin="0,8,0,0" Opacity=".8"/>
+                        </DockPanel>
                     </Grid>
                     <Border.Style>
                         <Style TargetType="Border">
