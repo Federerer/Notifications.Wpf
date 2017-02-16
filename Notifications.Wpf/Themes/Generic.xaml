@@ -8,7 +8,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <TextBlock Text="&#xE10A;" FontFamily="Segoe UI Symbol" FontSize="14" />
+                    <TextBlock Text="&#9932;" FontSize="12" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -35,7 +35,7 @@
                 Margin="8,8,0,0">
             <Grid>
                 <ContentPresenter/>
-                <Button x:Name="PART_CloseButton" Style="{StaticResource CloseButtonStyle}" Margin="16" Foreground="{TemplateBinding Foreground}" Opacity=".8"/>
+                <Button x:Name="PART_CloseButton" Style="{StaticResource CloseButtonStyle}" Margin="12" Foreground="{TemplateBinding Foreground}" Opacity=".8"/>
             </Grid>
         </Border>
     </ControlTemplate>
@@ -62,13 +62,13 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type wpf:NotificationContent}">
                 <!--TODO: icons-->
-                <Border Padding="16">
+                <Border Padding="12" MinHeight="80">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Ellipse Height="24" Width="24" Fill="White" VerticalAlignment="Top" Margin="0,0,8,0"/>
+                        <TextBlock Text="&#xE10B;" FontFamily="Segoe UI Symbol" FontSize="20" Margin="0,0,12,0"/>
                         <DockPanel Grid.Column="1">
                             <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
                             <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Margin="0,8,0,0" Opacity=".8"/>

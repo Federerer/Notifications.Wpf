@@ -41,7 +41,7 @@ namespace Notifications.Wpf.Sample
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            _notificationManager.Show("Sample notification", areaName: "WindowArea", onClick: () => _notificationManager.Show(new NotificationContent { Title = "Click", Message = "Notification was clicked!" , Type = NotificationType.Success}));
+            _notificationManager.Show("Sample notification", areaName: "WindowArea", onClick: () => _notificationManager.Show(new NotificationContent { Title = "Click", Message = "Notification was clicked!" , Type = NotificationType.Warning}));
         }
     }
 }
