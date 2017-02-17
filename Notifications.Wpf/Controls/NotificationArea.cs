@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -53,10 +54,10 @@ namespace Notifications.Wpf.Controls
             _items = itemsControl?.Children;
         }
 
-#if NET45
-        public async void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose)
-#else
+#if NET40
         public void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose)
+#else
+        public async void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose)
 #endif
         {
             var notification = new Notification
@@ -85,14 +86,14 @@ namespace Notifications.Wpf.Controls
                 }
             }
 
-#if NET45
-            await Task.Delay(expirationTime);
-#else
+#if NET40 
             DelayExecute(expirationTime, () =>
             {
+#else
+            await Task.Delay(expirationTime);
 #endif
                 notification.Close();
-#if !NET45
+#if NET40
             });
 #endif
         }
@@ -103,7 +104,7 @@ namespace Notifications.Wpf.Controls
             _items.Remove(notification);
         }
 
-#if !NET45
+#if NET40
         private static void DelayExecute(TimeSpan delay, Action actionToExecute)
         {
             if (actionToExecute != null)
