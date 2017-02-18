@@ -27,7 +27,7 @@ namespace Notifications.Wpf.Caliburn.Micro.Sample.ViewModels
 
         public void ShowInWindow()
         {
-            _manager.Show(new NotificationContent { Message = "Message in window"}, areaName: "WindowArea");
+            _manager.Show(new NotificationContent { Title ="Message", Message = "Message in window"}, areaName: "WindowArea");
         }
     }
 }

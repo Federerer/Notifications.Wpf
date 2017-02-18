@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Notifications.Wpf.Sample"
         xmlns:controls="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
+        xmlns:wpf="clr-namespace:Notifications.Wpf;assembly=Notifications.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600">
     <DockPanel>
