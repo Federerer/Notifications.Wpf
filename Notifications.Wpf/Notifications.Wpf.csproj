@@ -96,6 +96,6 @@
     <RemoveDir Directories="NuGet" />
     <MakeDir Directories="NuGet" />
     <!-- Package the project -->
-    <Exec WorkingDirectory="$(BuildDir)" Command="NuGet.exe pack -OutputDir &quot;NuGet&quot; -Version %(OutputAssemblyInfo.Version) -Properties &quot;Configuration=$(Configuration)&quot;" />
+    <Exec WorkingDirectory="$(BuildDir)" Command="NuGet.exe pack -OutputDir &quot;NuGet&quot; -Properties &quot;Configuration=$(Configuration)&quot;" />
   </Target>
 </Project>
