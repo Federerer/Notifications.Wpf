@@ -49,7 +49,7 @@ namespace Notifications.Wpf.Caliburn.Micro.Sample
 
             var timer = new Timer {Interval = 12000};
             timer.Elapsed += (o, args) => IoC.Get<INotificationManager>().Show("Pink string from Bootstrapper!");
-            timer.Start();
+            //timer.Start();
         }
     }
 }

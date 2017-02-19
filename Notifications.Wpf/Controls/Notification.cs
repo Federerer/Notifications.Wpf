@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Notifications.Wpf.Utils;
 
 namespace Notifications.Wpf.Controls
 {
@@ -32,6 +33,39 @@ namespace Notifications.Wpf.Controls
         {
             add { AddHandler(NotificationClosedEvent, value); }
             remove { RemoveHandler(NotificationClosedEvent, value); }
+        }
+
+        public static bool GetCloseOnClick(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(CloseOnClickProperty);
+        }
+
+        public static void SetCloseOnClick(DependencyObject obj, bool value)
+        {
+            obj.SetValue(CloseOnClickProperty, value);
+        }
+
+        public static readonly DependencyProperty CloseOnClickProperty =
+            DependencyProperty.RegisterAttached("CloseOnClick", typeof(bool), typeof(Notification), new FrameworkPropertyMetadata(false,CloseOnClickChanged));
+
+        private static void CloseOnClickChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var button = dependencyObject as Button;
+            if (button == null)
+            {
+                return;
+            }
+
+            var value = (bool)dependencyPropertyChangedEventArgs.NewValue;
+
+            if (value)
+            {
+                button.Click += (sender, args) =>
+                {
+                    var notification = VisualTreeHelperExtensions.GetParent<Notification>(button);
+                    notification?.Close();
+                };
+            }
         }
 
         public override void OnApplyTemplate()
