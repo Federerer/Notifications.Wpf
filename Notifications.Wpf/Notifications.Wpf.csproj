@@ -55,6 +55,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\NotificationsUtils.cs" />
     <Compile Include="Controls\Notification.cs" />
     <Compile Include="Controls\NotificationArea.cs" />
     <Compile Include="Controls\ReversibleStackPanel.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="NotificationsOverlayWindow.xaml.cs">
       <DependentUpon>NotificationsOverlayWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\VisualTreeHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">

@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Threading.Tasks;
+using System.Windows.Media;
 using Caliburn.Micro;
 
 namespace Notifications.Wpf.Caliburn.Micro.Sample.ViewModels
@@ -15,13 +16,15 @@ namespace Notifications.Wpf.Caliburn.Micro.Sample.ViewModels
             _manager = manager;
         }
 
-        public void Ok()
+        public async void Ok()
         {
+            await Task.Delay(500);
             _manager.Show(new NotificationContent { Title ="Success!", Message = "Ok button clicked.", Type = NotificationType.Success});
         }
 
-        public void Cancel()
+        public async void Cancel()
         {
+            await Task.Delay(500);
             _manager.Show(new NotificationContent { Title = "Error!",  Message = "Cancel button clicked!", Type = NotificationType.Error});
         }
     }

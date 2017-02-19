@@ -18,11 +18,11 @@ namespace Notifications.Wpf.Caliburn.Micro.Sample.ViewModels
         {
             var content = new NotificationViewModel(_manager)
             {
-                Title = "Custom message.",
+                Title = "Custom notification.",
                 Message = "Click on buttons!"
             };
 
-            _manager.Show(content, expirationTime: TimeSpan.FromSeconds(150));          
+            _manager.Show(content, expirationTime: TimeSpan.FromSeconds(30));          
         }
 
         public void ShowInWindow()
