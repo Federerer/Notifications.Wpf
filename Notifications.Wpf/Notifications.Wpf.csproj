@@ -61,6 +61,7 @@
     <Compile Include="INotificationManager.cs" />
     <Compile Include="NotificationContent.cs" />
     <Compile Include="NotificationManager.cs" />
+    <Compile Include="NotificationTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotificationsOverlayWindow.xaml.cs">
       <DependentUpon>NotificationsOverlayWindow.xaml</DependentUpon>

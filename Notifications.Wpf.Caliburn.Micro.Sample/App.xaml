@@ -5,7 +5,8 @@
              xmlns:controls="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             xmlns:micro="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro">
+             xmlns:micro="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+             xmlns:wpf="clr-namespace:Notifications.Wpf;assembly=Notifications.Wpf">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,11 +15,21 @@
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
-            <Style TargetType="controls:Notification" BasedOn="{StaticResource {x:Type controls:Notification}}">
+            <Style TargetType="controls:Notification">
                 <Style.Resources>
+                    
+                    <!--<DataTemplate DataType="{x:Type wpf:NotificationContent}" x:Key="DefaultNotificationTemplate">
+                        <TextBlock Text="{Binding}" Foreground="DeepPink"/>
+                    </DataTemplate>-->
+                    
+                    <DataTemplate DataType="{x:Type system:String}" x:Key="DefaultStringTemplate">
+                        <Label Content="{Binding}" Foreground="DeepPink" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MinHeight="80"/>
+                    </DataTemplate>
+
                     <DataTemplate DataType="{x:Type micro:PropertyChangedBase}">
                         <ContentControl cal:View.Model="{Binding}"/>
                     </DataTemplate>
+                    
                 </Style.Resources>
             </Style>
             
