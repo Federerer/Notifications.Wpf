@@ -19,6 +19,6 @@ namespace Notifications.Wpf
         Information,
         Success,
         Warning,
-        Alarm
+        Error
     }
 }

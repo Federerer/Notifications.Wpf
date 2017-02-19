@@ -57,7 +57,7 @@
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource WarningIcon}"/>
                         <Setter TargetName="Border" Property="Background" Value="Orange"/>
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding Type}" Value="Alarm">
+                    <DataTrigger Binding="{Binding Type}" Value="Error">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource ErrorIcon}"/>
                         <Setter TargetName="Border" Property="Background" Value="OrangeRed"/>
                     </DataTrigger>

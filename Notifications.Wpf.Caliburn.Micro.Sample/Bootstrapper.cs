@@ -47,8 +47,8 @@ namespace Notifications.Wpf.Caliburn.Micro.Sample
             DisplayRootViewFor<ShellViewModel>();
             Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
 
-            var timer = new Timer {Interval = 3000};
-            timer.Elapsed += (o, args) => IoC.Get<INotificationManager>().Show("String from Bootstrapper!");
+            var timer = new Timer {Interval = 12000};
+            timer.Elapsed += (o, args) => IoC.Get<INotificationManager>().Show("Pink string from Bootstrapper!");
             timer.Start();
         }
     }
