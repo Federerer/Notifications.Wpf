@@ -1,9 +1,25 @@
 ﻿<Application x:Class="Notifications.Wpf.Sample.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:sample="clr-namespace:Notifications.Wpf.Sample"
              ShutdownMode="OnMainWindowClose"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <sample:CustomTemplateSelector x:Key="CustomTemplateSelector" />
+
+        <Style TargetType="controls:Notification">
+            <Setter Property="ContentTemplateSelector" Value="{StaticResource CustomTemplateSelector}" />
+            <Style.Resources>
+                <DataTemplate DataType="{x:Type system:String}" x:Key="PinkStringTemplate">
+                    <Label MinHeight="80"
+                           Content="{Binding}"
+                           Foreground="DeepPink" HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center" />
+                </DataTemplate>
+            </Style.Resources>
+        </Style>
     </Application.Resources>
 </Application>

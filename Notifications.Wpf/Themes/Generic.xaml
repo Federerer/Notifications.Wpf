@@ -20,15 +20,27 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
-    
-    <wpf:NotificationTemplateSelector x:Key="NotificationTemplateSelector">
-        <wpf:NotificationTemplateSelector.Templates>
-            <DataTemplate DataType="{x:Type system:String}">
+
+    <wpf:NotificationTemplateSelector x:Key="NotificationTemplateSelector"/>
+
+    <ControlTemplate x:Key="NotificationTemplate" TargetType="{x:Type controls:Notification}">
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="ClosingAnimation">
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:.5" />
+                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="1" To="0" Duration="0:0:.2"/>
+                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="1" To="0" Duration="0:0:.2"/>
+            </Storyboard>
+            <Storyboard x:Key="LoadingAnimation">
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.5" />
+                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="0" To="1" Duration="0:0:.2"/>
+                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="0" To="1" Duration="0:0:.2"/>
+            </Storyboard>
+            <DataTemplate DataType="{x:Type system:String}" x:Key="DefaultStringTemplate">
                 <Border Background="{Binding RelativeSource={RelativeSource AncestorType=controls:Notification}, Path=Background}" MinHeight="80">
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}"/>
                 </Border>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type wpf:NotificationContent}">
+            <DataTemplate DataType="{x:Type wpf:NotificationContent}" x:Key="DefaultNotificationTemplate">
                 <Border x:Name="Border" Padding="12" MinHeight="80">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -63,21 +75,6 @@
                     </DataTrigger>
                 </DataTemplate.Triggers>
             </DataTemplate>
-        </wpf:NotificationTemplateSelector.Templates>
-    </wpf:NotificationTemplateSelector>
-
-    <ControlTemplate x:Key="NotificationTemplate" TargetType="{x:Type controls:Notification}">
-        <ControlTemplate.Resources>
-            <Storyboard x:Key="ClosingAnimation">
-                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:.5" />
-                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="1" To="0" Duration="0:0:.2"/>
-                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="1" To="0" Duration="0:0:.2"/>
-            </Storyboard>
-            <Storyboard x:Key="LoadingAnimation">
-                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.5" />
-                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="0" To="1" Duration="0:0:.2"/>
-                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="0" To="1" Duration="0:0:.2"/>
-            </Storyboard>
         </ControlTemplate.Resources>
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"

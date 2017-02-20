@@ -13,36 +13,32 @@ namespace Notifications.Wpf
         private DataTemplate _defaultStringTemplate;
         private DataTemplate _defaultNotificationTemplate;
 
-        public List<DataTemplate> Templates { private get; set; }
-
-        public NotificationTemplateSelector()
+        private void GetTemplatesFromResources(FrameworkElement container)
         {
-            Templates = new List<DataTemplate>();
-        }       
+            _defaultStringTemplate =
+                    container?.FindResource("DefaultStringTemplate") as DataTemplate;
+            _defaultNotificationTemplate =
+                    container?.FindResource("DefaultNotificationTemplate") as DataTemplate;
+        }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (_defaultStringTemplate == null)
+            if (_defaultStringTemplate == null && _defaultNotificationTemplate == null)
             {
-                _defaultStringTemplate =
-                    (container as FrameworkElement)?.TryFindResource("DefaultStringTemplate") as DataTemplate;
-                if (_defaultStringTemplate != null && (Type)_defaultStringTemplate.DataType == typeof(string))
-                {
-                    Templates.Insert(0, _defaultStringTemplate);
-                }
+                GetTemplatesFromResources((FrameworkElement)container);                            
+            }           
+
+            if (item is string)
+            {
+                return _defaultStringTemplate;
+            }
+            if (item is NotificationContent)
+            {
+                return _defaultNotificationTemplate;
             }
 
-            if (_defaultNotificationTemplate == null)
-            {
-                _defaultNotificationTemplate =
-                    (container as FrameworkElement)?.TryFindResource("DefaultNotificationTemplate") as DataTemplate;
-                if (_defaultNotificationTemplate != null && (Type)_defaultNotificationTemplate.DataType == typeof(NotificationContent))
-                {
-                    Templates.Insert(0, _defaultNotificationTemplate);
-                }
-            }
+            return base.SelectTemplate(item, container);
 
-            return Templates.FirstOrDefault(t => (Type) t.DataType == item?.GetType());
         }
     }
 }

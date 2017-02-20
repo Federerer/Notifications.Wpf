@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Notifications.Wpf.Sample
 {
@@ -29,18 +17,31 @@ namespace Notifications.Wpf.Sample
             InitializeComponent();     
 
             var timer = new Timer {Interval = 3000};
-            timer.Elapsed += (sender, args) => _notificationManager.Show("String from another thread!");
+            timer.Elapsed += (sender, args) => _notificationManager.Show("Pink string from another thread!");
             timer.Start();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _notificationManager.Show(new  NotificationContent { Title = "Sample notification", Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", Type = (NotificationType)_random.Next(0, 4)});
+            var content = new NotificationContent
+            {
+                Title = "Sample notification",
+                Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                Type = (NotificationType) _random.Next(0, 4)
+            };
+            _notificationManager.Show(content);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            _notificationManager.Show(new NotificationContent {Title = "Notification in window", Message = "Click me!"}, areaName: "WindowArea", onClick: () => _notificationManager.Show(new NotificationContent { Title = "Clicked!", Message = "Window notification was clicked!" , Type = NotificationType.Success}));
+            var content = new NotificationContent {Title = "Notification in window", Message = "Click me!"};
+            var clickContent = new NotificationContent
+            {
+                Title = "Clicked!",
+                Message = "Window notification was clicked!",
+                Type = NotificationType.Success
+            };
+            _notificationManager.Show(content, "WindowArea", onClick: () => _notificationManager.Show(clickContent));
         }
     }
 }
