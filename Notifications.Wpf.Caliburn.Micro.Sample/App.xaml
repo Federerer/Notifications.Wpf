@@ -11,32 +11,30 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary>
-                    <sample:Bootstrapper x:Key="Bootstrapper"/>
+                    <sample:Bootstrapper x:Key="Bootstrapper" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
-            <Style TargetType="controls:Notification">
-                <Style.Resources>
-                    
-                    <!--<DataTemplate DataType="{x:Type wpf:NotificationContent}" x:Key="DefaultNotificationTemplate">
-                        <TextBlock Text="{Binding}" Foreground="DeepPink"/>
-                    </DataTemplate>-->
-                    
-                    <DataTemplate DataType="{x:Type system:String}" x:Key="DefaultStringTemplate">
-                        <Label Content="{Binding}" Foreground="DeepPink" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MinHeight="80"/>
-                    </DataTemplate>
+            <sample:CustomTemplateSelector x:Key="CustomTemplateSelector" />
 
+            <Style TargetType="controls:Notification">
+                <Setter Property="ContentTemplateSelector" Value="{StaticResource CustomTemplateSelector}" />
+                <Style.Resources>
                     <DataTemplate DataType="{x:Type micro:PropertyChangedBase}">
-                        <ContentControl cal:View.Model="{Binding}"/>
+                        <ContentControl cal:View.Model="{Binding}" />
                     </DataTemplate>
-                    
+                    <DataTemplate DataType="{x:Type system:String}" x:Key="PinkStringTemplate">
+                        <Label MinHeight="80"
+                               Content="{Binding}"
+                               Foreground="DeepPink" HorizontalContentAlignment="Center"
+                               VerticalContentAlignment="Center" />
+                    </DataTemplate>
                 </Style.Resources>
             </Style>
-            
+
             <Style TargetType="controls:NotificationArea">
-                <Setter Property="MaxItems" Value="7"/>
+                <Setter Property="MaxItems" Value="7" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
-
