@@ -4,7 +4,7 @@ WPF toast notifications.
 ![Demo](http://i.imgur.com/UvYIVFV.gif)
 ### Installation:
 ```
-Install-Package Notifications.Wpf
+Install-Package Notifications.Wpf -Pre
 ```
 ### Usage:
 
