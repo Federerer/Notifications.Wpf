@@ -15,19 +15,10 @@
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
-            <sample:CustomTemplateSelector x:Key="CustomTemplateSelector" />
-
             <Style TargetType="controls:Notification">
-                <Setter Property="ContentTemplateSelector" Value="{StaticResource CustomTemplateSelector}" />
                 <Style.Resources>
                     <DataTemplate DataType="{x:Type micro:PropertyChangedBase}">
                         <ContentControl cal:View.Model="{Binding}" />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type system:String}" x:Key="PinkStringTemplate">
-                        <Label MinHeight="80"
-                               Content="{Binding}"
-                               Foreground="DeepPink" HorizontalContentAlignment="Center"
-                               VerticalContentAlignment="Center" />
                     </DataTemplate>
                 </Style.Resources>
             </Style>

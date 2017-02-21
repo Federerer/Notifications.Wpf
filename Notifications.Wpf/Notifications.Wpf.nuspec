@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/Federerer/Notifications.Wpf</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Prerelease.</releaseNotes>
+    <releaseNotes>First release.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags>Toast Notifications WPF</tags>
   </metadata>
