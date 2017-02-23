@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using Notifications.Wpf.Utils;
@@ -9,10 +13,12 @@ namespace Notifications.Wpf.Controls
     [TemplatePart(Name = "PART_CloseButton", Type = typeof(Button))]
     public class Notification : ContentControl
     {
+        private TimeSpan _closingAnimationTime = TimeSpan.Zero;
+
         public bool IsClosing { get; set; }
 
-        public static readonly RoutedEvent ClickEvent = EventManager.RegisterRoutedEvent(
-            "Click", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Notification));
+        public static readonly RoutedEvent NotificationCloseInvokedEvent = EventManager.RegisterRoutedEvent(
+            "NotificationCloseInvoked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Notification));
 
         public static readonly RoutedEvent NotificationClosedEvent = EventManager.RegisterRoutedEvent(
             "NotificationClosed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Notification));
@@ -23,10 +29,10 @@ namespace Notifications.Wpf.Controls
                 new FrameworkPropertyMetadata(typeof(Notification)));
         }
 
-        public event RoutedEventHandler Click
+        public event RoutedEventHandler NotificationCloseInvoked
         {
-            add { AddHandler(ClickEvent, value); }
-            remove { RemoveHandler(ClickEvent, value); }
+            add { AddHandler(NotificationCloseInvokedEvent, value); }
+            remove { RemoveHandler(NotificationCloseInvokedEvent, value); }
         }
 
         public event RoutedEventHandler NotificationClosed
@@ -66,7 +72,7 @@ namespace Notifications.Wpf.Controls
                     notification?.Close();
                 };
             }
-        }
+        }      
 
         public override void OnApplyTemplate()
         {
@@ -75,21 +81,15 @@ namespace Notifications.Wpf.Controls
             if (closeButton != null)
                 closeButton.Click += OnCloseButtonOnClick;
 
-            var loadingAnimation = Template.Resources["LoadingAnimation"] as Storyboard;
-
-            
-
-            if (loadingAnimation == null)
-            {
-                return;
-            }
+            //TODO: Extracto to method, check if storyboard has duration set before checking children.
+            var sb = Template.Triggers.OfType<EventTrigger>().First(t => t.RoutedEvent == NotificationCloseInvokedEvent).Actions.OfType<BeginStoryboard>().Select(a => a.Storyboard);
+            _closingAnimationTime = sb.First().Children.Max(c => c.Duration.TimeSpan);
 
             if (Equals(LayoutTransform, Transform.Identity))
             {
-                LayoutTransform = new ScaleTransform(1, 1);
+                LayoutTransform = new ScaleTransform();
             }
-
-            loadingAnimation.Begin(this, Template);
+            
         }
 
         private void OnCloseButtonOnClick(object sender, RoutedEventArgs args)
@@ -101,30 +101,19 @@ namespace Notifications.Wpf.Controls
             Close();
         }
 
-        public void Close()
+        //TODO: .NET40
+        public async void Close()
         {
             if (IsClosing)
             {
                 return;
             }
-
-            IsClosing = true;
-
-            var closingAnimation = (Template.Resources["ClosingAnimation"] as Storyboard)?.Clone();
-
-            if (closingAnimation == null)
-            {
-                RaiseEvent(new RoutedEventArgs(NotificationClosedEvent));
-                return;
-            }
-
-            closingAnimation.Completed += (sender, args) =>
-            {
-                RaiseEvent(new RoutedEventArgs(NotificationClosedEvent));
-            };
-
-            closingAnimation.Begin(this, Template, true);
-        }
-    }
         
+            IsClosing = true;
+            
+            RaiseEvent(new RoutedEventArgs(NotificationCloseInvokedEvent));
+            await Task.Delay(_closingAnimationTime);
+            RaiseEvent(new RoutedEventArgs(NotificationClosedEvent));
+        } 
+    }       
 }

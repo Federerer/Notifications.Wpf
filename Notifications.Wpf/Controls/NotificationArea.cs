@@ -76,6 +76,18 @@ namespace Notifications.Wpf.Controls
             notification.NotificationClosed += (sender, args) => onClose?.Invoke();
             notification.NotificationClosed += OnNotificationClosed;
 
+            if (!IsLoaded)
+            {
+                return;
+            }
+
+            var w = Window.GetWindow(this);
+            var x = PresentationSource.FromVisual(w);
+            if (x == null)
+            {
+                return;
+            }
+
             lock (_items)
             {
                 _items.Add(notification);
@@ -90,6 +102,10 @@ namespace Notifications.Wpf.Controls
             DelayExecute(expirationTime, () =>
             {
 #else
+            if (expirationTime == TimeSpan.MaxValue)
+            {
+                return;
+            }
             await Task.Delay(expirationTime);
 #endif
                 notification.Close();
