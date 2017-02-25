@@ -9,15 +9,26 @@ namespace Notifications.Wpf
 {
     public class NotificationManager : INotificationManager
     {
+        private readonly Dispatcher _dispatcher;
         private static readonly List<NotificationArea> Areas = new List<NotificationArea>();
         private static NotificationsOverlayWindow _window;
+
+        public NotificationManager(Dispatcher dispatcher = null)
+        {
+            if (dispatcher == null)
+            {
+                dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
+            }
+
+            _dispatcher = dispatcher;
+        }
 
         public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null)
         {
-            if (!Application.Current.Dispatcher.CheckAccess())
+            if (!_dispatcher.CheckAccess())
             {
-                Application.Current.Dispatcher.BeginInvoke(
+                _dispatcher.BeginInvoke(
                     new Action(() => Show(content, areaName, expirationTime, onClick, onClose)));
                 return;
             }
