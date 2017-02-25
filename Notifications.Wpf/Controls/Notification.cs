@@ -82,8 +82,8 @@ namespace Notifications.Wpf.Controls
                 closeButton.Click += OnCloseButtonOnClick;
 
             //TODO: Extracto to method, check if storyboard has duration set before checking children.
-            var sb = Template.Triggers.OfType<EventTrigger>().First(t => t.RoutedEvent == NotificationCloseInvokedEvent).Actions.OfType<BeginStoryboard>().Select(a => a.Storyboard);
-            _closingAnimationTime = sb.First().Children.Max(c => c.Duration.TimeSpan);
+            var sb = Template.Triggers.OfType<EventTrigger>().FirstOrDefault(t => t.RoutedEvent == NotificationCloseInvokedEvent)?.Actions.OfType<BeginStoryboard>().Select(a => a.Storyboard);
+            _closingAnimationTime = sb?.First().Children.Max(c => c.Duration.TimeSpan) ?? TimeSpan.Zero;
 
             if (Equals(LayoutTransform, Transform.Identity))
             {
