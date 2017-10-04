@@ -87,9 +87,12 @@
             </EventTrigger>
             <EventTrigger RoutedEvent="controls:Notification.NotificationCloseInvoked" >
                 <BeginStoryboard>
-                    <Storyboard>
-                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:.5" />
-                        <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="1" To="0" Duration="0:0:.2"/>
+                    <Storyboard Duration="0:0:.1">
+                        <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="1" To="0.1" Duration="0:0:.2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+                <BeginStoryboard>
+                    <Storyboard BeginTime="0:0:.2">
                         <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="1" To="0" Duration="0:0:.2"/>
                     </Storyboard>
                 </BeginStoryboard>
@@ -107,6 +110,11 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template" Value="{StaticResource NotificationTemplate}"/>
         <Setter Property="ContentTemplateSelector" Value="{StaticResource NotificationTemplateSelector}"/>
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <ScaleTransform />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect BlurRadius="5" Direction="0" ShadowDepth="0" Opacity=".25"/>
