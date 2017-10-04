@@ -25,16 +25,6 @@
 
     <ControlTemplate x:Key="NotificationTemplate" TargetType="{x:Type controls:Notification}">
         <ControlTemplate.Resources>
-            <Storyboard x:Key="ClosingAnimation">
-                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:.5" />
-                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="1" To="0" Duration="0:0:.2"/>
-                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="1" To="0" Duration="0:0:.2"/>
-            </Storyboard>
-            <Storyboard x:Key="LoadingAnimation">
-                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.5" />
-                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="0" To="1" Duration="0:0:.2"/>
-                <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="0" To="1" Duration="0:0:.2"/>
-            </Storyboard>
             <DataTemplate DataType="{x:Type system:String}" x:Key="DefaultStringTemplate">
                 <Border Background="{Binding RelativeSource={RelativeSource AncestorType=controls:Notification}, Path=Background}" MinHeight="80">
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding}"/>
@@ -85,6 +75,29 @@
                 <Button x:Name="PART_CloseButton" Style="{StaticResource CloseButtonStyle}" Margin="12" Foreground="{TemplateBinding Foreground}" Opacity=".8"/>
             </Grid>
         </Border>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.5" />
+                        <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="0" To="1" Duration="0:0:.2"/>
+                        <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="0" To="1" Duration="0:0:.2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="controls:Notification.NotificationCloseInvoked" >
+                <BeginStoryboard>
+                    <Storyboard Duration="0:0:.1">
+                        <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleX" From="1" To="0.1" Duration="0:0:.2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+                <BeginStoryboard>
+                    <Storyboard BeginTime="0:0:.2">
+                        <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY" From="1" To="0" Duration="0:0:.2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
     
     <Style TargetType="{x:Type controls:Notification}">
@@ -97,6 +110,11 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Template" Value="{StaticResource NotificationTemplate}"/>
         <Setter Property="ContentTemplateSelector" Value="{StaticResource NotificationTemplateSelector}"/>
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <ScaleTransform />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect BlurRadius="5" Direction="0" ShadowDepth="0" Opacity=".25"/>
