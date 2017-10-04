@@ -8,7 +8,7 @@ Install-Package Notifications.Wpf
 ```
 ### Usage:
 
-####Notification over the taskbar:
+#### Notification over the taskbar:
 ```C#
 var notificationManager = new NotificationManager();
 
@@ -20,7 +20,7 @@ notificationManager.Show(new NotificationContent
            });
 ```
 
-####Notification inside application window:
+#### Notification inside application window:
 - Adding namespace:
 ```XAML
 xmlns:notifications="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
@@ -36,12 +36,12 @@ notificationManager.Show(
                 areaName: "WindowArea");
 ```
 
-####Simple text with OnClick & OnClose actions:
+#### Simple text with OnClick & OnClose actions:
 ```C#
 notificationManager.Show("String notification", onClick: () => Console.WriteLine("Click"),
                onClose: () => Console.WriteLine("Closed!"));
 ```
-###Caliburn.Micro MVVM support:
+### Caliburn.Micro MVVM support:
 - App.xaml:
 ```XAML
 xmlns:controls="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
