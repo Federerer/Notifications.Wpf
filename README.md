@@ -16,7 +16,7 @@ notificationManager.Show(new NotificationContent
            {
                Title = "Sample notification",
                Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-               Type = NotificationType.Info
+               Type = NotificationType.Information
            });
 ```
 
