@@ -105,9 +105,16 @@ namespace Notifications.Wpf.Controls
         
             IsClosing = true;
             
-            RaiseEvent(new RoutedEventArgs(NotificationCloseInvokedEvent));
-            await Task.Delay(_closingAnimationTime);
-            RaiseEvent(new RoutedEventArgs(NotificationClosedEvent));
+            try
+            {
+                RaiseEvent(new RoutedEventArgs(NotificationCloseInvokedEvent));
+                await Task.Delay(_closingAnimationTime);
+                RaiseEvent(new RoutedEventArgs(NotificationClosedEvent));
+            }
+            catch (Exception)
+            {
+                // Fail silently (already closing)
+            }
         } 
     }       
 }
