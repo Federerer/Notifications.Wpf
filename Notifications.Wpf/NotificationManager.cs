@@ -50,10 +50,15 @@ namespace Notifications.Wpf
                 _window.Show();
             }
 
+            if (Areas != null && !_window.IsVisible)
+                _window.Show();
+
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
-                area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
+                area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
             }
+
+
         }
 
         internal static void AddArea(NotificationArea area)
