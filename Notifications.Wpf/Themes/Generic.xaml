@@ -13,7 +13,24 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <TextBlock Text="&#9932;" FontSize="12" />
+                  <Label>
+                    <Label.Content>
+                      <Canvas x:Name="CloseCross" Width="5" Height="5">
+                        <Canvas.RenderTransform>
+                          <TranslateTransform X="0" Y="0"/>
+                        </Canvas.RenderTransform>
+                        <Canvas.Resources/>
+                        <Canvas>
+                          <Canvas.RenderTransform>
+                            <MatrixTransform Matrix="0.02001779 0 0 -0.02008929 -3.5 8"/>
+                          </Canvas.RenderTransform>
+                          <Path Name="path1" Fill="#FFFFFFFF" Data="m 405 450 -110 -110 23 -22 22 -23 110 111 111 110 -24 22 -23 22 z"/>
+                          <Path Name="path2" Fill="#FFFFFFFF" Data="M 25 530 C 6 509 9 507 260 255 L 514 1 538 22 561 44 308 297 C 169 436 52 550 49 550 46 550 35 541 25 530 Z"/>
+                          <Path Name="path3" Fill="#FFFFFFFF" Data="M 107 153 -1 46 22 23 45 0 155 110 c 107 108 109 109 90 130 -10 11 -21 20 -24 20 -3 0 -55 -48 -114 -107 z"/>
+                        </Canvas>
+                      </Canvas>
+                    </Label.Content>
+                  </Label>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
