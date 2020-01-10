@@ -12,8 +12,8 @@ namespace Notifications.Wpf.Controls
 
         public bool ReverseOrder
         {
-            get { return (bool)GetValue(ReverseOrderProperty); }
-            set { SetValue(ReverseOrderProperty, value); }
+            get => (bool)GetValue(ReverseOrderProperty);
+            set => SetValue(ReverseOrderProperty, value);
         }
         
         public static readonly DependencyProperty ReverseOrderProperty =
@@ -25,8 +25,8 @@ namespace Notifications.Wpf.Controls
             double x = 0;
             double y = 0;
 
-            IEnumerable<UIElement> children = ReverseOrder ? InternalChildren.Cast<UIElement>().Reverse() : InternalChildren.Cast<UIElement>();
-            foreach (UIElement child in children)
+            var children = ReverseOrder ? InternalChildren.Cast<UIElement>().Reverse() : InternalChildren.Cast<UIElement>();
+            foreach (var child in children)
             {
                 Size size;
 

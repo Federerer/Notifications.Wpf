@@ -47,10 +47,20 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="MathCore, Version=0.0.16.0, Culture=neutral, PublicKeyToken=d1a4491910fe6bbb, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathCore.0.0.16\lib\netstandard2.0\MathCore.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -59,6 +69,7 @@
     <Compile Include="Controls\Notification.cs" />
     <Compile Include="Controls\NotificationArea.cs" />
     <Compile Include="Controls\ReversibleStackPanel.cs" />
+    <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="INotificationManager.cs" />
     <Compile Include="NotificationContent.cs" />
     <Compile Include="NotificationManager.cs" />
@@ -68,6 +79,14 @@
       <DependentUpon>NotificationsOverlayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\VisualTreeHelperExtensions.cs" />
+    <Compile Include="ViewModel\NotificationProgressViewModel.cs" />
+    <Compile Include="ViewModel\NotificationViewModel.cs" />
+    <Compile Include="View\NotificationInfoView.xaml.cs">
+      <DependentUpon>NotificationInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NotificationProgress.xaml.cs">
+      <DependentUpon>NotificationProgress.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
@@ -78,11 +97,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\NotificationInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NotificationProgress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="Notifications.Wpf.nuspec" />
     <None Include="pack.bat" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

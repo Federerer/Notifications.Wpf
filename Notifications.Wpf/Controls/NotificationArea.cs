@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Notifications.Wpf.View;
+using Utilities.WPF.Notifications;
 
 namespace Notifications.Wpf.Controls
 {
@@ -16,8 +19,8 @@ namespace Notifications.Wpf.Controls
 
         public NotificationPosition Position
         {
-            get { return (NotificationPosition)GetValue(PositionProperty); }
-            set { SetValue(PositionProperty, value); }
+            get => (NotificationPosition)GetValue(PositionProperty);
+            set => SetValue(PositionProperty, value);
         }
 
         // Using a DependencyProperty as the backing store for Position.  This enables animation, styling, binding, etc...
@@ -27,8 +30,8 @@ namespace Notifications.Wpf.Controls
 
         public int MaxItems
         {
-            get { return (int)GetValue(MaxItemsProperty); }
-            set { SetValue(MaxItemsProperty, value); }
+            get => (int)GetValue(MaxItemsProperty);
+            set => SetValue(MaxItemsProperty, value);
         }
         
         public static readonly DependencyProperty MaxItemsProperty =
@@ -60,6 +63,13 @@ namespace Notifications.Wpf.Controls
         public async void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose)
 #endif
         {
+            if(content is NotificationContent model)
+                if(model.Type==NotificationType.Notification)
+                {
+                    var temp = new NotificationViewModel {Title = model.Title, Message = model.Message};
+
+                    content = new NotificationInfoView {DataContext = temp };
+                }
             var notification = new Notification
             {
                 Content = content
@@ -112,6 +122,48 @@ namespace Notifications.Wpf.Controls
 #if NET40
             });
 #endif
+        }
+
+        public async void Show<T>(object model, CancellationTokenSource cancelTokenSource, CancellationToken cancel, IProgress<T> progress)
+        {
+            var content = new NotificationProgress { DataContext = model };
+            content.Cancel.Click += (s, e) => cancelTokenSource.Cancel();
+
+            var notification = new Notification
+            {
+                Content = content
+            };
+
+            notification.NotificationClosed += OnNotificationClosed;
+
+            if (!IsLoaded)
+            {
+                return;
+            }
+
+            var w = Window.GetWindow(this);
+            var x = PresentationSource.FromVisual(w);
+            if (x == null)
+            {
+                return;
+            }
+
+            lock (_items)
+            {
+                _items.Add(notification);
+
+                if (_items.OfType<Notification>().Count(i => !i.IsClosing) > MaxItems)
+                {
+                    _items.OfType<Notification>().First(i => !i.IsClosing).Close();
+                }
+            }
+
+            // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
+            while(cancel.IsCancellationRequested != true)
+                await Task.Delay(TimeSpan.FromSeconds(1), cancel);
+
+
+            notification.Close();
         }
 
         private void OnNotificationClosed(object sender, RoutedEventArgs routedEventArgs)

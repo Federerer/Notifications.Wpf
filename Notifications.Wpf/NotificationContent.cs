@@ -19,6 +19,7 @@ namespace Notifications.Wpf
         Information,
         Success,
         Warning,
-        Error
+        Error,
+        Notification
     }
 }
