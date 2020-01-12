@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Notifications.Wpf.Controls
 {
     public class NotificationArea : Control
     {
+        public Dictionary<string, IProgress<(int, string, string, bool?)>> ProgressWind = new Dictionary<string, IProgress<(int, string, string, bool?)>>();
 
 
 
@@ -124,11 +126,12 @@ namespace Notifications.Wpf.Controls
 #endif
         }
 
-        public async void Show<T>(object model, CancellationTokenSource cancelTokenSource, CancellationToken cancel, IProgress<T> progress)
+        public async void Show(NotificationProgressViewModel model)
         {
+            if(ProgressWind.ContainsKey(model.ProgressName)) throw new ArgumentException("Areas contains this window, change name");
+            ProgressWind.Add(model.ProgressName, model.progress);
             var content = new NotificationProgress { DataContext = model };
-            content.Cancel.Click += (s, e) => cancelTokenSource.Cancel();
-
+            content.Cancel.Click += model.CancelProgress;
             var notification = new Notification
             {
                 Content = content
@@ -158,12 +161,20 @@ namespace Notifications.Wpf.Controls
                 }
             }
 
-            // ReSharper disable once LoopVariableIsNeverChangedInsideLoop
-            while(cancel.IsCancellationRequested != true)
-                await Task.Delay(TimeSpan.FromSeconds(1), cancel);
+            try
+            {
 
-
-            notification.Close();
+                while(model.Cancel.Token.IsCancellationRequested != true)
+                {
+                    model.Cancel.Token.ThrowIfCancellationRequested();
+                    await Task.Delay(TimeSpan.FromSeconds(1), model.Cancel.Token);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                notification.Close();
+                ProgressWind.Remove(model.ProgressName);
+            }
         }
 
         private void OnNotificationClosed(object sender, RoutedEventArgs routedEventArgs)

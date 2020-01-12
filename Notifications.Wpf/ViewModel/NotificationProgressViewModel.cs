@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Threading;
+using System.Windows;
 using System.Windows.Markup;
 using Caliburn.Micro;
 
 // ReSharper disable once CheckNamespace
 namespace Utilities.WPF.Notifications
 {
-    [MarkupExtensionReturnType(typeof(NotificationProgressViewModel<>))]
-    public class NotificationProgressViewModel<T> : PropertyChangedBase
+    [MarkupExtensionReturnType(typeof(NotificationProgressViewModel))]
+    public class NotificationProgressViewModel : PropertyChangedBase
     {
-        private readonly CancellationTokenSource _cancel;
+        public readonly CancellationTokenSource Cancel;
 
         #region Титул окна
 
@@ -17,7 +18,6 @@ namespace Utilities.WPF.Notifications
         public string Title { get => _Title; set => Set(ref _Title, value); }
 
         #endregion
-
 
         #region Message : string - Текст сообщения
 
@@ -29,7 +29,7 @@ namespace Utilities.WPF.Notifications
 
         #endregion
 
-        #region Progress : double - Прогресс задачи
+        #region process : double - Прогресс задачи
 
         /// <summary>Прогресс задачи</summary>
         private double _process;
@@ -49,64 +49,6 @@ namespace Utilities.WPF.Notifications
 
         #endregion
 
-        /// <summary>
-        /// Содержимое левой кнопки
-        /// </summary>
-        public object RightButtonContent { get; set; } = "Cancel";
-
-        #region ProgressBar : IProgress<(int, string)> - Прогресс
-
-        /// <summary>Прогресс</summary>
-        private IProgress<T> _progress;
-
-        /// <summary>Прогресс</summary>
-        private IProgress<T> progress
-        {
-            get => _progress;
-            set => Set(ref _progress, value);
-        }
-
-        #endregion
-
-
-        //public NotificationProgressViewModel(T Progress)
-        //{
-        //    switch (Progress)
-        //    {
-        //        case IProgress<(double, string, string)> _:
-        //            progress = new Progress<T>(OnProgressDblStrStr);
-        //            break;
-        //        case IProgress<(double, string)> _:
-        //            progress = new Progress<T>(OnProgressDblStr);
-        //            break;
-        //        case IProgress<double> _:
-        //            progress = new Progress<T>(OnProgressDbl);
-        //            break;
-        //    }
-        //}
-
-        //private void OnProgressDblStrStr(T ProgressInfo)
-        //{
-        //    (process, Message, Title) = ProgressInfo as IProgress<(double, string, string)>;
-        //}
-
-        //void OnProgressDblStrStr((double percent, string msg, string title) ProgressInfo) =>
-        //    (process, Message, Title) = ProgressInfo;
-
-        //void OnProgressDblStr((double percent, string msg) ProgressInfo)
-        //{
-        //    (process, Message) = ProgressInfo;
-        //}
-
-        //void OnProgressDbl(double ProgressInfo) =>
-        //    process = ProgressInfo;
-
-        public NotificationProgressViewModel(CancellationTokenSource cancel, IProgress<T> progress)
-        {
-            _cancel = cancel;
-            this.progress= progress;
-        }
-
         #region Close : bool - статус окна
 
         /// <summary>статус окна</summary>
@@ -118,6 +60,58 @@ namespace Utilities.WPF.Notifications
         #endregion
         public void Close() => State = true;
 
-        public async void Cancel() => _cancel.Cancel();
+        #region ProgressBar : IProgress<(double, string, string,bool)> - Прогресс
+
+        /// <summary>Прогресс</summary>
+        private IProgress<(int, string, string, bool?)> _progress;
+
+        /// <summary>Прогресс</summary>
+        public IProgress<(int, string, string, bool?)> progress
+        {
+            get => _progress;
+            set => Set(ref _progress, value);
+        }
+
+        #endregion
+
+        #region ShowCancelButton : bool - видимость кнопки отмены
+
+        /// <summary>видимость кнопки отмены</summary>
+        private bool _ShowCancelButton;
+
+        /// <summary>видимость кнопки отмены</summary>
+        public bool ShowCancelButton { get => _ShowCancelButton; set => Set(ref _ShowCancelButton, value); }
+
+        #endregion
+        
+        /// <summary>
+        /// Содержимое левой кнопки
+        /// </summary>
+        public object RightButtonContent { get; set; } = "Cancel";
+
+        #region ProgressName : string - Имя прогресса для идентификации
+
+        /// <summary>Имя прогресса для идентификации</summary>
+        public readonly string ProgressName;
+
+        #endregion
+        public NotificationProgressViewModel(string progressName,CancellationTokenSource cancel, bool showCancelButton)
+        {
+            ProgressName = progressName;
+            Cancel = cancel;
+            progress= new Progress<(int, string, string, bool?)>(OnProgress);
+            ShowCancelButton = showCancelButton;
+        }
+
+        void OnProgress((int percent, string msg, string title, bool? showCancel) ProgressInfo)
+        {
+            process = (double)ProgressInfo.percent;
+            Message = ProgressInfo.msg;
+            if (ProgressInfo.title != null) Title = ProgressInfo.title;
+            if(ProgressInfo.showCancel != null)
+                ShowCancelButton = (bool) ProgressInfo.showCancel;
+        }
+
+        public void CancelProgress(object Sender, RoutedEventArgs E) => Cancel.Cancel();
     }
 }

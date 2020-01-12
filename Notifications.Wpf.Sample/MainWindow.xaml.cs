@@ -69,12 +69,12 @@ namespace Notifications.Wpf.Sample
         {
             var cancelTokenSource = new CancellationTokenSource();
             var cancel = cancelTokenSource.Token;
-            IProgress<(int, string)> progress = new Progress<(int percent, string msg)>(OnProgress);
+            var progressName = "progress";
+            _notificationManager.ShowProgressBar("progress","Прогресс бар", true,true);
+            var progress = _notificationManager.GetProgressWind(progressName);
+            if (progress is null)
+                MessageBox.Show("not finde progress");
 
-            void OnProgress((int percent, string msg) ProgressInfo) =>
-                (ProgressInfo.percent, ProgressInfo.msg) = ProgressInfo;
-
-            _notificationManager.Show(cancelTokenSource, cancel, progress,"Прогресс бар", true,true);
             try
             {
                 await CalcAsync(progress, cancel);
@@ -95,13 +95,13 @@ namespace Notifications.Wpf.Sample
             //});
         }
 
-        public Task CalcAsync(IProgress<(int, string)> progress, CancellationToken cancel) =>
+        public Task CalcAsync(IProgress<(int, string,string,bool?)> progress, CancellationToken cancel) =>
             Task.Run(async () =>
             {
                 for (var i = 0; i <= 100; i++)
                 {
                     cancel.ThrowIfCancellationRequested();
-                    progress.Report((i, $"Процесс {i}"));
+                    progress.Report((i, $"Процесс {i}",null, null));
                     await Task.Delay(TimeSpan.FromSeconds(0.1), cancel);
                 }
             }, cancel);

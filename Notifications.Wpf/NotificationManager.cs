@@ -15,6 +15,14 @@ namespace Notifications.Wpf
         private static readonly List<NotificationArea> Areas = new List<NotificationArea>();
         private static NotificationsOverlayWindow _window;
 
+        public IProgress<(int, string, string, bool?)> GetProgressWind(string name)
+        {
+            foreach (var area in Areas)
+                if (area.ProgressWind.ContainsKey(name)) return area.ProgressWind.FirstOrDefault(p => p.Key == name).Value;
+
+            return null;
+        }
+
         public NotificationManager(Dispatcher dispatcher = null)
         {
             if (dispatcher == null)
@@ -57,6 +65,7 @@ namespace Notifications.Wpf
                 area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
             }
         }
+
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null)
         {
@@ -98,34 +107,28 @@ namespace Notifications.Wpf
 
 
         /// <summary>
-        /// Show Progress Bar
+        /// Show ProgressBar
         /// </summary>
-        /// <typeparam name="T">Type of progress</typeparam>
-        /// <param name="cancelTokenSource">cancelTokenSource</param>
-        /// <param name="cancel">CancellationToken</param>
-        /// <param name="progress">IProgress</param>
+        /// <param name="ProgressName">Need to identification</param>
         /// <param name="Title">Title of window</param>
         /// <param name="ShowProgress">Show or not progress status</param>
         /// <param name="ShowCancelButton">Show Cancel button or not</param>
         /// <param name="areaName">window are where show notification</param>
-        public void Show<T>(CancellationTokenSource cancelTokenSource, CancellationToken cancel, IProgress<T> progress, string Title = null,
+        public void ShowProgressBar(string ProgressName, string Title = null,
             bool ShowCancelButton = true,  bool ShowProgress = false, string areaName = "")
         {
-            if(cancelTokenSource is null)throw new ArgumentNullException(nameof(cancelTokenSource));
-            if(cancel == default)throw new ArgumentNullException(nameof(cancel));
-            if(progress is null)throw new ArgumentNullException(nameof(progress));
-
-            var model = /*ShowCancelButton ? */new NotificationProgressViewModel<T>(cancelTokenSource, progress) /*: new NotificationProgressViewModel<T>(progress)*/;
+            var cancelTokenSource = new CancellationTokenSource();
+            var model = new NotificationProgressViewModel(ProgressName, cancelTokenSource, ShowCancelButton);
 
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (ShowProgress) model.IsIndeterminate = false;
             else model.IsIndeterminate = true;
             if (Title != null) model.Title = Title;
-            cancel.ThrowIfCancellationRequested();
+            cancelTokenSource.Token.ThrowIfCancellationRequested();
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(cancelTokenSource, cancel, progress, Title, ShowCancelButton, ShowProgress, areaName)));
+                    new Action(() => ShowProgressBar(ProgressName, Title, ShowCancelButton, ShowProgress, areaName)));
                 return;
             }
 
@@ -146,7 +149,7 @@ namespace Notifications.Wpf
 
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
-                area.Show(model, cancelTokenSource, cancel, progress);
+                area.Show(model);
             }
         }
 

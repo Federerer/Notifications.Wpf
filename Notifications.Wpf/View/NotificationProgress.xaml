@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Notifications.Wpf.View"
              xmlns:controls="clr-namespace:Notifications.Wpf.Controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:converters="clr-namespace:Notifications.Wpf.Converters"
              mc:Ignorable="d" 
              Foreground="White"
              d:DesignHeight="120" d:DesignWidth="300"
@@ -53,12 +54,14 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Margin="5" Name="Title" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
-                <ProgressBar Grid.Row="1" Margin="5" Name="ProgressBar1" Height="20" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
-                             Value="{Binding Progress}" IsIndeterminate="{Binding IsIndeterminate}"/>
-                <TextBlock Grid.Row="2" Height="20" Margin="5" Name="Message" Text="{Binding Message}" TextWrapping="Wrap" Opacity=".8"/>
+                <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+                <ProgressBar Grid.Row="1" Margin="5" Height="20" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
+                             Value="{Binding process}" IsIndeterminate="{Binding IsIndeterminate}"/>
+                <TextBlock Grid.Row="2" Height="20" Margin="5" Text="{Binding Message}" TextWrapping="Wrap" Opacity=".8"/>
 
-                <Button Grid.Row="3" x:Name="Cancel" Width="100" HorizontalAlignment="Right" Content="{Binding RightButtonContent}" DockPanel.Dock="Right" Margin="0,0,5,0" controls:Notification.CloseOnClick="True"/>
+                <Button Grid.Row="3" x:Name="Cancel" Width="100" HorizontalAlignment="Right" Content="{Binding RightButtonContent}"
+                        DockPanel.Dock="Right" Margin="0,0,5,0" controls:Notification.CloseOnClick="True"
+                        Visibility="{Binding ShowCancelButton, Converter={converters:BoolToVisibility Collapse=True}}"/>
             </Grid>
         </Grid>
     </Border>
