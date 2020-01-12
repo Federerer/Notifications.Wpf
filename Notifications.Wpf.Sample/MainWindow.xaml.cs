@@ -73,16 +73,13 @@ namespace Notifications.Wpf.Sample
             _notificationManager.ShowProgressBar(out var progress, out var Cancel, title, true, true);
             _notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, true, false);
             using (progress)
-            using (progress2)
                 try
                 {
                     await CalcAsync(progress, Cancel).ConfigureAwait(false);
-                    await CalcAsync(progress2, Cancel2).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
                     _notificationManager.Show("Операция отменена", "", TimeSpan.FromSeconds(3));
-                    var p = new Progress<int>();
                 }
         }
 
@@ -97,5 +94,19 @@ namespace Notifications.Wpf.Sample
                 }
             }, cancel);
 
+        private void Message_button(object sender, RoutedEventArgs e)
+        {
+            _notificationManager.ShowAction("2 button","This is 2 button on form","",TimeSpan.MaxValue,
+                (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),"Left Button",
+                (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), "Right Button"); 
+            
+            _notificationManager.ShowAction("2 button","This is 2 button on form","",TimeSpan.MaxValue,
+                (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),null,
+                (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), null);
+
+            _notificationManager.ShowAction("1 right button","This is 2 button on form","",TimeSpan.MaxValue,
+                (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)));
+
+        }
     }
 }

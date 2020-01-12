@@ -13,7 +13,7 @@ namespace Utilities.WPF.Notifications
         /// <summary>
         /// Содержимое левой кнопки
         /// </summary>
-        public object LeftButtonContent { get; set; } = "Cancel";
+        public object LeftButtonContent { get; set; }
 
         public bool LeftButtonVisibility { get; set; }
         public bool RightButtonVisibility { get; set; }
@@ -21,7 +21,7 @@ namespace Utilities.WPF.Notifications
         /// <summary>
         /// Содержимое правой кнопки
         /// </summary>
-        public object RightButtonContent { get; set; } = "Ok";
+        public object RightButtonContent { get; set; }
 
         public NotificationViewModel()
         {}

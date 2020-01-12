@@ -96,7 +96,56 @@ namespace Notifications.Wpf
             {
                 area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
             }
+        } 
+        public void ShowAction(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null, string LeftButtonText = null,
+            RoutedEventHandler RightButton = null, string RightButtonText = null)
+        {
+            var content = new NotificationViewModel();
+            if (message != null)
+                content.Message = message;
+            if (title != null) content.Title = title;
+            if (LeftButton != null)
+            {
+                content.LeftButtonContent = LeftButtonText ?? "Ok";
+
+                content.LeftButtonVisibility = true;
+            } 
+            if (RightButton != null)
+            {
+                content.RightButtonContent = RightButtonText ?? "Cancel";
+                content.RightButtonVisibility = true;
+            }
+
+            if (!_dispatcher.CheckAccess())
+            {
+                _dispatcher.BeginInvoke(
+                    new Action(() => ShowAction(title, message, areaName, expirationTime, LeftButton, LeftButtonText, RightButton, RightButtonText)));
+                return;
+            }
+
+            if (expirationTime == null) expirationTime = TimeSpan.FromSeconds(5);
+
+            if (areaName == string.Empty && _window == null)
+            {
+                var workArea = SystemParameters.WorkArea;
+
+                _window = new NotificationsOverlayWindow
+                {
+                    Left = workArea.Left,
+                    Top = workArea.Top,
+                    Width = workArea.Width,
+                    Height = workArea.Height
+                };
+
+                _window.Show();
+            }
+
+            foreach (var area in Areas.Where(a => a.Name == areaName))
+            {
+                area.ShowAction(content, (TimeSpan) expirationTime, LeftButton, RightButton);
+            }
         }
+        
 
 
         /// <summary>

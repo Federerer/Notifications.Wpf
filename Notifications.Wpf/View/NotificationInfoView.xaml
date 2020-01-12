@@ -47,10 +47,10 @@
             <DockPanel Grid.Column="1">
                 <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
                 <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="0,8,0,0">
-                    <Button x:Name="Ok" Content="{Binding LeftButtonContent}" DockPanel.Dock="Right" controls:Notification.CloseOnClick="True"
-                            Visibility="{Binding LeftButtonVisibility, Converter={converters:BoolToVisibility Collapse=True}}"/>
-                    <Button x:Name="Cancel" Content="{Binding RightButtonContent}" DockPanel.Dock="Right" Margin="0,0,8,0" controls:Notification.CloseOnClick="True"
+                    <Button x:Name="Ok" Content="{Binding RightButtonContent}" DockPanel.Dock="Right" controls:Notification.CloseOnClick="True"
                             Visibility="{Binding RightButtonVisibility, Converter={converters:BoolToVisibility Collapse=True}}"/>
+                    <Button x:Name="Cancel" Content="{Binding LeftButtonContent}" DockPanel.Dock="Right" Margin="0,0,8,0" controls:Notification.CloseOnClick="True"
+                            Visibility="{Binding LeftButtonVisibility, Converter={converters:BoolToVisibility Collapse=True}}"/>
                 </DockPanel>
                 <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Opacity=".8" Margin="0,8,0,0"/>
             </DockPanel>

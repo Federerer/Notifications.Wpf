@@ -123,6 +123,61 @@ namespace Notifications.Wpf.Controls
             });
 #endif
         }
+#if NET40
+        public void ShowAction(object content, TimeSpan expirationTime, Action LeftButton, Action RightButton)
+#else
+        public async void ShowAction(object model, TimeSpan expirationTime, RoutedEventHandler LeftButton = null, RoutedEventHandler RightButton = null)
+#endif
+        {
+
+            var content = new NotificationInfoView {DataContext = model};
+            if(RightButton!=null) content.Ok.Click += RightButton;
+            if(LeftButton!=null) content.Cancel.Click += LeftButton;
+
+            var notification = new Notification
+            {
+                Content = content
+            };
+            
+            notification.NotificationClosed += OnNotificationClosed;
+
+            if (!IsLoaded)
+            {
+                return;
+            }
+
+            var w = Window.GetWindow(this);
+            var x = PresentationSource.FromVisual(w);
+            if (x == null)
+            {
+                return;
+            }
+
+            lock (_items)
+            {
+                _items.Add(notification);
+
+                if (_items.OfType<Notification>().Count(i => !i.IsClosing) > MaxItems)
+                {
+                    _items.OfType<Notification>().First(i => !i.IsClosing).Close();
+                }
+            }
+
+#if NET40 
+            DelayExecute(expirationTime, () =>
+            {
+#else
+            if (expirationTime == TimeSpan.MaxValue)
+            {
+                return;
+            }
+            await Task.Delay(expirationTime);
+#endif
+                notification.Close();
+#if NET40
+            });
+#endif
+        }
 
         public async void Show(NotificationProgressViewModel model)
         {
