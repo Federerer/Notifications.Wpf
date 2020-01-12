@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using Notifications.Wpf.Classes;
 using Notifications.Wpf.Controls;
 using Utilities.WPF.Notifications;
 
@@ -14,14 +15,6 @@ namespace Notifications.Wpf
         private readonly Dispatcher _dispatcher;
         private static readonly List<NotificationArea> Areas = new List<NotificationArea>();
         private static NotificationsOverlayWindow _window;
-
-        public IProgress<(int, string, string, bool?)> GetProgressWind(string name)
-        {
-            foreach (var area in Areas)
-                if (area.ProgressWind.ContainsKey(name)) return area.ProgressWind.FirstOrDefault(p => p.Key == name).Value;
-
-            return null;
-        }
 
         public NotificationManager(Dispatcher dispatcher = null)
         {
@@ -109,26 +102,26 @@ namespace Notifications.Wpf
         /// <summary>
         /// Show ProgressBar
         /// </summary>
-        /// <param name="ProgressName">Need to identification</param>
         /// <param name="Title">Title of window</param>
         /// <param name="ShowProgress">Show or not progress status</param>
+        /// <param name="progress">Progress</param>
+        /// <param name="Cancel">CancellationTokenSource, if it null - ShowCancelButton will state false</param>
         /// <param name="ShowCancelButton">Show Cancel button or not</param>
         /// <param name="areaName">window are where show notification</param>
-        public void ShowProgressBar(string ProgressName, string Title = null,
-            bool ShowCancelButton = true,  bool ShowProgress = false, string areaName = "")
+        public void ShowProgressBar(out ProgressFinaly<(int,string,string,bool?)> progress, out CancellationToken Cancel, string Title = null,
+            bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "")
         {
-            var cancelTokenSource = new CancellationTokenSource();
-            var model = new NotificationProgressViewModel(ProgressName, cancelTokenSource, ShowCancelButton);
-
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            if (ShowProgress) model.IsIndeterminate = false;
-            else model.IsIndeterminate = true;
+            var CancelSource = new CancellationTokenSource();
+            Cancel = CancelSource.Token;
+            var model = new NotificationProgressViewModel(out var progressModel, CancelSource, ShowCancelButton, ShowProgress);
+            progress = progressModel;
             if (Title != null) model.Title = Title;
-            cancelTokenSource.Token.ThrowIfCancellationRequested();
+            Cancel.ThrowIfCancellationRequested();
+
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => ShowProgressBar(ProgressName, Title, ShowCancelButton, ShowProgress, areaName)));
+                    new Action(() => ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName)));
                 return;
             }
 

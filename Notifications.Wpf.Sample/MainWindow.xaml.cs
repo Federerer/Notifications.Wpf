@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Notifications.Wpf.Classes;
 using Notifications.Wpf.View;
 using Utilities.WPF.Notifications;
 using Timer = System.Timers.Timer;
@@ -67,32 +68,22 @@ namespace Notifications.Wpf.Sample
         }
         private async void Progress_Click(object sender, RoutedEventArgs e)
         {
-            var cancelTokenSource = new CancellationTokenSource();
-            var cancel = cancelTokenSource.Token;
-            var progressName = "progress";
-            _notificationManager.ShowProgressBar("progress","Прогресс бар", true,true);
-            var progress = _notificationManager.GetProgressWind(progressName);
-            if (progress is null)
-                MessageBox.Show("not finde progress");
+            var title = "Прогресс бар";
 
-            try
-            {
-                await CalcAsync(progress, cancel);
-            }
-            catch (OperationCanceledException)
-            {
-                _notificationManager.Show("Операция отменена", "", TimeSpan.FromSeconds(3));
-                cancelTokenSource.Dispose();
-            }
-
-
-            //var win_view = new NotificationProgress { DataContext = model };
-            //if (cancelTokenSource != null) win_view.Cancel.Click += (Sender, Args) => cancelTokenSource.Cancel();
-            //else win_view.Cancel.Visibility = Visibility.Collapsed;
-            //__NotificationManager.Show(win_view, expirationTime: TimeSpan.FromMilliseconds(int.MaxValue), onClose: () =>
-            //{
-            //    if (cancelTokenSource != null && !cancelTokenSource.IsCancellationRequested) cancelTokenSource.Cancel();
-            //});
+            _notificationManager.ShowProgressBar(out var progress, out var Cancel, title, true, true);
+            _notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, true, false);
+            using (progress)
+            using (progress2)
+                try
+                {
+                    await CalcAsync(progress, Cancel).ConfigureAwait(false);
+                    await CalcAsync(progress2, Cancel2).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    _notificationManager.Show("Операция отменена", "", TimeSpan.FromSeconds(3));
+                    var p = new Progress<int>();
+                }
         }
 
         public Task CalcAsync(IProgress<(int, string,string,bool?)> progress, CancellationToken cancel) =>

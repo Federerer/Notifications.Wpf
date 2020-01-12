@@ -7,6 +7,7 @@
              xmlns:controls="clr-namespace:Notifications.Wpf.Controls"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:converters="clr-namespace:Notifications.Wpf.Converters"
+             xmlns:wpf="clr-namespace:Notifications.Wpf"
              mc:Ignorable="d" 
              Foreground="White"
              d:DesignHeight="120" d:DesignWidth="300"
@@ -56,7 +57,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
                 <ProgressBar Grid.Row="1" Margin="5" Height="20" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
-                             Value="{Binding process}" IsIndeterminate="{Binding IsIndeterminate}"/>
+                             Value="{Binding process}" IsIndeterminate="{Binding ShowProgress, Converter={wpf:BoolInverse}}"/>
                 <TextBlock Grid.Row="2" Height="20" Margin="5" Text="{Binding Message}" TextWrapping="Wrap" Opacity=".8"/>
 
                 <Button Grid.Row="3" x:Name="Cancel" Width="100" HorizontalAlignment="Right" Content="{Binding RightButtonContent}"

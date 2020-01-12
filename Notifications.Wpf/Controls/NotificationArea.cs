@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Notifications.Wpf.Classes;
 using Notifications.Wpf.View;
 using Utilities.WPF.Notifications;
 
@@ -15,9 +16,6 @@ namespace Notifications.Wpf.Controls
 {
     public class NotificationArea : Control
     {
-        public Dictionary<string, IProgress<(int, string, string, bool?)>> ProgressWind = new Dictionary<string, IProgress<(int, string, string, bool?)>>();
-
-
 
         public NotificationPosition Position
         {
@@ -128,8 +126,6 @@ namespace Notifications.Wpf.Controls
 
         public async void Show(NotificationProgressViewModel model)
         {
-            if(ProgressWind.ContainsKey(model.ProgressName)) throw new ArgumentException("Areas contains this window, change name");
-            ProgressWind.Add(model.ProgressName, model.progress);
             var content = new NotificationProgress { DataContext = model };
             content.Cancel.Click += model.CancelProgress;
             var notification = new Notification
@@ -163,8 +159,7 @@ namespace Notifications.Wpf.Controls
 
             try
             {
-
-                while(model.Cancel.Token.IsCancellationRequested != true)
+                while (model.progress.IsFinished != true)
                 {
                     model.Cancel.Token.ThrowIfCancellationRequested();
                     await Task.Delay(TimeSpan.FromSeconds(1), model.Cancel.Token);
@@ -173,8 +168,8 @@ namespace Notifications.Wpf.Controls
             catch (OperationCanceledException)
             {
                 notification.Close();
-                ProgressWind.Remove(model.ProgressName);
             }
+            notification.Close();
         }
 
         private void OnNotificationClosed(object sender, RoutedEventArgs routedEventArgs)

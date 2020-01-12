@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
 using Caliburn.Micro;
+using Notifications.Wpf.Classes;
 
 // ReSharper disable once CheckNamespace
 namespace Utilities.WPF.Notifications
@@ -42,31 +43,20 @@ namespace Utilities.WPF.Notifications
         #region IsIndeterminate : bool - Состояние прогресс бара - бегунок или прогресс
 
         /// <summary>Состояние прогресс бара - бегунок или прогресс</summary>
-        private bool _IsIndeterminate;
+        private bool _ShowProgress;
 
         /// <summary>Состояние прогресс бара - бегунок или прогресс</summary>
-        public bool IsIndeterminate { get => _IsIndeterminate; set => Set(ref _IsIndeterminate, value); }
+        public bool ShowProgress { get => _ShowProgress; set => Set(ref _ShowProgress, value); }
 
         #endregion
-
-        #region Close : bool - статус окна
-
-        /// <summary>статус окна</summary>
-        private bool _State;
-
-        /// <summary>статус окна</summary>
-        private bool State { get => _State; set => Set(ref _State, value); }
-
-        #endregion
-        public void Close() => State = true;
 
         #region ProgressBar : IProgress<(double, string, string,bool)> - Прогресс
 
         /// <summary>Прогресс</summary>
-        private IProgress<(int, string, string, bool?)> _progress;
+        private ProgressFinaly<(int, string, string, bool?)> _progress;
 
         /// <summary>Прогресс</summary>
-        public IProgress<(int, string, string, bool?)> progress
+        public ProgressFinaly<(int, string, string, bool?)> progress
         {
             get => _progress;
             set => Set(ref _progress, value);
@@ -89,17 +79,11 @@ namespace Utilities.WPF.Notifications
         /// </summary>
         public object RightButtonContent { get; set; } = "Cancel";
 
-        #region ProgressName : string - Имя прогресса для идентификации
-
-        /// <summary>Имя прогресса для идентификации</summary>
-        public readonly string ProgressName;
-
-        #endregion
-        public NotificationProgressViewModel(string progressName,CancellationTokenSource cancel, bool showCancelButton)
+        public NotificationProgressViewModel(out ProgressFinaly<(int, string, string, bool?)> progresModel, CancellationTokenSource cancel, bool showCancelButton, bool showProgress)
         {
-            ProgressName = progressName;
+            ShowProgress = showProgress;
             Cancel = cancel;
-            progress= new Progress<(int, string, string, bool?)>(OnProgress);
+            progress = progresModel = new ProgressFinaly<(int, string, string, bool?)>(OnProgress);
             ShowCancelButton = showCancelButton;
         }
 

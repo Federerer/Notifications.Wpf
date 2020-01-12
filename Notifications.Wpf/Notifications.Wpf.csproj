@@ -66,11 +66,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ProgressFinaly.cs" />
     <Compile Include="Controls\Notification.cs" />
     <Compile Include="Controls\NotificationArea.cs" />
     <Compile Include="Controls\ReversibleStackPanel.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="INotificationManager.cs" />
+    <Compile Include="Converters\BoolInverse.cs" />
     <Compile Include="NotificationContent.cs" />
     <Compile Include="NotificationManager.cs" />
     <Compile Include="NotificationTemplateSelector.cs" />
