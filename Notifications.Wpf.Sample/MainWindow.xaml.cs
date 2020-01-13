@@ -127,24 +127,20 @@ namespace Notifications.Wpf.Sample
             var row2 = new RowDefinition();
             var row3 = new RowDefinition();
 
-            //row1.Height = new GridLength(40);
-            //row2.Height = new GridLength(300);
-            //row3.Height = new GridLength(40);
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
 
-            //grid.RowDefinitions.Add(row1);
-            //grid.RowDefinitions.Add(row2);
-            //grid.RowDefinitions.Add(row3);
 
             grid.HorizontalAlignment = HorizontalAlignment.Center;
             grid.Children.Add(text_block);
             grid.Children.Add(text);
             grid.Children.Add(panelBTN);
+
             Grid.SetRow(panelBTN, 1);
             Grid.SetRow(text_block, 0);
             Grid.SetRow(text, 2);
+
             object content = grid;
 
             _notificationManager.Show(content,null,TimeSpan.MaxValue);
