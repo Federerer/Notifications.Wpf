@@ -124,9 +124,9 @@ namespace Notifications.Wpf.Controls
 #endif
         }
 #if NET40
-        public void ShowAction(object content, TimeSpan expirationTime, Action LeftButton, Action RightButton)
+        public void ShowAction(object content, TimeSpan expirationTime, RoutedEventHandler LeftButton, RoutedEventHandler RightButton)
 #else
-        public async void ShowAction(object model, TimeSpan expirationTime, RoutedEventHandler LeftButton = null, RoutedEventHandler RightButton = null)
+        public async void Show(object model, TimeSpan expirationTime, RoutedEventHandler LeftButton = null, RoutedEventHandler RightButton = null)
 #endif
         {
 

@@ -29,6 +29,7 @@ namespace Notifications.Wpf
         public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null)
         {
+            if (areaName == null) areaName = "";
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
@@ -97,7 +98,7 @@ namespace Notifications.Wpf
                 area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
             }
         } 
-        public void ShowAction(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null, string LeftButtonText = null,
+        public void Show(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null, string LeftButtonText = null,
             RoutedEventHandler RightButton = null, string RightButtonText = null)
         {
             var content = new NotificationViewModel();
@@ -119,7 +120,7 @@ namespace Notifications.Wpf
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => ShowAction(title, message, areaName, expirationTime, LeftButton, LeftButtonText, RightButton, RightButtonText)));
+                    new Action(() => Show(title, message, areaName, expirationTime, LeftButton, LeftButtonText, RightButton, RightButtonText)));
                 return;
             }
 
@@ -142,7 +143,7 @@ namespace Notifications.Wpf
 
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
-                area.ShowAction(content, (TimeSpan) expirationTime, LeftButton, RightButton);
+                area.Show(content, (TimeSpan) expirationTime, LeftButton, RightButton);
             }
         }
         

@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Notifications.Wpf.Classes;
 using Notifications.Wpf.View;
 using Utilities.WPF.Notifications;
@@ -60,7 +62,7 @@ namespace Notifications.Wpf.Sample
 
             var title = "Sample notification";
             var Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-            var type = (NotificationType) _random.Next(0, 5);
+            var type = NotificationType.Notification;
 
             _notificationManager.Show(title, Message, type, "WindowArea", onClick: () => _notificationManager.Show(clickContent));
             _notificationManager.Show(title, Message, type, "", onClick: () => _notificationManager.Show(clickContent));
@@ -96,16 +98,56 @@ namespace Notifications.Wpf.Sample
 
         private void Message_button(object sender, RoutedEventArgs e)
         {
-            _notificationManager.ShowAction("2 button","This is 2 button on form","",TimeSpan.MaxValue,
+            _notificationManager.Show("2 button","This is 2 button on form","",TimeSpan.MaxValue,
                 (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),"Left Button",
                 (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), "Right Button"); 
             
-            _notificationManager.ShowAction("2 button","This is 2 button on form","",TimeSpan.MaxValue,
+            _notificationManager.Show("2 button", "This is 2 button on form with standard name", "",TimeSpan.MaxValue,
                 (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),null,
                 (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), null);
 
-            _notificationManager.ShowAction("1 right button","This is 2 button on form","",TimeSpan.MaxValue,
+            _notificationManager.Show("1 right button","This is 1 button on form with standard name","",TimeSpan.MaxValue,
                 (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)));
+
+        }
+
+        private void Show_Any_content(object sender, RoutedEventArgs e)
+        {
+            var grid = new Grid();
+            var text_block = new TextBlock { Text = "Some Text", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center };
+
+
+            var panelBTN = new StackPanel { Height = 100, Margin = new Thickness(0, 40, 0, 0) };
+            var btn1 = new Button { Width = 200, Height = 40, Content = "Cancel" };
+            var text = new TextBlock {Foreground = Brushes.White, Text = "Hello, world", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center};
+            panelBTN.VerticalAlignment = VerticalAlignment.Bottom;
+            panelBTN.Children.Add(btn1);
+
+            var row1 = new RowDefinition();
+            var row2 = new RowDefinition();
+            var row3 = new RowDefinition();
+
+            //row1.Height = new GridLength(40);
+            //row2.Height = new GridLength(300);
+            //row3.Height = new GridLength(40);
+            grid.RowDefinitions.Add(new RowDefinition());
+            grid.RowDefinitions.Add(new RowDefinition());
+            grid.RowDefinitions.Add(new RowDefinition());
+
+            //grid.RowDefinitions.Add(row1);
+            //grid.RowDefinitions.Add(row2);
+            //grid.RowDefinitions.Add(row3);
+
+            grid.HorizontalAlignment = HorizontalAlignment.Center;
+            grid.Children.Add(text_block);
+            grid.Children.Add(text);
+            grid.Children.Add(panelBTN);
+            Grid.SetRow(panelBTN, 1);
+            Grid.SetRow(text_block, 0);
+            Grid.SetRow(text, 2);
+            object content = grid;
+
+            _notificationManager.Show(content,null,TimeSpan.MaxValue);
 
         }
     }

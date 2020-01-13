@@ -15,6 +15,7 @@
             <Button Content="Show Progress" Click="Progress_Click" />
             <Button Content="Show Info" Click="Message_Click" />
             <Button Content="Show with button" Click="Message_button" />
+            <Button Content="Show content" Click="Show_Any_content" />
         </UniformGrid>
         <controls:NotificationArea x:Name="WindowArea" Position="TopLeft" MaxItems="3"/>
     </DockPanel>
