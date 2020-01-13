@@ -70,7 +70,7 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
 notificationManager.Show("String notification", onClick: () => Console.WriteLine("Click"),
                onClose: () => Console.WriteLine("Closed!"));
 ```
-### Notifi with button:
+#### Notifi with button:
 ```C#
 notificationManager.ShowAction("2 button","This is 2 button on form","",TimeSpan.MaxValue,
      (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),"Left Button",
@@ -83,6 +83,43 @@ notificationManager.ShowAction("2 button","This is 2 button on form","",TimeSpan
 notificationManager.ShowAction("1 right button","This is 2 button on form","",TimeSpan.MaxValue,
      (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)));
 ```
+
+#### Show any content
+```C#
+var grid = new Grid();
+var text_block = new TextBlock { Text = "Some Text", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center };
+
+
+var panelBTN = new StackPanel { Height = 100, Margin = new Thickness(0, 40, 0, 0) };
+var btn1 = new Button { Width = 200, Height = 40, Content = "Cancel" };
+var text = new TextBlock {Foreground = Brushes.White, Text = "Hello, world", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center};
+panelBTN.VerticalAlignment = VerticalAlignment.Bottom;
+panelBTN.Children.Add(btn1);
+
+var row1 = new RowDefinition();
+var row2 = new RowDefinition();
+var row3 = new RowDefinition();
+
+grid.RowDefinitions.Add(new RowDefinition());
+grid.RowDefinitions.Add(new RowDefinition());
+grid.RowDefinitions.Add(new RowDefinition());
+
+
+grid.HorizontalAlignment = HorizontalAlignment.Center;
+grid.Children.Add(text_block);
+grid.Children.Add(text);
+grid.Children.Add(panelBTN);
+
+Grid.SetRow(panelBTN, 1);
+Grid.SetRow(text_block, 0);
+Grid.SetRow(text, 2);
+
+object content = grid;
+
+notificationManager.Show(content,null,TimeSpan.MaxValue);
+```
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/any_content.png)
+
 - Result:
 
 ![Demo](http://i.imgur.com/G1ZU2ID.gif)
