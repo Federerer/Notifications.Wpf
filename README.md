@@ -58,7 +58,7 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
                     _notificationManager.Show("Операция отменена", "", TimeSpan.FromSeconds(3));
                 }
                 
-     public Task CalcAsync(IProgress<(int, string,string,bool?)> progress, CancellationToken cancel) =>
+     public Task SomeMetod(IProgress<(int, string,string,bool?)> progress, CancellationToken cancel) =>
             Task.Run(async () =>
             {
                 for (var i = 0; i <= 100; i++)
