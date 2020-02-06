@@ -76,15 +76,15 @@ notificationManager.Show("String notification", onClick: () => Console.WriteLine
 ```
 #### Notifi with button:
 ```C#
-notificationManager.ShowAction("2 button","This is 2 button on form","",TimeSpan.MaxValue,
+notificationManager.Show("2 button","This is 2 button on form","",TimeSpan.MaxValue,
      (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),"Left Button",
      (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), "Right Button"); 
 
-notificationManager.ShowAction("2 button","This is 2 button on form","",TimeSpan.MaxValue,
+notificationManager.Show("2 button","This is 2 button on form","",TimeSpan.MaxValue,
      (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),null,
      (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), null);
 
-notificationManager.ShowAction("1 right button","This is 2 button on form","",TimeSpan.MaxValue,
+notificationManager.Show("1 right button","This is 2 button on form","",TimeSpan.MaxValue,
      (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)));
 ```
 
