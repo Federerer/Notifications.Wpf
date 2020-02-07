@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Notifications.Wpf.Sample")]
+[assembly: AssemblyTitle("Notification.Wpf.Sample")]
 [assembly: AssemblyDescription("Toast notifications for WPF sample project.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Adrian Gaś")]
-[assembly: AssemblyProduct("Notifications.Wpf.Sample")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Notification.Wpf.Sample")]
+[assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

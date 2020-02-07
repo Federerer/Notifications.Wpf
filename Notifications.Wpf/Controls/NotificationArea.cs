@@ -8,11 +8,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
-using Notifications.Wpf.Classes;
-using Notifications.Wpf.View;
+using Notification.Wpf.View;
+using Notification.Wpf.ViewModel;
+using Notification.Wpf.Classes;
 using Utilities.WPF.Notifications;
 
-namespace Notifications.Wpf.Controls
+namespace Notification.Wpf.Controls
 {
     public class NotificationArea : Control
     {

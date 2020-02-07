@@ -6,9 +6,9 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using Notifications.Wpf.Utils;
+using Notification.Wpf.Utils;
 
-namespace Notifications.Wpf.Controls
+namespace Notification.Wpf.Controls
 {
     [TemplatePart(Name = "PART_CloseButton", Type = typeof(Button))]
     public class Notification : ContentControl

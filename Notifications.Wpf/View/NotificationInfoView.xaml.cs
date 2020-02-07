@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Notifications.Wpf.View
+namespace Notification.Wpf.View
 {
     /// <summary>
     /// Логика взаимодействия для NotificationInfoView.xaml

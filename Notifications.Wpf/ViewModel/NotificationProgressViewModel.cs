@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
 using Caliburn.Micro;
-using Notifications.Wpf.Classes;
+using Notification.Wpf.Classes;
 
-// ReSharper disable once CheckNamespace
-namespace Utilities.WPF.Notifications
+namespace Notification.Wpf.ViewModel
 {
     [MarkupExtensionReturnType(typeof(NotificationProgressViewModel))]
     public class NotificationProgressViewModel : PropertyChangedBase

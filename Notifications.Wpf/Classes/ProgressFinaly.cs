@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MathCore.Values;
 
-namespace Notifications.Wpf.Classes
+namespace Notification.Wpf.Classes
 {
     public class ProgressFinaly<T> : Progress<T>,IDisposable, IProgress<T>
     {

@@ -4,12 +4,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Notifications.Wpf.Classes;
-using Notifications.Wpf.View;
-using Utilities.WPF.Notifications;
 using Timer = System.Timers.Timer;
 
-namespace Notifications.Wpf.Sample
+namespace Notification.Wpf.Sample
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
