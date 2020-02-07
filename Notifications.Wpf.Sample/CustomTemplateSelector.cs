@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Notifications.Wpf.Sample
+namespace Notification.Wpf.Sample
 {
     class CustomTemplateSelector : NotificationTemplateSelector
     {

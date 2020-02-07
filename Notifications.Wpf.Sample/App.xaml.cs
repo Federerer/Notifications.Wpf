@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Notifications.Wpf.Sample
+namespace Notification.Wpf.Sample
 {
     /// <summary>
     /// Interaction logic for App.xaml

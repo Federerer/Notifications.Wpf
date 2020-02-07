@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Caliburn.Micro;
-using Notifications.Wpf;
+using Notification.Wpf;
 
 // ReSharper disable once CheckNamespace
 namespace Utilities.WPF.Notifications

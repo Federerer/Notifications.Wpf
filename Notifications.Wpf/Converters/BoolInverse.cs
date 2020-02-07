@@ -2,9 +2,9 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
-using Notifications.Wpf.Converters;
+using Notification.Wpf.Converters;
 
-namespace Notifications.Wpf
+namespace Notification.Wpf
 {
     [ValueConversion(typeof(bool), typeof(bool)), MarkupExtensionReturnType(typeof(BoolInverse))]
     public class BoolInverse : ValueConverter

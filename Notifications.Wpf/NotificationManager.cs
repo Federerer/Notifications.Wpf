@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
-using Notifications.Wpf.Classes;
-using Notifications.Wpf.Controls;
+using Notification.Wpf.Classes;
+using Notification.Wpf.Controls;
+using Notification.Wpf.ViewModel;
 using Utilities.WPF.Notifications;
 
-namespace Notifications.Wpf
+namespace Notification.Wpf
 {
     public class NotificationManager : INotificationManager
     {

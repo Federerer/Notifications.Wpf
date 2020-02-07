@@ -7,18 +7,17 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
-using MathCore.Annotations;
 
-namespace Notifications.Wpf.Converters
+namespace Notification.Wpf.Converters
 {
     [MarkupExtensionReturnType(typeof(ValueConverter))]
     public abstract class ValueConverter : MarkupExtension, IValueConverter
     {
         public override object ProvideValue(IServiceProvider sp) => this;
 
-        public abstract object Convert(object v, [NotNull] Type t, object p, [NotNull] CultureInfo c);
+        public abstract object Convert(object v, Type t, object p, CultureInfo c);
 
-        public virtual object ConvertBack(object v, [NotNull] Type t, object p, [NotNull] CultureInfo c) => throw new NotSupportedException();
+        public virtual object ConvertBack(object v, Type t, object p, CultureInfo c) => throw new NotSupportedException();
     }
     [MarkupExtensionReturnType(typeof(BoolToVisibility)), ValueConversion(typeof(bool), typeof(Visibility))]
     public class BoolToVisibility : ValueConverter

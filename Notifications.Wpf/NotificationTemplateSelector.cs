@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Notifications.Wpf
+namespace Notification.Wpf
 {
     public class NotificationTemplateSelector : DataTemplateSelector
     {

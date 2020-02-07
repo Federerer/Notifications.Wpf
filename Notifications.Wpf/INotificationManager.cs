@@ -1,6 +1,6 @@
 using System;
 
-namespace Notifications.Wpf
+namespace Notification.Wpf
 {
     public interface INotificationManager
     {

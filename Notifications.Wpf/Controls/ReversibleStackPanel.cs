@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Notifications.Wpf.Controls
+namespace Notification.Wpf.Controls
 {
     public class ReversibleStackPanel : StackPanel
     {

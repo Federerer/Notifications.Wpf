@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Notifications.Wpf
+namespace Notification.Wpf
 {
     /// <summary>
     /// Interaction logic for ToastWindow.xaml
