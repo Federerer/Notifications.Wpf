@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Notification.Wpf.Classes
 {
-    public class ProgressFinaly<T> : Progress<T>,IDisposable, IProgress<T>
+    public class ProgressFinaly<T> : Progress<T>,IDisposable
     {
         #region IsFinished : bool - progress was finished
 
@@ -21,6 +21,7 @@ namespace Notification.Wpf.Classes
 
         public ProgressFinaly(Action<T> handler) : base(handler) { }
 
+        public void Report(T value) { base.OnReport(value); }
 
         public void Dispose() { _IsFinished = true; }
 

@@ -74,7 +74,28 @@ namespace Notification.Wpf.Sample
             using (progress)
                 try
                 {
-                    await CalcAsync(progress, Cancel).ConfigureAwait(false);
+                    //await CalcAsync(progress, Cancel).ConfigureAwait(false);
+
+                    await Task.Run(async () =>
+                    {
+                        for (var i = 0; i <= 100; i++)
+                        {
+                            Cancel.ThrowIfCancellationRequested();
+                            progress.Report((i, $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
+                                                + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r"
+                                                + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
+                            await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel);
+                        }
+                    }, Cancel).ConfigureAwait(false);
+
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        Cancel.ThrowIfCancellationRequested();
+                        progress.Report((i,null, null, null));
+                        await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel).ConfigureAwait(false);
+                    }
+
+
                 }
                 catch (OperationCanceledException)
                 {
@@ -89,7 +110,7 @@ namespace Notification.Wpf.Sample
                 {
                     cancel.ThrowIfCancellationRequested();
                     progress.Report((i, $"Процесс {i}",null, null));
-                    await Task.Delay(TimeSpan.FromSeconds(0.1), cancel);
+                    await Task.Delay(TimeSpan.FromSeconds(0.01), cancel);
                 }
             }, cancel);
 
