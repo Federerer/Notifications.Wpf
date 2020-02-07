@@ -3,7 +3,7 @@ WPF toast notifications.
 
 ![Demo](http://i.imgur.com/UvYIVFV.gif)
 ### Installation:
-Install-Package Notification.WPF -Version 1.0.1.2
+Install-Package Notification.WPF -Version 1.0.1.3
 
 ### Information
 This project was forked from  https://github.com/Federerer/Notifications.Wpf
@@ -52,6 +52,14 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
                 try
                 {
                     await SomeMetod(progress, Cancel).ConfigureAwait(false);
+                    
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        Cancel.ThrowIfCancellationRequested();
+                    progress.Report((i, $"Процесс {i}",null, null));
+                        await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
+                    }
+
                 }
                 catch (OperationCanceledException)
                 {
@@ -65,7 +73,7 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
                 {
                     cancel.ThrowIfCancellationRequested();
                     progress.Report((i, $"Процесс {i}",null, null));
-                    await Task.Delay(TimeSpan.FromSeconds(0.1), cancel);
+                    await Task.Delay(TimeSpan.FromSeconds(0.05), cancel);
                 }
             }, cancel);            
 ```                
