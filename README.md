@@ -3,7 +3,7 @@ WPF toast notifications.
 
 ![Demo](http://i.imgur.com/UvYIVFV.gif)
 ### Installation:
-Install-Package Notification.WPF -Version 1.0.1.1
+Install-Package Notification.WPF -Version 1.0.1.2
 
 ### Information
 This project was forked from  https://github.com/Federerer/Notifications.Wpf
