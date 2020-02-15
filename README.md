@@ -5,6 +5,12 @@ WPF toast notifications.
 ### Installation:
 Install-Package Notification.WPF -Version 1.0.1.3
 
+### Known issue
+If you have problem with close notification window after closing you app, use this row: 
+```C#
+Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+
+```
 ### Information
 This project was forked from  https://github.com/Federerer/Notifications.Wpf
 
