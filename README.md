@@ -52,16 +52,16 @@ notificationManager.Show(title, Message, type, "WindowArea", onClick: () => Some
 #### Notification ProgressBar:
 
 using next type IProgress<(int progress, string message, string title, bool? showCancel)>
-
-ShowProgressBar(
-      out ProgressFinaly<ValueTuple<int, string, string, bool?>> progress,
-      out CancellationToken Cancel,
-      string Title = null,
-      bool ShowCancelButton = true,
-      bool ShowProgress = true,
-      string areaName = "")
-      
+    
 ```C#
+ShowProgressBar(out ProgressFinaly<ValueTuple<int, string, string, bool?>> progress,
+                out CancellationToken Cancel,
+                string Title = null,
+                bool ShowCancelButton = true,
+                bool ShowProgress = true,
+                string areaName = "")
+      
+      
 notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, true, false);
             using (progress)
                 try
