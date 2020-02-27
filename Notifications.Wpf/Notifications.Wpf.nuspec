@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>Notification.WPF</id>
-    <version>1.0.1.3</version>
+    <version>1.0.1.4</version>
     <title>Notification.WPF</title>
     <authors>https://github.com/Platonenkov</authors>
     <owners>https://github.com/Federerer</owners>
     <projectUrl>https://github.com/Platonenkov/Notifications.Wpf</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This project will help you take notification window like in windows</description>
-    <releaseNotes>fix package bugs</releaseNotes>
+    <releaseNotes>update progress</releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>Toast Notifications WPF</tags>
   </metadata>

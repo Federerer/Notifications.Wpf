@@ -51,10 +51,10 @@ namespace Notification.Wpf.ViewModel
         #region ProgressBar : IProgress<(double, string, string,bool)> - Прогресс
 
         /// <summary>Прогресс</summary>
-        private ProgressFinaly<(int, string, string, bool?)> _progress;
+        private ProgressFinaly<(int?, string, string, bool?)> _progress;
 
         /// <summary>Прогресс</summary>
-        public ProgressFinaly<(int, string, string, bool?)> progress
+        public ProgressFinaly<(int?, string, string, bool?)> progress
         {
             get => _progress;
             set => Set(ref _progress, value);
@@ -77,17 +77,23 @@ namespace Notification.Wpf.ViewModel
         /// </summary>
         public object RightButtonContent { get; set; } = "Cancel";
 
-        public NotificationProgressViewModel(out ProgressFinaly<(int, string, string, bool?)> progresModel, CancellationTokenSource cancel, bool showCancelButton, bool showProgress)
+        public NotificationProgressViewModel(out ProgressFinaly<(int?, string, string, bool?)> progresModel, CancellationTokenSource cancel, bool showCancelButton, bool showProgress)
         {
             ShowProgress = showProgress;
             Cancel = cancel;
-            progress = progresModel = new ProgressFinaly<(int, string, string, bool?)>(OnProgress);
+            progress = progresModel = new ProgressFinaly<(int?, string, string, bool?)>(OnProgress);
             ShowCancelButton = showCancelButton;
         }
 
-        void OnProgress((int percent, string msg, string title, bool? showCancel) ProgressInfo)
+        void OnProgress((int? percent, string msg, string title, bool? showCancel) ProgressInfo)
         {
-            process = (double)ProgressInfo.percent;
+            if (ProgressInfo.percent is null)
+                ShowProgress = false;
+            else
+            {
+                ShowProgress = true;
+                process = (double) ProgressInfo.percent;
+            }
             Message = ProgressInfo.msg;
             if (ProgressInfo.title != null) Title = ProgressInfo.title;
             if(ProgressInfo.showCancel != null)

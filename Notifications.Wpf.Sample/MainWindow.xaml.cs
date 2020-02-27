@@ -70,7 +70,6 @@ namespace Notification.Wpf.Sample
             var title = "Прогресс бар";
 
             _notificationManager.ShowProgressBar(out var progress, out var Cancel, title, true, true);
-            _notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, true, false);
             using (progress)
                 try
                 {
@@ -91,7 +90,21 @@ namespace Notification.Wpf.Sample
                     for (var i = 0; i <= 100; i++)
                     {
                         Cancel.ThrowIfCancellationRequested();
-                        progress.Report((i,null, null, null));
+                        progress.Report((i,null, "Whith progress", null));
+                        await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel).ConfigureAwait(false);
+                    }
+
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        Cancel.ThrowIfCancellationRequested();
+                        progress.Report((null,null, "Whithout progress", null));
+                        await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
+                    }
+
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        Cancel.ThrowIfCancellationRequested();
+                        progress.Report((i, null, "Agane whith progress", null));
                         await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel).ConfigureAwait(false);
                     }
 
