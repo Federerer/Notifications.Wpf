@@ -3,7 +3,7 @@ WPF toast notifications.
 
 ![Demo](http://i.imgur.com/UvYIVFV.gif)
 ### Installation:
-Install-Package Notification.WPF -Version 1.0.1.3
+Install-Package Notification.WPF -Version 1.0.1.4
 
 ### Known issue
 If you have problem with close notification window after closing you app, use this row: 
@@ -51,10 +51,10 @@ notificationManager.Show(title, Message, type, "WindowArea", onClick: () => Some
 ```
 #### Notification ProgressBar:
 
-using next type IProgress<(int progress, string message, string title, bool? showCancel)>
+using next type IProgress<(int? progress, string message, string title, bool? showCancel)>
     
 ```C#
-ShowProgressBar(out ProgressFinaly<ValueTuple<int, string, string, bool?>> progress,
+ShowProgressBar(out ProgressFinaly<ValueTuple<int?, string, string, bool?>> progress,
                 out CancellationToken Cancel,
                 string Title = null,
                 bool ShowCancelButton = true,
@@ -74,14 +74,28 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
                     progress.Report((i, $"Процесс {i}",null, null));
                         await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
                     }
+                    
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        Cancel.ThrowIfCancellationRequested();
+                        progress.Report((i,null, "Whith progress", null));
+                        await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel).ConfigureAwait(false);
+                    }
+
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        Cancel.ThrowIfCancellationRequested();
+                        progress.Report((null,null, "Whithout progress", null));
+                        await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
+                    }
 
                 }
                 catch (OperationCanceledException)
                 {
-                    _notificationManager.Show("Операция отменена", "", TimeSpan.FromSeconds(3));
+                    _notificationManager.Show("operation was cancelled", "", TimeSpan.FromSeconds(3));
                 }
                 
-     public Task SomeMetod(IProgress<(int, string,string,bool?)> progress, CancellationToken cancel) =>
+     public Task SomeMetod(IProgress<(int?, string,string,bool?)> progress, CancellationToken cancel) =>
             Task.Run(async () =>
             {
                 for (var i = 0; i <= 100; i++)
@@ -91,7 +105,9 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
                     await Task.Delay(TimeSpan.FromSeconds(0.05), cancel);
                 }
             }, cancel);            
-```                
+```
+Just send null as progress count that change bar to "running line".
+
 #### Simple text with OnClick & OnClose actions:
 ```C#
 notificationManager.Show("String notification", onClick: () => Console.WriteLine("Click"),
