@@ -1,12 +1,13 @@
 # Notifications.Wpf
 WPF toast notifications.
 
+### Installation:
+Install-Package Notification.WPF -Version 1.0.1.5
+
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/info_button.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/content.gif)
-### Installation:
-Install-Package Notification.WPF -Version 1.0.1.5
 
 ### Known issue
 If you have problem with close notification window after closing you app, use this row: 
