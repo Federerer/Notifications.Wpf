@@ -20,20 +20,26 @@ namespace Notification.Wpf.Sample
         {
             InitializeComponent();     
 
-            var timer = new Timer {Interval = 3000};
+            var timer = new Timer {Interval = 10000};
             timer.Elapsed += (sender, args) => _notificationManager.Show("Pink string from another thread!");
             timer.Start();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            var content = new NotificationContent
+            for (var i = 0; i <= 5; i++)
             {
-                Title = "Sample notification",
-                Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                Type = (NotificationType) _random.Next(0, 4)
-            };
-            _notificationManager.Show(content);
+                var content = new NotificationContent
+                {
+                    Title = "Sample notification",
+                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Type = (NotificationType)i
+                };
+                await Task.Delay(TimeSpan.FromSeconds(1));
+                _notificationManager.Show(content);
+
+            }
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
