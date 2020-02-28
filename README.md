@@ -1,7 +1,7 @@
 # Notifications.Wpf
 WPF toast notifications.
 
-![Demo](http://i.imgur.com/UvYIVFV.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/sample.gif)
 ### Installation:
 Install-Package Notification.WPF -Version 1.0.1.4
 
@@ -127,6 +127,8 @@ notificationManager.Show("1 right button","This is 2 button on form","",TimeSpan
      (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)));
 ```
 
+![Demo](http://i.imgur.com/G1ZU2ID.gif)
+
 #### Show any content
 ```C#
 var grid = new Grid();
@@ -162,9 +164,7 @@ object content = grid;
 notificationManager.Show(content,null,TimeSpan.MaxValue);
 ```
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/any_content.png)
-
 - Result:
 
-![Demo](http://i.imgur.com/G1ZU2ID.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/button_notifi.png)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notifi.png)
