@@ -19,10 +19,17 @@ namespace Notification.Wpf.Sample
         public MainWindow()
         {
             InitializeComponent();     
+            Timer = new Timer { Interval = 1000 };
+            Timer.Elapsed += (s, a) => _notificationManager.Show("Pink string from another thread!");
 
-            var timer = new Timer {Interval = 10000};
-            timer.Elapsed += (sender, args) => _notificationManager.Show("Pink string from another thread!");
-            timer.Start();
+        }
+
+        private Timer Timer;
+
+        private void Button_Timer(object sender, RoutedEventArgs e)
+        {
+            if(!Timer.Enabled) Timer.Start();
+            else Timer.Stop();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -87,9 +94,8 @@ namespace Notification.Wpf.Sample
                         {
                             Cancel.ThrowIfCancellationRequested();
                             progress.Report((i, $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
-                                                + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r"
                                                 + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
-                            await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel);
+                            await Task.Delay(TimeSpan.FromSeconds(0.03), Cancel);
                         }
                     }, Cancel).ConfigureAwait(false);
 
@@ -97,7 +103,7 @@ namespace Notification.Wpf.Sample
                     {
                         Cancel.ThrowIfCancellationRequested();
                         progress.Report((i,null, "Whith progress", null));
-                        await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel).ConfigureAwait(false);
+                        await Task.Delay(TimeSpan.FromSeconds(0.02), Cancel).ConfigureAwait(false);
                     }
 
                     for (var i = 0; i <= 100; i++)

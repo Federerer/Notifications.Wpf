@@ -9,6 +9,7 @@
         Title="MainWindow" Height="400" Width="600">
     <DockPanel>
         <UniformGrid DockPanel.Dock="Bottom" Rows="1">
+            <Button Content="Timer" Click="Button_Timer"/>
             <Button Content="Show" Click="Button_Click"/>
             <Button Content="Show in window" Click="Button_Click_1" />
             <Button Content="Show Progress" Click="Progress_Click" />

@@ -188,7 +188,7 @@ namespace Notification.Wpf.Controls
             {
                 Content = content
             };
-
+            notification.NotificationClosed += model.CancelProgress;
             notification.NotificationClosed += OnNotificationClosed;
 
             if (!IsLoaded)

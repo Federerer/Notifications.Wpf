@@ -1,8 +1,12 @@
 ﻿using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Markup;
 using Caliburn.Micro;
+//using GalaSoft.MvvmLight;
+//using GalaSoft.MvvmLight.Command;
 using Notification.Wpf.Classes;
+using Notifications.Wpf.Command;
 
 namespace Notification.Wpf.ViewModel
 {
@@ -71,7 +75,70 @@ namespace Notification.Wpf.ViewModel
         public bool ShowCancelButton { get => _ShowCancelButton; set => Set(ref _ShowCancelButton, value); }
 
         #endregion
-        
+
+        #region Collapse : bool - Вид прогресса - свернуть до полосы
+
+        /// <summary>Вид прогресса - свернуть до полосы</summary>
+        private bool _Collapse;
+
+        /// <summary>Вид прогресса - свернуть до полосы</summary>
+        public bool Collapse
+        {
+            get => _Collapse;
+            set
+            {
+                Set(ref _Collapse, value);
+                GeneralPadding = value ? new Thickness(1) : new Thickness(12);
+                BarMargin = value ? new Thickness(1) : new Thickness(5);
+                BarHeight = value ? 32 : 20;
+            }
+        }
+
+        #region GeneralPadding : int - Отступ элементов от внешней рамки
+
+        /// <summary>Отступ элементов от внешней рамки</summary>
+        private Thickness _GeneralPadding = new Thickness(12);
+
+        /// <summary>Отступ элементов от внешней рамки</summary>
+        public Thickness GeneralPadding { get => _GeneralPadding; set => Set(ref _GeneralPadding, value); }
+
+        #endregion
+
+        #region BarMargin : Thickness - отступ прогресс бара от рамки строки
+
+        /// <summary>Отступ прогресс бара от рамки строки</summary>
+        private Thickness _BarMargin = new Thickness(5);
+
+        /// <summary>Отступ прогресс бара от рамки строки</summary>
+        public Thickness BarMargin { get => _BarMargin; set => Set(ref _BarMargin, value); }
+
+        #endregion
+
+        #region BarHeight : double - ввысота прогресс бара
+
+        /// <summary>высота прогресс бара</summary>
+        private double _BarHeight = 20;
+
+        /// <summary>высота прогресс бара</summary>
+        public double BarHeight { get => _BarHeight; set => Set(ref _BarHeight, value); }
+
+        #endregion
+
+        #endregion
+
+        #region CollapseWindowCommand : ICommand - Команда свертывания прогресс бара в строку
+
+        /// <summary>Команда свертывания прогресс бара в строку</summary>
+        private ICommand _CollapseWindowCommand;
+
+        /// <summary>Команда свертывания прогресс бара в строку</summary>
+        public ICommand CollapseWindowCommand { get => _CollapseWindowCommand; set => Set(ref _CollapseWindowCommand, value); }
+        private void CollapseWindow(object Obj)
+        {
+            Collapse = !Collapse;
+        }
+
+        #endregion
         /// <summary>
         /// Содержимое левой кнопки
         /// </summary>
@@ -83,6 +150,7 @@ namespace Notification.Wpf.ViewModel
             Cancel = cancel;
             progress = progresModel = new ProgressFinaly<(int?, string, string, bool?)>(OnProgress);
             ShowCancelButton = showCancelButton;
+            CollapseWindowCommand = new LamdaCommand(CollapseWindow);
         }
 
         void OnProgress((int? percent, string msg, string title, bool? showCancel) ProgressInfo)
@@ -101,5 +169,6 @@ namespace Notification.Wpf.ViewModel
         }
 
         public void CancelProgress(object Sender, RoutedEventArgs E) => Cancel.Cancel();
+
     }
 }

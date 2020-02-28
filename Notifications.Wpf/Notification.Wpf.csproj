@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ProgressFinaly.cs" />
+    <Compile Include="Command\LamdaCommand.cs" />
     <Compile Include="Controls\Notification.cs" />
     <Compile Include="Controls\NotificationArea.cs" />
     <Compile Include="Controls\ReversibleStackPanel.cs" />
