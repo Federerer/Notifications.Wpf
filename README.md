@@ -68,27 +68,37 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
                 {
                     await SomeMetod(progress, Cancel).ConfigureAwait(false);
                     
+                     await Task.Run(async () =>
+                    {
+                        for (var i = 0; i <= 100; i++)
+                        {
+                            Cancel.ThrowIfCancellationRequested();
+                            progress.Report((i, $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
+                                                + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
+                            await Task.Delay(TimeSpan.FromSeconds(0.03), Cancel);
+                        }
+                    }, Cancel).ConfigureAwait(false);
+
                     for (var i = 0; i <= 100; i++)
                     {
                         Cancel.ThrowIfCancellationRequested();
-                    progress.Report((i, $"Процесс {i}",null, null));
+                        progress.Report((i,$"Progress {i}", "Whith progress", true));
+                        await Task.Delay(TimeSpan.FromSeconds(0.02), Cancel).ConfigureAwait(false);
+                    }
+
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        Cancel.ThrowIfCancellationRequested();
+                        progress.Report((null,$"{i}", "Whithout progress", null));
                         await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
                     }
-                    
+
                     for (var i = 0; i <= 100; i++)
                     {
                         Cancel.ThrowIfCancellationRequested();
-                        progress.Report((i,null, "Whith progress", null));
+                        progress.Report((i, null, "Agane whith progress", null));
                         await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel).ConfigureAwait(false);
                     }
-
-                    for (var i = 0; i <= 100; i++)
-                    {
-                        Cancel.ThrowIfCancellationRequested();
-                        progress.Report((null,null, "Whithout progress", null));
-                        await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
-                    }
-
                 }
                 catch (OperationCanceledException)
                 {
