@@ -102,14 +102,14 @@ namespace Notification.Wpf.Sample
                     for (var i = 0; i <= 100; i++)
                     {
                         Cancel.ThrowIfCancellationRequested();
-                        progress.Report((i,null, "Whith progress", null));
+                        progress.Report((i,$"Progress {i}", "Whith progress", true));
                         await Task.Delay(TimeSpan.FromSeconds(0.02), Cancel).ConfigureAwait(false);
                     }
 
                     for (var i = 0; i <= 100; i++)
                     {
                         Cancel.ThrowIfCancellationRequested();
-                        progress.Report((null,null, "Whithout progress", null));
+                        progress.Report((null,$"{i}", "Whithout progress", null));
                         await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
                     }
 
