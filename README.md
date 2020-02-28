@@ -176,8 +176,6 @@ object content = grid;
 
 notificationManager.Show(content,null,TimeSpan.MaxValue);
 ```
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/any_content.png)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/content.gif)
 - Result:
 
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/button_notifi.png)
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notifi.png)
