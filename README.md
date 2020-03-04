@@ -1,4 +1,4 @@
-# Notifications.Wpf
+# Notification.Wpf
 WPF toast notifications.
 
 ### Installation:
@@ -18,7 +18,7 @@ Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
 ### Information
 This project was forked from  https://github.com/Federerer/Notifications.Wpf
 
-Project was re-released due to lack of owner interest in updating itю
+Project was re-released due to lack of owner interest in updating it.
 
 ### Usage:
 
