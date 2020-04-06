@@ -2,7 +2,7 @@
 WPF toast notifications.
 
 ### Installation:
-Install-Package Notification.WPF -Version 1.0.1.5
+Install-Package Notification.WPF -Version 1.0.1.6
 
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
