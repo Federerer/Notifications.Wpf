@@ -55,10 +55,15 @@ namespace Notification.Wpf
                 _window.Show();
             }
 
+            if (Areas != null && !_window.IsVisible)
+                _window.Show();
+
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
-                area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
+                area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
             }
+
+
         }
 
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,

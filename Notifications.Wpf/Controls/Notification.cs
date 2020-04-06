@@ -52,7 +52,7 @@ namespace Notification.Wpf.Controls
         }
 
         public static readonly DependencyProperty CloseOnClickProperty =
-            DependencyProperty.RegisterAttached("CloseOnClick", typeof(bool), typeof(Notification), new FrameworkPropertyMetadata(false,CloseOnClickChanged));
+            DependencyProperty.RegisterAttached("CloseOnClick", typeof(bool), typeof(Notification), new FrameworkPropertyMetadata(false, CloseOnClickChanged));
 
         private static void CloseOnClickChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
@@ -72,7 +72,7 @@ namespace Notification.Wpf.Controls
                     notification?.Close();
                 };
             }
-        }      
+        }
 
         public override void OnApplyTemplate()
         {
@@ -80,17 +80,17 @@ namespace Notification.Wpf.Controls
             var closeButton = GetTemplateChild("PART_CloseButton") as Button;
             if (closeButton != null)
                 closeButton.Click += OnCloseButtonOnClick;
-            
+
             var storyboards = Template.Triggers.OfType<EventTrigger>().FirstOrDefault(t => t.RoutedEvent == NotificationCloseInvokedEvent)?.Actions.OfType<BeginStoryboard>().Select(a => a.Storyboard);
             _closingAnimationTime = new TimeSpan(storyboards?.Max(s => Math.Min((s.Duration.HasTimeSpan ? s.Duration.TimeSpan + (s.BeginTime ?? TimeSpan.Zero) : TimeSpan.MaxValue).Ticks, s.Children.Select(ch => ch.Duration.TimeSpan + (s.BeginTime ?? TimeSpan.Zero)).Max().Ticks)) ?? 0);
-            
+
         }
 
         private void OnCloseButtonOnClick(object sender, RoutedEventArgs args)
         {
             var button = sender as Button;
             if (button == null) return;
-            
+
             button.Click -= OnCloseButtonOnClick;
             Close();
         }
@@ -102,12 +102,22 @@ namespace Notification.Wpf.Controls
             {
                 return;
             }
-        
+
             IsClosing = true;
-            
+
             RaiseEvent(new RoutedEventArgs(NotificationCloseInvokedEvent));
             await Task.Delay(_closingAnimationTime);
             RaiseEvent(new RoutedEventArgs(NotificationClosedEvent));
-        } 
-    }       
+
+            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.Title.Equals("ToastWindow"));
+
+            var notificationCount = VisualTreeHelperExtensions.GetActiveNotificationCount(currentWindow);
+
+            if (notificationCount == 0)
+                currentWindow?.Hide();
+
+        }
+
+
+    }
 }
