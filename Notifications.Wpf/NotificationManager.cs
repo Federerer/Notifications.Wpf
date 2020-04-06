@@ -99,6 +99,10 @@ namespace Notification.Wpf
                 _window.Show();
             }
 
+            if (Areas != null && !_window.IsVisible)
+                _window.Show();
+
+
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
                 area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
@@ -146,6 +150,10 @@ namespace Notification.Wpf
 
                 _window.Show();
             }
+
+            if (Areas != null && !_window.IsVisible)
+                _window.Show();
+
 
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
@@ -195,6 +203,10 @@ namespace Notification.Wpf
 
                 _window.Show();
             }
+
+            if (Areas != null && !_window.IsVisible)
+                _window.Show();
+
 
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
