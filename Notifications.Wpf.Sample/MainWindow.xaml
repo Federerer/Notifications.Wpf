@@ -17,6 +17,6 @@
             <Button Content="Show with button" Click="Message_button" />
             <Button Content="Show content" Click="Show_Any_content" />
         </UniformGrid>
-        <controls:NotificationArea x:Name="WindowArea" Position="TopLeft" MaxItems="3"/>
+        <controls:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="3"/>
     </DockPanel>
 </Window>

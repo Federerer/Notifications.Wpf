@@ -110,7 +110,7 @@ namespace Notification.Wpf.Controls
             RaiseEvent(new RoutedEventArgs(NotificationClosedEvent));
 
             var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.Title.Equals("ToastWindow"));
-
+            if(currentWindow == null)return;
             var notificationCount = VisualTreeHelperExtensions.GetActiveNotificationCount(currentWindow);
 
             if (notificationCount == 0)
