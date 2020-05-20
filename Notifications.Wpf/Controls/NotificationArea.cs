@@ -197,6 +197,7 @@ namespace Notification.Wpf.Controls
             }
 
             var w = Window.GetWindow(this);
+
             var x = PresentationSource.FromVisual(w);
             if (x == null)
             {

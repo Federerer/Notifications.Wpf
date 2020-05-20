@@ -185,11 +185,20 @@ namespace Notification.Wpf
 
             if (!_dispatcher.CheckAccess())
             {
+                ProgressFinaly<(int?, string, string, bool?)> bar = null;
+                var CancelFirst= new CancellationToken();
+
                 _dispatcher.BeginInvoke(
-                    new Action(() => ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName)));
+                    new Action(() =>
+                    {
+                        ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName);
+                        bar = progress1;
+                        CancelFirst = Cancel1;
+                    }));
+                progress = bar;
+                Cancel = CancelFirst;
                 return;
             }
-
             if (areaName == string.Empty && _window == null)
             {
                 var workArea = SystemParameters.WorkArea;

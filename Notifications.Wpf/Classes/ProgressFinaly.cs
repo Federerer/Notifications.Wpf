@@ -28,7 +28,14 @@ namespace Notification.Wpf.Classes
         public void Dispose()
         {
             _IsFinished = true;
-            Application.Current.Dispatcher.Invoke(() => Area.Close());
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() => Area.Close());
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
         public void SetArea(Controls.Notification area)
