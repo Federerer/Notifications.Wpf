@@ -188,13 +188,13 @@ namespace Notification.Wpf
                 ProgressFinaly<(int?, string, string, bool?)> bar = null;
                 var CancelFirst= new CancellationToken();
 
-                _dispatcher.BeginInvoke(
-                    new Action(() =>
+                _dispatcher.Invoke(
+                    () =>
                     {
                         ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName);
                         bar = progress1;
                         CancelFirst = Cancel1;
-                    }));
+                    });
                 progress = bar;
                 Cancel = CancelFirst;
                 return;
