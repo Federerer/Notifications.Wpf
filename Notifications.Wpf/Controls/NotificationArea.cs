@@ -202,7 +202,7 @@ namespace Notification.Wpf.Controls
             {
                 return;
             }
-
+            model.progress.SetArea(notification);
             lock (_items)
             {
                 _items.Add(notification);

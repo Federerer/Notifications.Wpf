@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Notification.Wpf.Classes
 {
@@ -19,11 +20,21 @@ namespace Notification.Wpf.Classes
 
         #endregion
 
+        private Controls.Notification Area;
         public ProgressFinaly(Action<T> handler) : base(handler) { }
 
         public void Report(T value) { base.OnReport(value); }
 
-        public void Dispose() { _IsFinished = true; }
+        public void Dispose()
+        {
+            _IsFinished = true;
+            Application.Current.Dispatcher.Invoke(() => Area.Close());
+        }
+
+        public void SetArea(Controls.Notification area)
+        {
+            Area = area;
+        }
 
     }
 }
