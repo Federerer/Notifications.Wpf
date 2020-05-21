@@ -30,7 +30,7 @@ namespace Notification.Wpf
         public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null)
         {
-            if (areaName == null) areaName = "";
+            areaName ??= "";
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
@@ -38,7 +38,7 @@ namespace Notification.Wpf
                 return;
             }
 
-            if (expirationTime == null) expirationTime = TimeSpan.FromSeconds(5);
+            expirationTime ??= TimeSpan.FromSeconds(5);
 
             if (areaName == string.Empty && _window == null)
             {
@@ -58,11 +58,11 @@ namespace Notification.Wpf
             if (Areas != null && _window != null && !_window.IsVisible)
                 _window.Show();
 
-            if (Areas != null)
-                foreach (var area in Areas.Where(a => a.Name == areaName))
-                {
-                    area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
-                }
+            if (Areas == null) return;
+            foreach (var area in Areas.Where(a => a.Name == areaName))
+            {
+                area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
+            }
         }
 
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
@@ -81,7 +81,7 @@ namespace Notification.Wpf
                 return;
             }
 
-            if (expirationTime == null) expirationTime = TimeSpan.FromSeconds(5);
+            expirationTime ??= TimeSpan.FromSeconds(5);
 
             if (areaName == string.Empty && _window == null)
             {
@@ -102,11 +102,11 @@ namespace Notification.Wpf
                 _window.Show();
 
 
-            if (Areas != null)
-                foreach (var area in Areas.Where(a => a.Name == areaName))
-                {
-                    area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
-                }
+            if (Areas == null) return;
+            foreach (var area in Areas.Where(a => a.Name == areaName))
+            {
+                area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
+            }
         } 
         public void Show(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null, string LeftButtonText = null,
             RoutedEventHandler RightButton = null, string RightButtonText = null)
@@ -134,7 +134,7 @@ namespace Notification.Wpf
                 return;
             }
 
-            if (expirationTime == null) expirationTime = TimeSpan.FromSeconds(5);
+            expirationTime ??= TimeSpan.FromSeconds(5);
 
             if (areaName == string.Empty && _window == null)
             {
@@ -155,11 +155,11 @@ namespace Notification.Wpf
                 _window.Show();
 
 
-            if (Areas != null)
-                foreach (var area in Areas.Where(a => a.Name == areaName))
-                {
-                    area.Show(content, (TimeSpan) expirationTime, LeftButton, RightButton);
-                }
+            if (Areas == null) return;
+            foreach (var area in Areas.Where(a => a.Name == areaName))
+            {
+                area.Show(content, (TimeSpan) expirationTime, LeftButton, RightButton);
+            }
         }
         
 
@@ -218,11 +218,11 @@ namespace Notification.Wpf
                 _window.Show();
 
 
-            if (Areas != null)
-                foreach (var area in Areas.Where(a => a.Name == areaName))
-                {
-                    area.Show(model);
-                }
+            if (Areas == null) return;
+            foreach (var area in Areas.Where(a => a.Name == areaName))
+            {
+                area.Show(model);
+            }
         }
 
         internal static void AddArea(NotificationArea area)
