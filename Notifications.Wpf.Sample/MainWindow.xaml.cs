@@ -8,23 +8,19 @@ using Timer = System.Timers.Timer;
 
 namespace Notification.Wpf.Sample
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly NotificationManager _notificationManager = new NotificationManager();
-        private readonly Random _random = new Random();
+        //private readonly Random _random = new Random();
 
         public MainWindow()
         {
-            InitializeComponent();     
+            InitializeComponent();
             Timer = new Timer { Interval = 1000 };
             Timer.Elapsed += (s, a) => _notificationManager.Show("Pink string from another thread!");
-
         }
 
-        private Timer Timer;
+        private readonly Timer Timer;
 
         private void Button_Timer(object sender, RoutedEventArgs e)
         {
@@ -61,7 +57,7 @@ namespace Notification.Wpf.Sample
             _notificationManager.Show(content, "WindowArea", onClick: () => _notificationManager.Show(clickContent));
         }
 
-        private async void Message_Click(object sender, RoutedEventArgs e)
+        private void Message_Click(object sender, RoutedEventArgs e)
         {
             var clickContent = new NotificationContent
             {
@@ -70,12 +66,12 @@ namespace Notification.Wpf.Sample
                 Type = NotificationType.Success
             };
 
-            var title = "Sample notification";
-            var Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-            var type = NotificationType.Notification;
+            const string title = "Sample notification";
+            const string Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+            const NotificationType type = NotificationType.Notification;
 
             _notificationManager.Show(title, Message, type, "WindowArea", onClick: () => _notificationManager.Show(clickContent));
-            _notificationManager.Show(title, Message, type, "", onClick: () => _notificationManager.Show(clickContent));
+            _notificationManager.Show(title, Message, type, string.Empty, onClick: () => _notificationManager.Show(clickContent));
 
         }
         private async void Progress_Click(object sender, RoutedEventArgs e)
@@ -93,8 +89,8 @@ namespace Notification.Wpf.Sample
                         for (var i = 0; i <= 100; i++)
                         {
                             Cancel.ThrowIfCancellationRequested();
-                            progress.Report((i, $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
-                                                + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
+                            progress.Report((i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
+                                                + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
                             await Task.Delay(TimeSpan.FromSeconds(0.03), Cancel);
                         }
                     }, Cancel).ConfigureAwait(false);
@@ -124,7 +120,7 @@ namespace Notification.Wpf.Sample
                 }
                 catch (OperationCanceledException)
                 {
-                    _notificationManager.Show("Операция отменена", "", TimeSpan.FromSeconds(3));
+                    _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3));
                 }
         }
 
@@ -141,16 +137,16 @@ namespace Notification.Wpf.Sample
 
         private void Message_button(object sender, RoutedEventArgs e)
         {
-            _notificationManager.Show("2 button","This is 2 button on form","",TimeSpan.MaxValue,
-                (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),"Left Button",
-                (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), "Right Button"); 
+            _notificationManager.Show("2 button","This is 2 button on form", string.Empty,TimeSpan.MaxValue,
+                (o, args) => _notificationManager.Show("Left button click", string.Empty,TimeSpan.FromSeconds(3)),"Left Button",
+                (o, args) => _notificationManager.Show("Right button click", string.Empty, TimeSpan.FromSeconds(3)), "Right Button"); 
             
-            _notificationManager.Show("2 button", "This is 2 button on form with standard name", "",TimeSpan.MaxValue,
-                (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),null,
-                (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), null);
+            _notificationManager.Show("2 button", "This is 2 button on form with standard name", string.Empty,TimeSpan.MaxValue,
+                (o, args) => _notificationManager.Show("Left button click", string.Empty,TimeSpan.FromSeconds(3)),null,
+                (o, args) => _notificationManager.Show("Right button click", string.Empty, TimeSpan.FromSeconds(3)), null);
 
             _notificationManager.Show("1 right button","This is 1 button on form with standard name","",TimeSpan.MaxValue,
-                (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)));
+                (o, args) => _notificationManager.Show("Right button click", string.Empty, TimeSpan.FromSeconds(3)));
 
         }
 
@@ -166,9 +162,9 @@ namespace Notification.Wpf.Sample
             panelBTN.VerticalAlignment = VerticalAlignment.Bottom;
             panelBTN.Children.Add(btn1);
 
-            var row1 = new RowDefinition();
-            var row2 = new RowDefinition();
-            var row3 = new RowDefinition();
+            //var row1 = new RowDefinition();
+            //var row2 = new RowDefinition();
+            //var row3 = new RowDefinition();
 
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition());

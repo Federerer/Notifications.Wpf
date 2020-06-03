@@ -23,11 +23,8 @@ namespace Utilities.WPF.Notifications
         /// </summary>
         public object RightButtonContent { get; set; }
 
-        public NotificationViewModel()
-        {}
+        public virtual void Ok() { }
 
-        public virtual async void Ok(){}
-
-        public virtual async void Cancel(){}
+        public virtual void Cancel() { }
     }
 }
