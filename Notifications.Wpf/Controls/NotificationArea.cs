@@ -9,8 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Notification.Wpf.View;
-using Notification.Wpf.ViewModel;
 using Notification.Wpf.Classes;
+using Notifications.Wpf.ViewModels;
 using Utilities.WPF.Notifications;
 
 namespace Notification.Wpf.Controls

@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Notification.Wpf.Classes;
 using Notification.Wpf.Controls;
-using Notification.Wpf.ViewModel;
+using Notifications.Wpf.ViewModels;
 using Utilities.WPF.Notifications;
 
 namespace Notification.Wpf
