@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Notification.Wpf;
-using Notifications.Wpf.ViewModels.Base;
+﻿using Notifications.Wpf.ViewModels.Base;
 
 // ReSharper disable once CheckNamespace
 namespace Utilities.WPF.Notifications
