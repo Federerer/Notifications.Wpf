@@ -51,13 +51,9 @@
     <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
@@ -80,13 +76,15 @@
     <Compile Include="NotificationContent.cs" />
     <Compile Include="NotificationManager.cs" />
     <Compile Include="NotificationTemplateSelector.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotificationsOverlayWindow.xaml.cs">
       <DependentUpon>NotificationsOverlayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\VisualTreeHelperExtensions.cs" />
-    <Compile Include="ViewModel\NotificationProgressViewModel.cs" />
-    <Compile Include="ViewModel\NotificationViewModel.cs" />
+    <Compile Include="ViewModels\NotificationProgressViewModel.cs" />
+    <Compile Include="ViewModels\NotificationViewModel.cs" />
+    <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="View\NotificationInfoView.xaml.cs">
       <DependentUpon>NotificationInfoView.xaml</DependentUpon>
     </Compile>

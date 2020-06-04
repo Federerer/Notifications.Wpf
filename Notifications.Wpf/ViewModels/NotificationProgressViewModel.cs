@@ -1,17 +1,14 @@
 ﻿using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
-using Caliburn.Micro;
-//using GalaSoft.MvvmLight;
-//using GalaSoft.MvvmLight.Command;
 using Notification.Wpf.Classes;
 using Notifications.Wpf.Command;
+using Notifications.Wpf.ViewModels.Base; //using GalaSoft.MvvmLight;
+//using GalaSoft.MvvmLight.Command;
 
-namespace Notification.Wpf.ViewModel
+namespace Notifications.Wpf.ViewModels
 {
-    [MarkupExtensionReturnType(typeof(NotificationProgressViewModel))]
-    public class NotificationProgressViewModel : PropertyChangedBase
+    public class NotificationProgressViewModel : ViewModel
     {
         public readonly CancellationTokenSource Cancel;
 

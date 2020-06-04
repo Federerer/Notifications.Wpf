@@ -1,11 +1,9 @@
-﻿using System.Threading.Tasks;
-using Caliburn.Micro;
-using Notification.Wpf;
+﻿using Notifications.Wpf.ViewModels.Base;
 
 // ReSharper disable once CheckNamespace
 namespace Utilities.WPF.Notifications
 {
-    public class NotificationViewModel : PropertyChangedBase
+    public class NotificationViewModel : ViewModel
     {
         public string Title { get; set; }
         public string Message { get; set; }
@@ -23,11 +21,8 @@ namespace Utilities.WPF.Notifications
         /// </summary>
         public object RightButtonContent { get; set; }
 
-        public NotificationViewModel()
-        {}
+        public virtual void Ok() { }
 
-        public virtual async void Ok(){}
-
-        public virtual async void Cancel(){}
+        public virtual void Cancel() { }
     }
 }
