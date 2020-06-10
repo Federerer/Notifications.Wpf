@@ -173,7 +173,7 @@ namespace Notification.Wpf
         /// <param name="Cancel">CancellationTokenSource, if it null - ShowCancelButton will state false</param>
         /// <param name="ShowCancelButton">Show Cancel button or not</param>
         /// <param name="areaName">window are where show notification</param>
-        public void ShowProgressBar(out ProgressFinaly<(int?,string,string,bool?)> progress, out CancellationToken Cancel, string Title = null,
+        public void ShowProgressBar(out ProgressFinaly<(int? value, string message, string title, bool? showCancel)> progress, out CancellationToken Cancel, string Title = null,
             bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "")
         {
             var CancelSource = new CancellationTokenSource();
