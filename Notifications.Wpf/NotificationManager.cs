@@ -23,19 +23,19 @@ namespace Notifications.Wpf
             _dispatcher = dispatcher;
         }
 
-        public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
+        public void Show(object content, string areaIdentifier = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null)
         {
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(content, areaName, expirationTime, onClick, onClose)));
+                    new Action(() => Show(content, areaIdentifier, expirationTime, onClick, onClose)));
                 return;
             }
 
             if (expirationTime == null) expirationTime = TimeSpan.FromSeconds(5);
 
-            if (areaName == string.Empty && _window == null)
+            if (areaIdentifier == string.Empty && _window == null)
             {
                 var workArea = SystemParameters.WorkArea;
 
@@ -50,15 +50,20 @@ namespace Notifications.Wpf
                 _window.Show();
             }
 
-            foreach (var area in Areas.Where(a => a.Name == areaName))
+            foreach (var area in Areas.Where(a => a.AreaName == areaIdentifier))
             {
-                area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
+                area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
             }
         }
 
         internal static void AddArea(NotificationArea area)
         {
             Areas.Add(area);
+        }
+
+        internal static void RemoveArea(NotificationArea area)
+        {
+            Areas.Remove(area);
         }
     }
 }
