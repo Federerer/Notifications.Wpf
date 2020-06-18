@@ -13,7 +13,6 @@
             <Button Content="Show" Click="Button_Click"/>
             <Button Content="Show in window" Click="Button_Click_1" />
         </UniformGrid>
-        <!--<controls:NotificationArea x:Name="WindowArea" Position="TopLeft" MaxItems="3"/>-->
         <controls:NotificationArea AreaName="WindowArea" Position="TopLeft" MaxItems="3"/>
     </DockPanel>
 </Window>
