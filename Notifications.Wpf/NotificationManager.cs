@@ -23,19 +23,19 @@ namespace Notifications.Wpf
             _dispatcher = dispatcher;
         }
 
-        public void Show(object content, string areaIdentifier = "", TimeSpan? expirationTime = null, Action onClick = null,
+        public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null)
         {
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(content, areaIdentifier, expirationTime, onClick, onClose)));
+                    new Action(() => Show(content, areaName, expirationTime, onClick, onClose)));
                 return;
             }
 
             if (expirationTime == null) expirationTime = TimeSpan.FromSeconds(5);
 
-            if (areaIdentifier == string.Empty && _window == null)
+            if (areaName == string.Empty && _window == null)
             {
                 var workArea = SystemParameters.WorkArea;
 
@@ -50,7 +50,7 @@ namespace Notifications.Wpf
                 _window.Show();
             }
 
-            foreach (var area in Areas.Where(a => a.AreaName == areaIdentifier))
+            foreach (var area in Areas.Where(a => a.AreaName == areaName))
             {
                 area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
             }
