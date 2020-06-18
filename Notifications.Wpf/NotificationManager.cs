@@ -50,15 +50,20 @@ namespace Notifications.Wpf
                 _window.Show();
             }
 
-            foreach (var area in Areas.Where(a => a.Name == areaName))
+            foreach (var area in Areas.Where(a => a.AreaName == areaName))
             {
-                area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
+                area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
             }
         }
 
         internal static void AddArea(NotificationArea area)
         {
             Areas.Add(area);
+        }
+
+        internal static void RemoveArea(NotificationArea area)
+        {
+            Areas.Remove(area);
         }
     }
 }

@@ -9,9 +9,16 @@ using System.Windows.Threading;
 
 namespace Notifications.Wpf.Controls
 {
-    public class NotificationArea : Control
+    public class NotificationArea : Control, IDisposable
     {
+        public string AreaName
+        {
+            get { return (string)GetValue(AreaNameProp); }
+            set { SetValue(AreaNameProp, value); }
+        }
 
+        public static readonly DependencyProperty AreaNameProp =
+            DependencyProperty.Register("AreaName", typeof(string), typeof(NotificationArea), new PropertyMetadata(string.Empty));
 
 
         public NotificationPosition Position
@@ -30,7 +37,7 @@ namespace Notifications.Wpf.Controls
             get { return (int)GetValue(MaxItemsProperty); }
             set { SetValue(MaxItemsProperty, value); }
         }
-        
+
         public static readonly DependencyProperty MaxItemsProperty =
             DependencyProperty.Register("MaxItems", typeof(int), typeof(NotificationArea), new PropertyMetadata(int.MaxValue));
 
@@ -38,7 +45,13 @@ namespace Notifications.Wpf.Controls
 
         public NotificationArea()
         {
+            this.Unloaded += NotificationArea_Unloaded;
             NotificationManager.AddArea(this);
+        }
+
+        private void NotificationArea_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Dispose();
         }
 
         static NotificationArea()
@@ -64,7 +77,7 @@ namespace Notifications.Wpf.Controls
             {
                 Content = content
             };
-            
+
             notification.MouseLeftButtonDown += (sender, args) =>
             {
                 if (onClick != null)
@@ -108,7 +121,7 @@ namespace Notifications.Wpf.Controls
             }
             await Task.Delay(expirationTime);
 #endif
-                notification.Close();
+            notification.Close();
 #if NET40
             });
 #endif
@@ -138,6 +151,12 @@ namespace Notifications.Wpf.Controls
             }
         }
 #endif
+
+        public void Dispose()
+        {
+            this.Unloaded -= NotificationArea_Unloaded;
+            NotificationManager.RemoveArea(this);
+        }
     }
 
     public enum NotificationPosition
