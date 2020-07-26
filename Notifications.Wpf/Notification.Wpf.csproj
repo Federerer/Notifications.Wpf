@@ -50,6 +50,12 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <LangVersion>8</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Notifications.Wpf.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -112,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Notifications.Wpf.nuspec" />
+    <None Include="Notifications.Wpf.snk" />
     <None Include="pack.bat" />
     <None Include="packages.config" />
   </ItemGroup>
