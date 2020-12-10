@@ -185,5 +185,21 @@ namespace Notification.Wpf.Sample
             _notificationManager.Show(content,null,TimeSpan.MaxValue);
 
         }
+
+        private void Show_new_content_window(object Sender, RoutedEventArgs E)
+        {
+            var long_text =
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod accumsan orci vel varius. Nulla consectetur egestas est, in porttitor elit placerat non. Cras dapibus cursus magna. Nunc ac malesuada lacus. Etiam non luctus magna, nec vulputate diam. Sed porta mi at tristique bibendum. Nunc luctus libero ut mauris cursus, eget dignissim est luctus.Sed ac nibh dignissim, elementum mi ut, tempor quam.Donec quis ornare sapien. Maecenas arcu elit, blandit quis odio eu, elementum bibendum leo."
+
+                + "\n\rIn dapibus blandit mauris sed egestas. Nullam lacinia ligula vel imperdiet tristique. Vivamus elit ex, aliquam vel metus et, porttitor consequat risus. Donec eget est metus. Fusce cursus id lacus et porta. Aenean porttitor sagittis nibh, a porttitor risus varius fringilla. Fusce scelerisque vehicula leo. Nullam quam mauris, condimentum sed euismod id, dictum ac mi."
+
+                + "\n\rSed hendrerit ultrices pulvinar. In ullamcorper, est sit amet tempor iaculis, felis est ultrices lectus, nec sollicitudin est dui a justo. Duis aliquet, est eget sagittis vehicula, nibh quam venenatis ante, et ultrices urna nibh sed diam.Mauris dapibus, mi in elementum tristique, nibh dui porttitor arcu, in hendrerit neque neque condimentum erat.Praesent urna lorem, dignissim sed aliquet quis, porta vel tortor. Etiam iaculis consectetur metus. Donec in bibendum massa. Nam nec facilisis eros, sit amet blandit magna.Duis vitae justo nec nisi maximus efficitur vitae non mauris."
+
+                + "\n\rNullam blandit velit sed nisi ullamcorper varius.Nam facilisis ex vitae nulla pharetra ornare.Proin tincidunt purus vitae odio tristique, vel laoreet magna vulputate.Quisque quis erat pharetra, accumsan ante vitae, tristique felis.Pellentesque pretium, orci id consectetur maximus, velit quam consectetur ex, quis consectetur diam diam eleifend arcu.Donec a massa venenatis, aliquam sapien at, hendrerit tellus.Vivamus lectus justo, faucibus vitae erat eu, porta bibendum ligula."
+
+                + "\n\rIn hac habitasse platea dictumst.Quisque malesuada, mi ut ultricies luctus, nisl mi sodales ligula, eget feugiat tortor lacus sed elit.Fusce sit amet risus a purus volutpat fermentum. Sed in enim lacinia, iaculis elit ut, facilisis felis.Nulla facilisi. Suspendisse dapibus enim dui, ac sollicitudin enim rutrum nec. Cras tincidunt sit amet quam vitae sollicitudin.Cras porttitor non ante nec accumsan. Nam placerat eget enim consequat dignissim. Suspendisse tempor urna tortor, id aliquet augue dignissim vel. Vivamus auctor ac ex et pulvinar.";
+            _notificationManager.Show("Long text test window",long_text, NotificationType.AttachText, "", TimeSpan.MaxValue);
+
+        }
     }
 }

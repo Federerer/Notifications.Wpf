@@ -13,7 +13,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <TextBlock Text="&#9932;" FontSize="12" />
+                    <TextBlock Text="&#9932;" FontSize="12" Foreground="White" FontFamily="Segoe UI Symbol"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -62,6 +62,10 @@
                     <DataTrigger Binding="{Binding Type}" Value="Error">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource ErrorIcon}"/>
                         <Setter TargetName="Border" Property="Background" Value="OrangeRed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="Notification">
+                        <Setter TargetName="Icon" Property="Content" Value="{StaticResource InfoIcon}"/>
+                        <Setter TargetName="Border" Property="Background" Value="#FF444444"/>
                     </DataTrigger>
                 </DataTemplate.Triggers>
             </DataTemplate>

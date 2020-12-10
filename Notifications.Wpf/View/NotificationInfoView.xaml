@@ -8,7 +8,8 @@
              xmlns:converters="clr-namespace:Notification.Wpf.Converters"
              mc:Ignorable="d" 
              Foreground="White"
-             d:DesignHeight="120" d:DesignWidth="300">
+             d:DesignHeight="120" d:DesignWidth="300"
+             MinHeight="120" MinWidth="300">
     <UserControl.Resources>
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White"/>

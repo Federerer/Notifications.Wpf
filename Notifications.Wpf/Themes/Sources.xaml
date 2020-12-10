@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Themes/Sources/Geometry.xaml"/>
+        <ResourceDictionary Source="../Themes/Sources/Animations.xaml"/>
+        <ResourceDictionary Source="../Themes/Sources/EasingFunctions.xaml"/>
+        <ResourceDictionary Source="../Themes/Sources/Colors.xaml"/>
+        <ResourceDictionary Source="../Themes/Sources/Effects.xaml"/>
+        <ResourceDictionary Source="../Themes/Sources/Transformations.xaml"/>
+
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

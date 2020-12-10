@@ -15,6 +15,7 @@ namespace Utilities.WPF.Notifications
 
         public bool LeftButtonVisibility { get; set; }
         public bool RightButtonVisibility { get; set; }
+        public bool AttachButtonVisibility { get; set; }
 
         /// <summary>
         /// Содержимое правой кнопки

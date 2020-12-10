@@ -72,6 +72,7 @@ namespace Notification.Wpf.Controls
             }
         }
 
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

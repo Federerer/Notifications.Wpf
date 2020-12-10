@@ -1,0 +1,81 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="White" p:Freeze="True"/>
+    <SolidColorBrush x:Key="WhiteSmokeBrush" Color="WhiteSmoke" p:Freeze="True"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="Black" p:Freeze="True"/>
+    <SolidColorBrush x:Key="GrayBrush" Color="Gray" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LightGrayBrush" Color="LightGray" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkGrayBrush" Color="DarkGray" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkRedBrush" Color="DarkRed" p:Freeze="True"/>
+    <SolidColorBrush x:Key="RedBrush" Color="Red" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkOrangeBrush" Color="DarkOrange" p:Freeze="True"/>
+    <SolidColorBrush x:Key="OrangeRedBrush" Color="OrangeRed" p:Freeze="True"/>
+    <SolidColorBrush x:Key="OrangeBrush" Color="Orange" p:Freeze="True"/>
+    <SolidColorBrush x:Key="YellowBrush" Color="Yellow" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LightYellowBrush" Color="LightYellow" p:Freeze="True"/>
+    <SolidColorBrush x:Key="GreenBrush" Color="Green" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LimeGreenBrush" Color="LimeGreen" p:Freeze="True"/>
+    <SolidColorBrush x:Key="BlueBrush" Color="Blue" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LimeBrush" Color="Lime" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkBlueBrush" Color="DarkBlue" p:Freeze="True"/>
+
+    <!-- https://encycolorpedia.ru/ff6347 -->
+    <SolidColorBrush x:Key="RedTomatoBrush" Color="#FF6347" p:Freeze="True"/>
+    <!-- https://encycolorpedia.ru/fbec5d -->
+    <SolidColorBrush x:Key="YelowCornBrush" Color="#FBEC5D" p:Freeze="True"/>
+    <!-- https://encycolorpedia.ru/2e8b57 -->
+    <SolidColorBrush x:Key="GreenSeagreenBrush" Color="#2E8B57" p:Freeze="True"/>
+
+    <SolidColorBrush x:Key="LightSkyBlueBrush" Color="LightSkyBlue" p:Freeze="True"/>
+    <SolidColorBrush x:Key="LightBlueBrush" Color="LightBlue" p:Freeze="True"/>
+    <SolidColorBrush x:Key="ChartreuseBrush" Color="Chartreuse" p:Freeze="True"/>
+
+    <Color x:Key="SelectionColor">#D8E0F1</Color>
+    <SolidColorBrush x:Key="SelectionBrush" Color="{StaticResource SelectionColor}" p:Freeze="True"/>
+
+    <SolidColorBrush x:Key="FolderColorBrush" Color="#FFFFE793" p:Freeze="True"/>
+
+    <SolidColorBrush x:Key="AlternativeDataGridRowBackground" Color="#66D3D3D3" p:Freeze="True"/>
+
+    <SolidColorBrush x:Key="FolderStrokeColor" Color="#FF987B05" p:Freeze="True"/>
+
+    <SolidColorBrush x:Key="OliveBrush" Color="Olive" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DarkSlateGrayBrush" Color="DarkSlateGray" p:Freeze="True"/>
+    <SolidColorBrush x:Key="DodgerBlueBrush" Color="DodgerBlue" p:Freeze="True"/>
+
+    <LinearGradientBrush x:Key="FolderBackFillBrush" StartPoint="0.5,0" EndPoint="0.5,1" p:Freeze="True">
+        <LinearGradientBrush.RelativeTransform>
+            <RotateTransform Angle="-15" p:Freeze="True"/>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Color="#FFFCEA60" Offset="0"/>
+        <GradientStop Color="#FFF4BC0F" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="FolderFrontFillBrush" StartPoint="0.5,0" EndPoint="0.5,1" p:Freeze="True">
+        <LinearGradientBrush.RelativeTransform>
+            <RotateTransform Angle="-15" p:Freeze="True"/>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Color="#00000000" Offset="1"/>
+        <GradientStop Color="#99F4BC0F"/>
+    </LinearGradientBrush>
+
+
+    <LinearGradientBrush x:Key="Gradient_Vertical_AliceBlue_White" p:Freeze="true">
+        <GradientStop Color="AliceBlue" Offset="0.4" />
+        <GradientStop Color="White" Offset="0.8" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Gradient_Vertical_LightBlue_DarkBlue" StartPoint="0.5,0" EndPoint="0.5,1" p:Freeze="true">
+        <GradientStop Color="LightBlue" Offset="0" />
+        <GradientStop Color="DarkBlue" Offset="0.5" />
+    </LinearGradientBrush>
+
+    <Pen x:Key="GrayPen" Brush="{StaticResource GrayBrush}" p:Freeze="true"/>
+    <Pen x:Key="RedPen" Brush="{StaticResource RedBrush}" p:Freeze="true"/>
+    <Pen x:Key="RedPen2" Brush="{StaticResource RedBrush}" Thickness="2" p:Freeze="true"/>
+    <Pen x:Key="OrangePen2" Brush="{StaticResource OrangeBrush}" Thickness="2" p:Freeze="true"/>
+    <Pen x:Key="YellowPen2" Brush="{StaticResource YellowBrush}" Thickness="2" p:Freeze="true"/>
+
+</ResourceDictionary>

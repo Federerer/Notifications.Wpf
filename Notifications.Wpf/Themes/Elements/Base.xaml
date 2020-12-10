@@ -1,0 +1,71 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Sources.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key=".WhiteControl" TargetType="{x:Type Control}">
+        <Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+    </Style>
+
+    <Style x:Key=".ControlMargin5Style" TargetType="{x:Type FrameworkElement}">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+
+    <Style x:Key=".UnborderedControl" TargetType="{x:Type Control}">
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style x:Key="FixedMinWidth90Margin5" TargetType="{x:Type FrameworkElement}" BasedOn="{StaticResource .ControlMargin5Style}">
+        <Setter Property="MinWidth" Value="90" />
+    </Style>
+
+    <Style x:Key="FixedMinWidth60Margin5" TargetType="{x:Type FrameworkElement}" BasedOn="{StaticResource .ControlMargin5Style}">
+        <Setter Property="MinWidth" Value="60" />
+    </Style>
+
+    <Style x:Key="FixedMinWidth120Margin5" TargetType="{x:Type FrameworkElement}" BasedOn="{StaticResource .ControlMargin5Style}">
+        <Setter Property="MinWidth" Value="120" />
+    </Style>
+
+    <Style x:Key=".FocusVisual" TargetType="{x:Type Control}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Rectangle Margin="2" 
+                               SnapsToDevicePixels="true" 
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" 
+                               StrokeThickness="1" 
+                               StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key=".DefaultFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style> 
+
+    <ItemsPanelTemplate x:Key="@GridItemsPanelTemplate">
+        <Grid ClipToBounds="False"/>
+    </ItemsPanelTemplate>
+
+    <ItemsPanelTemplate x:Key="@CanvasItemsPanelTemplate">
+        <Canvas/>
+    </ItemsPanelTemplate>
+
+    <Geometry x:Key="ArrowUpGeometry" p:Freeze="true">M 0,4 C0,4 0,6 0,6 0,6 3.5,2.5 3.5,2.5 3.5,2.5 7,6 7,6 7,6 7,4 7,4 7,4 3.5,0.5 3.5,0.5 3.5,0.5 0,4 0,4 z</Geometry>
+    <Geometry x:Key="ArrowDownGeometry" p:Freeze="true">M 0,2.5 C0,2.5 0,0.5 0,0.5 0,0.5 3.5,4 3.5,4 3.5,4 7,0.5 7,0.5 7,0.5 7,2.5 7,2.5 7,2.5 3.5,6 3.5,6 3.5,6 0,2.5 0,2.5 z</Geometry>
+    <Geometry x:Key="ArrowLeftGeometry" p:Freeze="true">M 3.18,7 C3.18,7 5,7 5,7 5,7 1.81,3.5 1.81,3.5 1.81,3.5 5,0 5,0 5,0 3.18,0 3.18,0 3.18,0 0,3.5 0,3.5 0,3.5 3.18,7 3.18,7 z</Geometry>
+    <Geometry x:Key="ArrowRightGeometry" p:Freeze="true">M 1.81,7 C1.81,7 0,7 0,7 0,7 3.18,3.5 3.18,3.5 3.18,3.5 0,0 0,0 0,0 1.81,0 1.81,0 1.81,0 5,3.5 5,3.5 5,3.5 1.81,7 1.81,7 z</Geometry>
+    <Geometry x:Key="CheckGeometry" xml:space="preserve" p:Freeze="false">F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z </Geometry>
+
+</ResourceDictionary>

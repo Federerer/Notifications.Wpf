@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StreamGeometry x:Key="ArrowDown" p:Freeze="True">M 0 0 L 4 4 L 8 0 Z</StreamGeometry>
+    <StreamGeometry x:Key="PlayArrow" p:Freeze="True">F1M50,25L0,0L0,50L50,25Z</StreamGeometry>
+
+    <StreamGeometry x:Key="DocumentGeomentry" p:Freeze="True">M0,0 v20 h15 v-15 l-5,-5 h-10 m10,0 v5 h5 M0,0 m2,3 h6 m-6,4 h3 m2,0 h3 m2,0 h2 m-12,3 h2 m2,0 h3 m2,0 h2 m-11,3 h5 m2,0 h4 m-11,3 h2 m2,0 h4 m2,0 h1</StreamGeometry>
+    <StreamGeometry x:Key="FolderBackGeomentry" p:Freeze="True">M0,0 l5,25 l25,-5 l-6,-18 l-15,-0 l-1,-2 L0,0</StreamGeometry>
+    <StreamGeometry x:Key="FolderFrontGeomentry" p:Freeze="True">m5,25 l5,-18 l24,-2 l-4,15</StreamGeometry>
+
+    <StreamGeometry x:Key="FilterGeomentry" p:Freeze="True">M1,1 l3,5 0,3 2,0 0,-3 3,-5 Z</StreamGeometry> 
+
+</ResourceDictionary>

@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"> 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colors.xaml"/>
+        <ResourceDictionary Source="EasingFunctions.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Storyboard x:Key="BackgroundColor_SelectionOn_0.1s">
+        <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                        To="{StaticResource SelectionColor}" 
+                        Duration="0:0:0.1" 
+                        EasingFunction="{StaticResource CubicEasingInFunction}" />
+    </Storyboard>
+    <Storyboard x:Key="BackgroundColor_SelectionOn_0.2s">
+        <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                        To="{StaticResource SelectionColor}" 
+                        Duration="0:0:0.2" 
+                        EasingFunction="{StaticResource CubicEasingInFunction}" />
+    </Storyboard>
+
+    <Storyboard x:Key="BackgroundColor_SelectionOff_0.1s">
+        <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                        From="{StaticResource SelectionColor}" 
+                        Duration="0:0:0.1" 
+                        EasingFunction="{StaticResource CubicEasingInFunction}" />
+    </Storyboard>
+
+    <Storyboard x:Key="BackgroundColor_SelectionOff_0.2s">
+        <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                        From="{StaticResource SelectionColor}" 
+                        Duration="0:0:0.2" 
+                        EasingFunction="{StaticResource CubicEasingInFunction}" />
+    </Storyboard>
+
+    <Storyboard x:Key="BackgroundColor_SelectionOff_0.4s">
+        <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                        From="{StaticResource SelectionColor}" 
+                        Duration="0:0:0.4" 
+                        EasingFunction="{StaticResource CubicEasingInFunction}" />
+    </Storyboard>
+
+</ResourceDictionary>

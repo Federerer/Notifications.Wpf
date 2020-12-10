@@ -19,10 +19,7 @@ namespace Notification.Wpf
 
         public NotificationManager(Dispatcher dispatcher = null)
         {
-            if (dispatcher == null)
-            {
-                dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
-            }
+            dispatcher ??= Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
             _dispatcher = dispatcher;
         }
@@ -68,7 +65,7 @@ namespace Notification.Wpf
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null)
         {
-            var content = new NotificationContent {Type = type};
+            var content = new NotificationContent { Type = type };
             if (message != null)
                 content.Message = message;
             if (title != null) content.Title = title;
@@ -105,8 +102,9 @@ namespace Notification.Wpf
             if (Areas == null) return;
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
-                area.Show(content, (TimeSpan) expirationTime, onClick, onClose);
+                area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
             }
+
         } 
         public void Show(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null, string LeftButtonText = null,
             RoutedEventHandler RightButton = null, string RightButtonText = null)

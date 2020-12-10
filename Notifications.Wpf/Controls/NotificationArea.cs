@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Notification.Wpf.View;
+using Notifications.Wpf.View;
 using Notifications.Wpf.ViewModels;
 using Utilities.WPF.Notifications;
 
@@ -60,12 +61,31 @@ namespace Notification.Wpf.Controls
 #endif
         {
             if(content is NotificationContent model)
-                if(model.Type==NotificationType.Notification)
+            {
+                if (model.Type == NotificationType.Notification)
                 {
                     var temp = new NotificationViewModel {Title = model.Title, Message = model.Message};
 
-                    content = new NotificationInfoView {DataContext = temp };
+                    content = new NotificationInfoView {DataContext = temp};
                 }
+                else if(model.Type == NotificationType.AttachText)
+                {
+                    var temp = new NotificationAttachTextViewModel() { Title = model.Title, Message = model.Message };
+
+                    content = new NotificationAttachTextView { DataContext = temp };
+                    ((NotificationAttachTextView) content).Attach.Click += (Sender, Args) =>
+                    {
+                        var window = new Window();
+                        var win_content = new TextContentView {DataContext = temp};
+                        window.Content = win_content;
+                        window.Title = "Message";
+                        window.Height = 500;
+                        window.Width = 650;
+                        window.Show();
+                    };
+                }
+            }
+
             var notification = new Notification
             {
                 Content = content
