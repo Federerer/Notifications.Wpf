@@ -55,11 +55,6 @@
                             Style="{StaticResource OverButton}"
                             Visibility="{Binding AttachButtonVisibility, Converter={converters:BoolToVisibility Collapse=True}}" 
                             controls:Notification.CloseOnClick="True">
-                    <Button.Triggers>
-                            <!--<EventTrigger RoutedEvent="ButtonBase.Loaded" SourceName="Attach">
-                                <BeginStoryboard Storyboard="{StaticResource Blinking}"/>
-                            </EventTrigger>-->
-                        </Button.Triggers>
                         <TextBlock DockPanel.Dock="Bottom" Text="&#57708;" FontFamily="Segoe UI Symbol" FontSize="20"  TextAlignment="Left" VerticalAlignment="Center">
                             <TextBlock.Triggers>
                                 <EventTrigger RoutedEvent="TextBlock.Loaded">

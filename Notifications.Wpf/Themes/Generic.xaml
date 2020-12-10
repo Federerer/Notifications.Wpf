@@ -2,7 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Notification.Wpf.Controls"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:wpf="clr-namespace:Notification.Wpf">
+                    xmlns:wpf="clr-namespace:Notification.Wpf"
+                    xmlns:converters="clr-namespace:Notification.Wpf.Converters">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Themes/Main.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
     <Path x:Key="ErrorIcon" Data="M 2.6874995 2.8246546e-7 -4.7683716e-7 2.6855503 5.3007795 7.9863303 -4.7683716e-7 13.28516 2.6874995 15.97266 l 5.29883 -5.30079 5.3007805 5.30079 2.68554 -2.6875 -5.29882 -5.2988297 5.29882 -5.30078 L 13.28711 2.8246546e-7 7.9863295 5.2988303 2.6874995 2.8246546e-7 Z" Fill="White" x:Shared="False"/>
     <Path x:Key="SuccessIcon" Data="M 15.56055 5.9323048e-7 7.53125 10.197261 2.73242 5.2304706 0 7.8710906 7.82422 15.968751 18.54492 2.3515606 15.56055 5.9323048e-7 Z" Fill="White" x:Shared="False"/>
@@ -37,12 +41,49 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <ContentControl Margin="0,0,12,0" Width="25" Height="25" VerticalAlignment="Top">
-                            <ContentControl x:Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ContentControl Margin="0,0,12,0" Width="25" VerticalAlignment="Stretch">
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Top" Text="&#xE115;" FontFamily="Segoe UI Symbol" FontSize="20" TextAlignment="Center" VerticalAlignment="Top"/>
+                                <Button x:Name="Attach" 
+                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                            Style="{StaticResource OverButton}"
+                            Visibility="{Binding TrimType,
+                                    Converter={wpf:Combine First={wpf:NotificationTextAttachConverter}, Then={converters:BoolToVisibility Collapse=True}}}" 
+                            controls:Notification.CloseOnClick="True">
+                                    <TextBlock DockPanel.Dock="Bottom" Text="&#57708;" FontFamily="Segoe UI Symbol" FontSize="20"  TextAlignment="Left" VerticalAlignment="Center">
+                                        <TextBlock.Triggers>
+                                            <EventTrigger RoutedEvent="TextBlock.Loaded">
+                                                <EventTrigger.Actions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimationUsingKeyFrames
+                                                    Storyboard.TargetProperty
+                                                    ="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                    RepeatBehavior="10x"
+                                                    AutoReverse="True">
+                                                                <LinearColorKeyFrame
+                                                        KeyTime="0:0:1"
+                                                        Value="WhiteSmoke"/>
+                                                                <LinearColorKeyFrame
+                                                        KeyTime="0:0:3"
+                                                        Value="Black"/>
+                                                            </ColorAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger.Actions>
+                                            </EventTrigger>
+                                        </TextBlock.Triggers>
+                                    </TextBlock>
+                                </Button>
+
+                            </DockPanel>
                         </ContentControl>
+
                         <DockPanel Grid.Column="1">
                             <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis" />
-                            <TextBlock Text="{Binding Message}" TextWrapping="Wrap" Opacity=".8" Margin="0,0,12,0"/>
+                            <TextBlock Text="{Binding Message}"
+                                       TextTrimming="{Binding TrimType, Converter={wpf:NotificationTextTextTrimmingConverter}}"
+                                       TextWrapping="Wrap" Opacity=".8" Margin="0,0,12,0"/>
                         </DockPanel>
                     </Grid>
                 </Border>

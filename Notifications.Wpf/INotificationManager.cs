@@ -10,7 +10,7 @@ namespace Notification.Wpf
         void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null, Action onClose = null);
 
         void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
-            Action onClose = null);
+            Action onClose = null, TextTrimming trim = TextTrimming.None);
 
         void Show(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null,
             string LeftButtonText = null,

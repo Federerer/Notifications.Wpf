@@ -74,6 +74,7 @@
     <Compile Include="Controls\Notification.cs" />
     <Compile Include="Controls\NotificationArea.cs" />
     <Compile Include="Controls\ReversibleStackPanel.cs" />
+    <Compile Include="Converters\Combine.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Extensions\ColumnDefinitionCollapsable.cs" />
     <Compile Include="Extensions\RowDefinitionCollapsable.cs" />

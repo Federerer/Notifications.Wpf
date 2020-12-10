@@ -63,7 +63,7 @@ namespace Notification.Wpf
         }
 
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
-            Action onClose = null)
+            Action onClose = null, TextTrimming trim = TextTrimming.None)
         {
             var content = new NotificationContent { Type = type };
             if (message != null)
@@ -74,7 +74,7 @@ namespace Notification.Wpf
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose)));
+                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose, trim)));
                 return;
             }
 
@@ -105,7 +105,8 @@ namespace Notification.Wpf
                 area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
             }
 
-        } 
+        }
+
         public void Show(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null, string LeftButtonText = null,
             RoutedEventHandler RightButton = null, string RightButtonText = null)
         {
