@@ -30,13 +30,23 @@ namespace Notification.Wpf.Sample
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            var v = new NotificationContent
+            {
+                Title = "Sample notification",
+                Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                Type = (NotificationType)1,
+                TrimType = NotificationTextTrimType.Attach
+            };
+            _notificationManager.Show(v);
+            return;
             for (var i = 0; i <= 5; i++)
             {
                 var content = new NotificationContent
                 {
                     Title = "Sample notification",
-                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    Type = (NotificationType)i
+                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Type = (NotificationType)i,
+                    TrimType = NotificationTextTrimType.Attach
                 };
                 await Task.Delay(TimeSpan.FromSeconds(1));
                 _notificationManager.Show(content);

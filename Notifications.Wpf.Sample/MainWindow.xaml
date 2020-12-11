@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Notification.Wpf.Sample"
         xmlns:controls="clr-namespace:Notification.Wpf.Controls;assembly=Notifications.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600">
+        Title="MainWindow" Height="400" Width="600"
+        >
     <DockPanel>
         <UniformGrid DockPanel.Dock="Bottom" Rows="1">
             <Button Content="Timer" Click="Button_Timer"/>

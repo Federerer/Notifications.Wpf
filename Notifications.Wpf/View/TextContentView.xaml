@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Notifications.Wpf.View"
              xmlns:converters="clr-namespace:Notification.Wpf.Converters"
              xmlns:controls="clr-namespace:Notification.Wpf.Controls"
+             xmlns:wpf="clr-namespace:Notification.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="450" >
     <UserControl.Resources>
@@ -43,31 +44,55 @@
     </UserControl.Resources>
     <Border Padding="12" MinHeight="20" Background="#FF444444">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition MaxHeight="16"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ContentControl Margin="0,0,12,0" Width="25" VerticalAlignment="Top">
-                <TextBlock DockPanel.Dock="Top" Text="&#xE167;" FontFamily="Segoe UI Symbol" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}" TextAlignment="Center" VerticalAlignment="Center"/>
-            </ContentControl>
-                <DockPanel Grid.Column="1">
-                <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" Foreground="{StaticResource WhiteSmokeBrush}"  FontSize="18" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
-                <!--<DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="0,8,0,0">
-                    <Button x:Name="Ok" Content="{Binding RightButtonContent}" DockPanel.Dock="Right" controls:Notification.CloseOnClick="True"
-                            Visibility="{Binding RightButtonVisibility, Converter={converters:BoolToVisibility Collapse=True}}"/>
-                    <Button x:Name="Cancel" Content="{Binding LeftButtonContent}" DockPanel.Dock="Right" Margin="0,0,8,0" controls:Notification.CloseOnClick="True"
-                            Visibility="{Binding LeftButtonVisibility, Converter={converters:BoolToVisibility Collapse=True}}"/>
-                </DockPanel>-->
-                <ScrollViewer x:Name="MyScrollViewer" HorizontalScrollBarVisibility="Disabled"
-                              VerticalScrollBarVisibility="Auto" Margin="0,8,0,0">
-                    <TextBox IsReadOnly="True"  
-                             Text="{Binding Message}" BorderThickness="0"
-                             Background="{StaticResource TransparentBrush}" Foreground="{StaticResource WhiteBrush}" FontSize="16"
-                           TextWrapping="Wrap" Opacity=".8" Margin="0,8,0,0"/>
-                    <!--<TextBlock Text="{Binding Message}" Foreground="{StaticResource WhiteBrush}" FontSize="16"
-                               TextWrapping="Wrap" Opacity=".8" Margin="0,8,0,0"/>-->
-                </ScrollViewer>
-            </DockPanel>
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                  HorizontalAlignment="Right">
+
+                <StackPanel x:Name="TopPanelButtons" Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+
+                    <Button x:Name="MinimizeButton" KeyboardNavigation.IsTabStop="False" Style="{StaticResource OverButton}" Click="MinimizeButton_OnClick">
+                        <TextBlock Text="&#xE108;" FontFamily="Segoe UI Symbol" Margin="0,0,0,-5" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <Button x:Name="MaximizeButton" KeyboardNavigation.IsTabStop="False" Style="{StaticResource OverButton}" Click="MaximizeButton_OnClick">
+                        <TextBlock Text="&#xE15B;" FontFamily="Segoe UI Symbol" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center"/>
+                    </Button>
+
+                    <Button x:Name="CloseButton" KeyboardNavigation.IsTabStop="False" Style="{StaticResource OverButton}" Click="CloseButton_OnClick">
+                        <TextBlock Text="&#xE10A;" FontFamily="Segoe UI Symbol" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center"/>
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="&#xE167;" FontFamily="Segoe UI Symbol" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}"
+                      VerticalAlignment="Top" Margin="0,0,12,0" />
+            <DockPanel Grid.Column="1" Grid.Row="1"> 
+            <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" Foreground="{StaticResource WhiteSmokeBrush}"  FontSize="18" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+            <!--<DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="0,8,0,0">
+                <Button x:Name="Ok" Content="{Binding RightButtonContent}" DockPanel.Dock="Right" controls:Notification.CloseOnClick="True"
+                        Visibility="{Binding RightButtonVisibility, Converter={converters:BoolToVisibility Collapse=True}}"/>
+                <Button x:Name="Cancel" Content="{Binding LeftButtonContent}" DockPanel.Dock="Right" Margin="0,0,8,0" controls:Notification.CloseOnClick="True"
+                        Visibility="{Binding LeftButtonVisibility, Converter={converters:BoolToVisibility Collapse=True}}"/>
+            </DockPanel>-->
+            <ScrollViewer x:Name="MyScrollViewer" HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto" Margin="0,8,0,0">
+                <TextBox IsReadOnly="True"  
+                         Text="{Binding Message}" BorderThickness="0"
+                         Background="{StaticResource TransparentBrush}" Foreground="{StaticResource WhiteBrush}" FontSize="16"
+                       TextWrapping="Wrap" Opacity=".8" Margin="0,8,0,0"/>
+                <!--<TextBlock Text="{Binding Message}" Foreground="{StaticResource WhiteBrush}" FontSize="16"
+                           TextWrapping="Wrap" Opacity=".8" Margin="0,8,0,0"/>-->
+            </ScrollViewer>
+        </DockPanel>
         </Grid>
     </Border>
 </UserControl>
