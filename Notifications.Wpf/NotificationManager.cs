@@ -63,9 +63,9 @@ namespace Notification.Wpf
         }
 
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
-            Action onClose = null, TextTrimming trim = TextTrimming.None)
+            Action onClose = null, NotificationTextTrimType trim = NotificationTextTrimType.NoTrim)
         {
-            var content = new NotificationContent { Type = type };
+            var content = new NotificationContent { Type = type, TrimType = trim};
             if (message != null)
                 content.Message = message;
             if (title != null) content.Title = title;

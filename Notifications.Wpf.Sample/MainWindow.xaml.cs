@@ -30,23 +30,13 @@ namespace Notification.Wpf.Sample
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            var v = new NotificationContent
-            {
-                Title = "Sample notification",
-                Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                Type = (NotificationType)1,
-                TrimType = NotificationTextTrimType.Attach
-            };
-            _notificationManager.Show(v);
-            return;
             for (var i = 0; i <= 5; i++)
             {
                 var content = new NotificationContent
                 {
                     Title = "Sample notification",
-                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     Type = (NotificationType)i,
-                    TrimType = NotificationTextTrimType.Attach
                 };
                 await Task.Delay(TimeSpan.FromSeconds(1));
                 _notificationManager.Show(content);
@@ -62,7 +52,8 @@ namespace Notification.Wpf.Sample
             {
                 Title = "Clicked!",
                 Message = "Window notification was clicked!",
-                Type = NotificationType.Success
+                Type = NotificationType.Success,
+                
             };
             _notificationManager.Show(content, "WindowArea", onClick: () => _notificationManager.Show(clickContent));
         }
@@ -196,7 +187,7 @@ namespace Notification.Wpf.Sample
 
         }
 
-        private void Show_new_content_window(object Sender, RoutedEventArgs E)
+        private void ShowAttachMessage(object Sender, RoutedEventArgs E)
         {
             var long_text =
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod accumsan orci vel varius. Nulla consectetur egestas est, in porttitor elit placerat non. Cras dapibus cursus magna. Nunc ac malesuada lacus. Etiam non luctus magna, nec vulputate diam. Sed porta mi at tristique bibendum. Nunc luctus libero ut mauris cursus, eget dignissim est luctus.Sed ac nibh dignissim, elementum mi ut, tempor quam.Donec quis ornare sapien. Maecenas arcu elit, blandit quis odio eu, elementum bibendum leo."
@@ -208,8 +199,14 @@ namespace Notification.Wpf.Sample
                 + "\n\rNullam blandit velit sed nisi ullamcorper varius.Nam facilisis ex vitae nulla pharetra ornare.Proin tincidunt purus vitae odio tristique, vel laoreet magna vulputate.Quisque quis erat pharetra, accumsan ante vitae, tristique felis.Pellentesque pretium, orci id consectetur maximus, velit quam consectetur ex, quis consectetur diam diam eleifend arcu.Donec a massa venenatis, aliquam sapien at, hendrerit tellus.Vivamus lectus justo, faucibus vitae erat eu, porta bibendum ligula."
 
                 + "\n\rIn hac habitasse platea dictumst.Quisque malesuada, mi ut ultricies luctus, nisl mi sodales ligula, eget feugiat tortor lacus sed elit.Fusce sit amet risus a purus volutpat fermentum. Sed in enim lacinia, iaculis elit ut, facilisis felis.Nulla facilisi. Suspendisse dapibus enim dui, ac sollicitudin enim rutrum nec. Cras tincidunt sit amet quam vitae sollicitudin.Cras porttitor non ante nec accumsan. Nam placerat eget enim consequat dignissim. Suspendisse tempor urna tortor, id aliquet augue dignissim vel. Vivamus auctor ac ex et pulvinar.";
-            _notificationManager.Show("Long text test window",long_text, NotificationType.AttachText, "", TimeSpan.MaxValue);
-
+            var v = new NotificationContent
+            {
+                Title = "Sample notification",
+                Message = long_text,
+                Type = (NotificationType)1,
+                TrimType = NotificationTextTrimType.Attach
+            };
+            _notificationManager.Show(v, expirationTime:TimeSpan.MaxValue);
         }
     }
 }

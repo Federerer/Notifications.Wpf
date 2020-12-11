@@ -6,7 +6,7 @@
         public string Message { get; set; }
 
         public NotificationType Type { get; set; }
-        public NotificationTextTrimType TrimType { get; set; }
+        public NotificationTextTrimType TrimType { get; set; } = NotificationTextTrimType.NoTrim;
     }
 
     /// <summary>
