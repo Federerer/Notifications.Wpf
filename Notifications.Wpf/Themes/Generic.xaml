@@ -115,10 +115,9 @@
                                                     RepeatBehavior="10x"
                                                     AutoReverse="True">
                                                                 <LinearColorKeyFrame
+                                                        KeyTime="0:0:0"
+                                                        Value="White"/><LinearColorKeyFrame
                                                         KeyTime="0:0:1"
-                                                        Value="WhiteSmoke"/>
-                                                                <LinearColorKeyFrame
-                                                        KeyTime="0:0:3"
                                                         Value="Black"/>
                                                             </ColorAnimationUsingKeyFrames>
                                                         </Storyboard>
