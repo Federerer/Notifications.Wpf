@@ -8,8 +8,9 @@ Install-Package Notification.WPF -Version 1.0.3
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/info_button.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/content.gif)
-
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/sample_attach.gif)
 ### Known issue
+
 If you have problem with close notification window after closing you app, use this row: 
 ```C#
 Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
