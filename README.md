@@ -37,7 +37,8 @@ Project was re-released due to lack of owner interest in updating it.
     {
         NoTrim,
         Trim,
-        Attach
+        Attach,
+        AttachIfMoreRows
     }
 
     
