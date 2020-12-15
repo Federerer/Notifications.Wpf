@@ -63,9 +63,9 @@ namespace Notification.Wpf
         }
 
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
-            Action onClose = null, NotificationTextTrimType trim = NotificationTextTrimType.NoTrim)
+            Action onClose = null, NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2)
         {
-            var content = new NotificationContent { Type = type, TrimType = trim};
+            var content = new NotificationContent { Type = type, TrimType = trim, RowsCount = RowsCountWhenTrim };
             if (message != null)
                 content.Message = message;
             if (title != null) content.Title = title;
@@ -74,7 +74,7 @@ namespace Notification.Wpf
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose, trim)));
+                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose, trim, RowsCountWhenTrim)));
                 return;
             }
 
