@@ -8,7 +8,7 @@ using Notifications.Wpf.Annotations;
 
 namespace Notification.Wpf.Sample.Helpers
 {
-    public class EnumValues : MarkupExtension
+    class EnumValues : MarkupExtension
     {
         private Type _Type;
         public Type Type

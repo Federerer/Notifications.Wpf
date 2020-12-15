@@ -8,12 +8,12 @@ using Notification.Wpf.Converters;
 namespace Notification.Wpf
 {
     [ValueConversion(typeof(bool), typeof(bool)), MarkupExtensionReturnType(typeof(BoolInverse))]
-    public class BoolInverse : ValueConverter
+    class BoolInverse : ValueConverter
     {
         public override object Convert(object v, Type t, object p, CultureInfo c) => v is null ? false : (object)!(bool)v;
     } 
     [ValueConversion(typeof(int), typeof(int)), MarkupExtensionReturnType(typeof(MessageRowsCountConverter))]
-    public class MessageRowsCountConverter : ValueConverter
+    class MessageRowsCountConverter : ValueConverter
     {
         public double BaseSize { get; set; }
 
@@ -36,7 +36,7 @@ namespace Notification.Wpf
         }
     }
     [ValueConversion(typeof(NotificationTextTrimType), typeof(bool)), MarkupExtensionReturnType(typeof(NotificationTextAttachConverter))]
-    public class NotificationTextAttachConverter : ValueConverter
+    class NotificationTextAttachConverter : ValueConverter
     {
         public override object Convert(object v, Type t, object p, CultureInfo c)
         {
@@ -44,8 +44,8 @@ namespace Notification.Wpf
             return type == NotificationTextTrimType.Attach;
         }
     }
-    [ValueConversion(typeof(NotificationTextTrimType), typeof(TextTrimming)), MarkupExtensionReturnType(typeof(NotificationTextTextTrimmingConverter))]
-    public class NotificationTextTextTrimmingConverter : ValueConverter
+    [ValueConversion(typeof(NotificationTextTrimType), typeof(TextTrimming)), MarkupExtensionReturnType(typeof(NotificationTextTrimmingConverter))]
+    class NotificationTextTrimmingConverter : ValueConverter
     {
         public override object Convert(object v, Type t, object p, CultureInfo c)
         {
