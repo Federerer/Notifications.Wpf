@@ -2,7 +2,7 @@
 WPF toast notifications.
 
 ### Installation:
-Install-Package Notification.WPF -Version 1.0.2.2
+Install-Package Notification.WPF -Version 1.0.3
 
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
@@ -23,7 +23,7 @@ Project was re-released due to lack of owner interest in updating it.
 ### Usage:
 
 ### Notifi type:
- public enum NotificationType   
+    public enum NotificationType   
     {
         Information,
         Success,
@@ -31,6 +31,14 @@ Project was re-released due to lack of owner interest in updating it.
         Error,
         Notification
     }
+### Text Trim type
+    public enum NotificationTextTrimType
+    {
+        NoTrim,
+        Trim,
+        Attach
+    }
+
     
 #### Notification over the taskbar:
 ```C#
@@ -51,8 +59,22 @@ xmlns:notifications="clr-namespace:Notifications.Wpf.Controls;assembly=Notificat
 - Displaying notification:
 ```C#
 notificationManager.Show(title, Message, type, "WindowArea", onClick: () => SomeAction();
-
 ```
+-  Attach a long text to view window, without changing a size of notification message
+if you need to show all long text - use TrimTipe - NoTrim
+if you need to show small message window - use TrimTipe - Trim,
+if you need All text, but you dont need big window - use TrimTipe - Attach, it will trim text and show small button that open other window to operate with full text;
+```C#
+var content = new NotificationContent
+                {
+                    Title = "Sample notification",
+                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Type = NotificationType.Error,
+                    TrimType = NotificationTextTrimType.Attach
+                };
+                _notificationManager.Show(content);
+```
+
 #### Notification ProgressBar:
 
 using next type IProgress<(int? progress, string message, string title, bool? showCancel)>
