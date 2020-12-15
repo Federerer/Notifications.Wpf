@@ -65,13 +65,15 @@ notificationManager.Show(title, Message, type, "WindowArea", onClick: () => Some
 if you need to show all long text - use TrimTipe - NoTrim
 if you need to show small message window - use TrimTipe - Trim,
 if you need All text, but you dont need big window - use TrimTipe - Attach, it will trim text and show small button that open other window to operate with full text;
+Use row count (RowCount) when trim text
 ```C#
 var content = new NotificationContent
                 {
                     Title = "Sample notification",
                     Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     Type = NotificationType.Error,
-                    TrimType = NotificationTextTrimType.Attach
+                    TrimType = NotificationTextTrimType.Attach // will show attach buttron on message
+                    RowsCont = 3 //Will show 3 rows and trim after
                 };
                 _notificationManager.Show(content);
 ```
