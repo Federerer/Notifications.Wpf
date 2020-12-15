@@ -7,6 +7,7 @@
 
         public NotificationType Type { get; set; }
         public NotificationTextTrimType TrimType { get; set; } = NotificationTextTrimType.NoTrim;
+        public uint RowsCount { get; set; } = 2;
     }
 
     /// <summary>

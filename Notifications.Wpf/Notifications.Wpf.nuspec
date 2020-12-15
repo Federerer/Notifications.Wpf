@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>Notification.WPF</id>
-    <version>1.0.3.0</version>
+    <version>1.0.4.0</version>
     <title>Notification.WPF</title>
     <authors>APlatonenkov</authors>
-    <owners>https://github.com/Federerer</owners>
+	  <owners>https://github.com/Platonenkov</owners>
     <projectUrl>https://github.com/Platonenkov/Notifications.Wpf</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This project will help you take notification window like in windows</description>
-    <releaseNotes>Add attach string property</releaseNotes>
+    <releaseNotes>Add trim setting for text in notification</releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>Toast Notifications WPF</tags>
     <license type="expression">MIT</license>

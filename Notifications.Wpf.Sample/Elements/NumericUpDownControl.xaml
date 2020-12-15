@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Notification.Wpf.Sample.Elements.NumericUpDownControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Notification.Wpf.Sample.Elements"
+             mc:Ignorable="d" 
+             Height="25" Width="80">
+    <Border BorderBrush="#60000000" BorderThickness="0.5">
+        <Grid Margin="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="TextBoxValue"
+                     PreviewTextInput="value_PreviewTextInput" TextChanged="value_TextChanged" PreviewKeyDown="value_PreviewKeyDown"					 
+                     TextAlignment="Right"
+                     Grid.Column="0"/>
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="1"						
+                        VerticalAlignment="Center">
+                <Button x:Name="Increase"
+                        Click="Increase_Click">
+                    <TextBlock DockPanel.Dock="Bottom" Text="Up;" FontFamily="Segoe UI Symbol" FontSize="4"  TextAlignment="Left" VerticalAlignment="Center"/>
+                </Button>
+                <Button x:Name="Decrease"
+                        Click="Decrease_Click"					>
+                    <TextBlock DockPanel.Dock="Bottom" Text="down" FontFamily="Segoe UI Symbol" FontSize="4"  TextAlignment="Left" VerticalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

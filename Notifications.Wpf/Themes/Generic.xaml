@@ -142,12 +142,12 @@
                     <DataTrigger Binding="{Binding TrimType}" Value="Attach">
                         <Setter TargetName="Attach" Property="Visibility" Value="Visible"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="Height" Value="80"/>
+                        <Setter Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=60}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="Trim">
                         <Setter TargetName="Attach" Property="Visibility" Value="Collapsed"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="Height" Value="80"/>
+                        <Setter Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=60}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="NoTrim">
                         <Setter TargetName="Attach" Property="Visibility" Value="Collapsed"/>

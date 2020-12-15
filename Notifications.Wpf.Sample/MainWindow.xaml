@@ -5,20 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Notification.Wpf.Sample"
         xmlns:controls="clr-namespace:Notification.Wpf.Controls;assembly=Notifications.Wpf"
+        xmlns:elements="clr-namespace:Notification.Wpf.Sample.Elements"
+        xmlns:helpers="clr-namespace:Notification.Wpf.Sample.Helpers"
+        xmlns:wpf="clr-namespace:Notification.Wpf;assembly=Notifications.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600"
         >
-    <DockPanel>
-        <UniformGrid DockPanel.Dock="Bottom" Rows="1">
-            <Button Content="Timer" Click="Button_Timer"/>
-            <Button Content="Show" Click="Button_Click"/>
-            <Button Content="Show in window" Click="Button_Click_1" />
-            <Button Content="Show Progress" Click="Progress_Click" />
-            <Button Content="Show Info" Click="Message_Click" />
-            <Button Content="Show with button" Click="Message_button" />
-            <Button Content="Show content" Click="Show_Any_content" />
-            <Button Content="Attach" Click="ShowAttachMessage" />
-        </UniformGrid>
-        <controls:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="3"/>
-    </DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel  HorizontalAlignment="Right" VerticalAlignment="Bottom" DockPanel.Dock="Right">
+            <ComboBox ItemsSource="{helpers:EnumValues {x:Type wpf:NotificationTextTrimType}}" 
+                      SelectedItem="{Binding TrimType, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"/>
+            <elements:NumericUpDownControl Value="{Binding RowCount,
+                RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                           Minimum="1" Maximum="100" Margin="5"/>
+        </StackPanel>
+        <DockPanel Grid.Row="1">
+            <UniformGrid DockPanel.Dock="Bottom" Rows="1">
+                <Button Content="Timer" Click="Button_Timer"/>
+                <Button Content="Show" Click="Button_Click"/>
+                <Button Content="Show in window" Click="Button_Click_1" />
+                <Button Content="Show Progress" Click="Progress_Click" />
+                <Button Content="Show Info" Click="Message_Click" />
+                <Button Content="Show with button" Click="Message_button" />
+                <Button Content="Show content" Click="Show_Any_content" />
+                <Button Content="Attach" Click="ShowAttachMessage" />
+            </UniformGrid>
+            <controls:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="3"/>
+        </DockPanel>
+
+    </Grid>
 </Window>
