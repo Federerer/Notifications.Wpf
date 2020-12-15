@@ -144,6 +144,11 @@
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
                         <Setter Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=60}}"/>
                     </DataTrigger>
+                    <DataTrigger Binding="{Binding TrimType}" Value="AttachIfMoreRows">
+                        <Setter TargetName="Attach" Property="Visibility" Value="{Binding Converter={wpf:NotificationAttachVisibleConverter}}"/>
+                        <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
+                        <Setter Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=60}}"/>
+                    </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="Trim">
                         <Setter TargetName="Attach" Property="Visibility" Value="Collapsed"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>

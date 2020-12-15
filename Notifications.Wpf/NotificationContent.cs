@@ -17,7 +17,8 @@
     {
         NoTrim,
         Trim,
-        Attach
+        Attach,
+        AttachIfMoreRows
     }
     /// <summary>
     /// Тип сообщения

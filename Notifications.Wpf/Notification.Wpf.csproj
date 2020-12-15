@@ -75,6 +75,9 @@
     <Compile Include="Controls\NotificationArea.cs" />
     <Compile Include="Controls\ReversibleStackPanel.cs" />
     <Compile Include="Converters\Combine.cs" />
+    <Compile Include="Converters\MessageRowsCountConverter.cs" />
+    <Compile Include="Converters\NotificationTextAttachConverter.cs" />
+    <Compile Include="Converters\NotificationTextTrimmingConverter.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="Extensions\ColumnDefinitionCollapsable.cs" />
     <Compile Include="Extensions\RowDefinitionCollapsable.cs" />
@@ -173,9 +176,6 @@
     <None Include="Notifications.Wpf.snk" />
     <None Include="pack.bat" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
