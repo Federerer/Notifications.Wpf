@@ -18,6 +18,11 @@
              DataContext="{Binding NotificationProgressViewModel}" 
              >
     <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="#22FFFFFF"/>
@@ -41,7 +46,8 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <MouseBinding Gesture="LeftClick"  Command="{Binding CollapseWindowCommand}"/>
@@ -54,7 +60,7 @@
                 <extensions:ColumnDefinitionCollapsable Width="*"/>
             </Grid.ColumnDefinitions>
             <ContentControl Margin="0,0,12,0" Width="25" Height="25" VerticalAlignment="Top">
-                <TextBlock Text="..." FontFamily="Segoe UI Symbol" FontSize="20" TextAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{StaticResource LoadIcon}"/>
             </ContentControl>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>

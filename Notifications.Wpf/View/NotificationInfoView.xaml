@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Notification.Wpf.View"
              xmlns:controls="clr-namespace:Notification.Wpf.Controls"
              xmlns:converters="clr-namespace:Notification.Wpf.Converters"
              mc:Ignorable="d" 
@@ -11,30 +10,37 @@
              d:DesignHeight="120" d:DesignWidth="300"
              MinHeight="120" MinWidth="300">
     <UserControl.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#22FFFFFF"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Label Content="{TemplateBinding Content}"
-                           Foreground="{TemplateBinding Foreground}"
-                           Background="{TemplateBinding Background}"
-                           HorizontalContentAlignment="Center"
-                           MinWidth="80"/>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#11FFFFFF"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#11000000"/>
-                                <Setter Property="Foreground" Value="#FFAAAAAA"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Generic.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Button">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="#22FFFFFF"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Label Content="{TemplateBinding Content}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   Background="{TemplateBinding Background}"
+                                   HorizontalContentAlignment="Center"
+                                   MinWidth="80"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#11FFFFFF"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#11000000"/>
+                                    <Setter Property="Foreground" Value="#FFAAAAAA"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+
     </UserControl.Resources>
     <Border Padding="12" MinHeight="20" Background="#FF444444">
         <Grid>
@@ -43,7 +49,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <ContentControl Margin="0,0,12,0" Width="25" Height="25" VerticalAlignment="Top">
-                <TextBlock Text="&#xE115;" FontFamily="Segoe UI Symbol" FontSize="20" TextAlignment="Center" VerticalAlignment="Center"/>
+                <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center" Content="{StaticResource SettingIcon}"/>
+
             </ContentControl>
             <DockPanel Grid.Column="1">
                 <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>

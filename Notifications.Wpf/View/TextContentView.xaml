@@ -13,6 +13,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/Main.xaml"/>
+                <ResourceDictionary Source="../Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="Button">
                 <Setter Property="Foreground" Value="White"/>
@@ -60,21 +61,21 @@
                             VerticalAlignment="Center">
 
                     <Button x:Name="MinimizeButton" KeyboardNavigation.IsTabStop="False" Style="{StaticResource OverButton}" Click="MinimizeButton_OnClick">
-                        <TextBlock Text="&#xE108;" FontFamily="Segoe UI Symbol" Margin="0,0,0,-5" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center"/>
+                        <ContentControl HorizontalAlignment="Center" VerticalAlignment="Bottom" Content="{StaticResource MinimizeIcon}" Width="12" Margin="0,0,0,-5"/>
                     </Button>
 
                     <Button x:Name="MaximizeButton" KeyboardNavigation.IsTabStop="False" Style="{StaticResource OverButton}" Click="MaximizeButton_OnClick">
-                        <TextBlock Text="&#xE15B;" FontFamily="Segoe UI Symbol" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center"/>
+                        <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center" Content="{StaticResource MaximizeIcon}" Width="12" Margin="5,0"/>
                     </Button>
 
                     <Button x:Name="CloseButton" KeyboardNavigation.IsTabStop="False" Style="{StaticResource OverButton}" Click="CloseButton_OnClick">
-                        <TextBlock Text="&#xE10A;" FontFamily="Segoe UI Symbol" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center"/>
+                        <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center" Content="{StaticResource CloseIcon}" Width="12"/>
                     </Button>
 
                 </StackPanel>
             </Grid>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="&#xE167;" FontFamily="Segoe UI Symbol" FontSize="20" Foreground="{StaticResource WhiteSmokeBrush}"
-                      VerticalAlignment="Top" Margin="0,0,12,0" />
+            <ContentControl Grid.Row="1" Grid.Column="0" VerticalAlignment="Top"  HorizontalAlignment="Right" Content="{StaticResource LinkIcon}" Width="20" Margin="0,0,12,0"/>
+
             <DockPanel Grid.Column="1" Grid.Row="1"> 
             <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" Foreground="{StaticResource WhiteSmokeBrush}"  FontSize="18" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
             <!--<DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="0,8,0,0">
