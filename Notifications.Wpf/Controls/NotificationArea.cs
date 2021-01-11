@@ -63,20 +63,18 @@ namespace Notification.Wpf.Controls
                 Content = content
             };
             
-            notification.MouseLeftButtonDown += (sender, args) =>
+            notification.MouseLeftButtonDown += (sender, _) =>
             {
                 if (onClick == null) return;
                 onClick.Invoke();
                 (sender as Notification)?.Close();
             };
-            notification.NotificationClosed += (sender, args) => onClose?.Invoke();
+            notification.NotificationClosed += (_, _) => onClose?.Invoke();
 
             notification.NotificationClosed += OnNotificationClosed;
 
 
             await OnShowContent(notification, expirationTime);
-            content = null;
-            notification = null;
 
         }
 #if NET40
@@ -98,8 +96,6 @@ namespace Notification.Wpf.Controls
             notification.NotificationClosed += OnNotificationClosed;
 
             await OnShowContent(notification, expirationTime);
-            model = null;
-            content = null;
         }
 
         /// <summary>
@@ -132,9 +128,6 @@ namespace Notification.Wpf.Controls
             catch (OperationCanceledException)
             { }
             notification.Close();
-            model = null;
-            content = null;
-            progress = null;
         }
 
         /// <summary>
