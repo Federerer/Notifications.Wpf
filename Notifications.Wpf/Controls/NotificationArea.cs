@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Notification.Wpf.View;
-using Notifications.Wpf.View;
 using Notifications.Wpf.ViewModels;
-using Utilities.WPF.Notifications;
 
 namespace Notification.Wpf.Controls
 {
@@ -67,51 +65,19 @@ namespace Notification.Wpf.Controls
             
             notification.MouseLeftButtonDown += (sender, args) =>
             {
-                if (onClick != null)
-                {
-                    onClick.Invoke();
-                    (sender as Notification)?.Close();
-                }
+                if (onClick == null) return;
+                onClick.Invoke();
+                (sender as Notification)?.Close();
             };
             notification.NotificationClosed += (sender, args) => onClose?.Invoke();
+
             notification.NotificationClosed += OnNotificationClosed;
 
-            if (!IsLoaded)
-            {
-                return;
-            }
 
-            var w = Window.GetWindow(this);
-            var x = PresentationSource.FromVisual(w);
-            if (x == null)
-            {
-                return;
-            }
+            await OnShowContent(notification, expirationTime);
+            content = null;
+            notification = null;
 
-            lock (_items)
-            {
-                _items.Add(notification);
-
-                if (_items.OfType<Notification>().Count(i => !i.IsClosing) > MaxItems)
-                {
-                    _items.OfType<Notification>().First(i => !i.IsClosing).Close();
-                }
-            }
-
-#if NET40 
-            DelayExecute(expirationTime, () =>
-            {
-#else
-            if (expirationTime == TimeSpan.MaxValue)
-            {
-                return;
-            }
-            await Task.Delay(expirationTime);
-#endif
-                notification.Close();
-#if NET40
-            });
-#endif
         }
 #if NET40
         public void ShowAction(object content, TimeSpan expirationTime, RoutedEventHandler LeftButton, RoutedEventHandler RightButton)
@@ -131,54 +97,54 @@ namespace Notification.Wpf.Controls
             
             notification.NotificationClosed += OnNotificationClosed;
 
-            if (!IsLoaded)
-            {
-                return;
-            }
-
-            var w = Window.GetWindow(this);
-            var x = PresentationSource.FromVisual(w);
-            if (x == null)
-            {
-                return;
-            }
-
-            lock (_items)
-            {
-                _items.Add(notification);
-
-                if (_items.OfType<Notification>().Count(i => !i.IsClosing) > MaxItems)
-                {
-                    _items.OfType<Notification>().First(i => !i.IsClosing).Close();
-                }
-            }
-
-#if NET40 
-            DelayExecute(expirationTime, () =>
-            {
-#else
-            if (expirationTime == TimeSpan.MaxValue)
-            {
-                return;
-            }
-            await Task.Delay(expirationTime);
-#endif
-                notification.Close();
-#if NET40
-            });
-#endif
+            await OnShowContent(notification, expirationTime);
+            model = null;
+            content = null;
         }
 
-        public async void Show(NotificationProgressViewModel model)
+        /// <summary>
+        /// Отображает окно прогресса
+        /// </summary>
+        /// <param name="model">модель прогрессбара</param>
+        public async void Show(object model)
         {
-            var content = new NotificationProgress { DataContext = model };
-            content.Cancel.Click += model.CancelProgress;
+            var progress = (NotificationProgressViewModel) model;
+            var content = new NotificationProgress { DataContext = progress };
+            content.Cancel.Click += progress.CancelProgress;
             var notification = new Notification
             {
                 Content = content
             };
-            notification.NotificationClosed += model.CancelProgress;
+            notification.NotificationClosed += progress.CancelProgress;
             notification.NotificationClosed += OnNotificationClosed;
+            progress.progress.SetArea(notification);
+
+            await OnShowContent(notification);
+
+            try
+            {
+                while (progress.progress.IsFinished != true)
+                {
+                    progress.Cancel.Token.ThrowIfCancellationRequested();
+                    await Task.Delay(TimeSpan.FromSeconds(1), progress.Cancel.Token);
+                }
+            }
+            catch (OperationCanceledException)
+            { }
+            notification.Close();
+            model = null;
+            content = null;
+            progress = null;
+        }
+
+        /// <summary>
+        /// Добавляет уведомление в список отображения
+        /// </summary>
+        /// <param name="notification">уведомление</param>
+        /// <param name="expirationTime">время отображения</param>
+        /// <returns></returns>
+        private async Task OnShowContent(Notification notification, TimeSpan? expirationTime = null)
+        {
 
             if (!IsLoaded)
             {
@@ -186,13 +152,11 @@ namespace Notification.Wpf.Controls
             }
 
             var w = Window.GetWindow(this);
-
             var x = PresentationSource.FromVisual(w);
             if (x == null)
             {
                 return;
             }
-            model.progress.SetArea(notification);
             lock (_items)
             {
                 _items.Add(notification);
@@ -203,25 +167,28 @@ namespace Notification.Wpf.Controls
                 }
             }
 
-            try
+            if (expirationTime is null)
+                return;
+#if NET40 
+            DelayExecute(expirationTime, () =>
             {
-                while (model.progress.IsFinished != true)
-                {
-                    model.Cancel.Token.ThrowIfCancellationRequested();
-                    await Task.Delay(TimeSpan.FromSeconds(1), model.Cancel.Token);
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                notification.Close();
-            }
-            notification.Close();
-        }
+#else
 
+            if (expirationTime == TimeSpan.MaxValue)
+            {
+                return;
+            }
+            await Task.Delay((TimeSpan)expirationTime);
+
+#endif
+            notification.Close();
+#if NET40
+            });
+#endif
+        }
         private void OnNotificationClosed(object sender, RoutedEventArgs routedEventArgs)
         {
-            var notification = sender as Notification;
-            _items.Remove(notification);
+            _items.Remove(sender);
         }
 
 #if NET40
@@ -242,13 +209,5 @@ namespace Notification.Wpf.Controls
             }
         }
 #endif
-    }
-
-    public enum NotificationPosition
-    {
-        TopLeft,
-        TopRight,
-        BottomLeft,
-        BottomRight
     }
 }

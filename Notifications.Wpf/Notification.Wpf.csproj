@@ -76,6 +76,7 @@
     <Compile Include="Command\LamdaCommand.cs" />
     <Compile Include="Controls\Notification.cs" />
     <Compile Include="Controls\NotificationArea.cs" />
+    <Compile Include="Controls\NotificationPosition.cs" />
     <Compile Include="Controls\ReversibleStackPanel.cs" />
     <Compile Include="Converters\Combine.cs" />
     <Compile Include="Converters\MessageRowsCountConverter.cs" />

@@ -9,7 +9,7 @@ namespace Notification.Wpf.Utils
     internal class VisualTreeHelperExtensions
     {
 
-        private static readonly List<Visual> _activeControls = new List<Visual>();
+        private static readonly List<Visual> _activeControls = new();
 
         public static T GetParent<T>(DependencyObject child) where T : DependencyObject
         {

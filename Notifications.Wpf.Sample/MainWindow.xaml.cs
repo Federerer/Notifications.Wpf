@@ -32,7 +32,7 @@ namespace Notification.Wpf.Sample
                 nameof(RowCount),
                 typeof(uint),
                 typeof(MainWindow),
-                new PropertyMetadata(default(uint)));
+                new PropertyMetadata(2U));
 
         /// <summary>количество строк в сообщении</summary>
         public uint RowCount { get => (uint) GetValue(RowCountProperty); set => SetValue(RowCountProperty, value); }
@@ -58,7 +58,7 @@ namespace Notification.Wpf.Sample
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            for (var i = 0; i <= 5; i++)
+            for (var i = 0; i <= 0; i++)
             {
                 var content = new NotificationContent
                 {
@@ -66,8 +66,8 @@ namespace Notification.Wpf.Sample
                     Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     Type = (NotificationType)i,
                 };
-                await Task.Delay(TimeSpan.FromSeconds(1));
                 _notificationManager.Show(content);
+                await Task.Delay(TimeSpan.FromSeconds(1));
 
             }
 
