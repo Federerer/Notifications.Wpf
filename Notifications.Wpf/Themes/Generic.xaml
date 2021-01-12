@@ -31,6 +31,9 @@
     <ScaleTransform x:Key="Scale1.1" ScaleX="1.1" ScaleY="1.1" p:Freeze="True"/>
     <ScaleTransform x:Key="Scale0.9" ScaleX="0.9" ScaleY="0.9" p:Freeze="True"/>
 
+    <Color x:Key="WhiteColor" A="255"  R="255" G="255" B="255"/>
+    <Color x:Key="BlackColor" A="255"  R="0" G="0" B="0"/>
+
     <fa:ImageAwesome x:Key="LinkIcon" Icon="Link" Foreground="{StaticResource WhiteBrush}" Height="20" Rotation="135" x:Shared="False"/>
     <fa:ImageAwesome x:Key="MinimizeIcon" Icon="WindowMinimize" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
     <fa:ImageAwesome x:Key="MaximizeIcon" Icon="WindowMaximize" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
@@ -51,10 +54,10 @@
                             AutoReverse="True">
                             <LinearColorKeyFrame
                                 KeyTime="0:0:0"
-                                Value="{StaticResource WhiteBrush}"/>
+                                Value="{StaticResource WhiteColor}"/>
                             <LinearColorKeyFrame
                                 KeyTime="0:0:1"
-                                Value="{StaticResource BlackBrush}"/>
+                                Value="{StaticResource BlackColor}"/>
                         </ColorAnimationUsingKeyFrames>
                     </Storyboard>
                 </BeginStoryboard>
@@ -112,6 +115,31 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
 
+    <Style TargetType="Button" x:Key="NotifyButton">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#22FFFFFF"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Label Content="{TemplateBinding Content}"
+                           Foreground="{TemplateBinding Foreground}"
+                           Background="{TemplateBinding Background}"
+                           HorizontalContentAlignment="Center"
+                           MinWidth="80"  MaxWidth="120"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#11FFFFFF"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#11000000"/>
+                            <Setter Property="Foreground" Value="#FFAAAAAA"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <wpf:NotificationTemplateSelector x:Key="NotificationTemplateSelector"/>
 
     <ControlTemplate x:Key="NotificationTemplate" TargetType="{x:Type controls:Notification}">
@@ -145,6 +173,14 @@
 
                         <DockPanel Grid.Column="1">
                             <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis" />
+                            <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="0,8,0,0">
+                                <Button x:Name="LeftButton" Style="{StaticResource NotifyButton}" Command="{Binding RightButtonAction, Converter={wpf:ActionToCommandConverter}}"
+                                        Content="{Binding RightButtonContent}" DockPanel.Dock="Right" controls:Notification.CloseOnClick="True"
+                                        Visibility="{Binding RightButtonAction, Converter={wpf:Combine First={wpf:IsNull}, Then={converters:BoolToVisibility Collapse=True, Inverse=True}}}"/>
+                                <Button x:Name="RightButton" Style="{StaticResource NotifyButton}" Command="{Binding LeftButtonAction, Converter={wpf:ActionToCommandConverter}}"
+                                        Content="{Binding LeftButtonContent}" DockPanel.Dock="Right" Margin="0,0,8,0" controls:Notification.CloseOnClick="True"
+                                        Visibility="{Binding LeftButtonAction, Converter={wpf:Combine First={wpf:IsNull}, Then={converters:BoolToVisibility Collapse=True, Inverse=True}}}"/>
+                            </DockPanel>
                             <TextBlock x:Name="MessageBox" Text="{Binding Message}"
                                        TextWrapping="Wrap" Opacity=".8" Margin="0,0,12,0"/>
                         </DockPanel>
@@ -154,17 +190,17 @@
                     <DataTrigger Binding="{Binding TrimType}" Value="Attach">
                         <Setter TargetName="Attach" Property="Visibility" Value="Visible"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=60}}"/>
+                        <Setter TargetName="MessageBox" Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=18}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="AttachIfMoreRows">
                         <Setter TargetName="Attach" Property="Visibility" Value="{Binding Converter={wpf:NotificationAttachVisibleConverter}}"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=60}}"/>
+                        <Setter TargetName="MessageBox" Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=18}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="Trim">
                         <Setter TargetName="Attach" Property="Visibility" Value="Collapsed"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=60}}"/>
+                        <Setter TargetName="MessageBox"  Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=18}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="NoTrim">
                         <Setter TargetName="Attach" Property="Visibility" Value="Collapsed"/>

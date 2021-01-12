@@ -11,22 +11,23 @@ namespace Notification.Wpf
     {
         public double BaseSize { get; set; }
 
-        public MessageRowsCountConverter(double size = 60)
+        public MessageRowsCountConverter(double size = 18)
         {
             BaseSize = size;
         }
 
         public MessageRowsCountConverter()
         {
-            BaseSize = 60;
+            BaseSize = 18;
         }
         public static double ToDouble(object v) => v is null ? double.NaN : v is double d ? d : System.Convert.ToDouble(v);
 
         public override object Convert(object v, Type t, object p, CultureInfo c)
         {
+
             var multiplier = ToDouble(v);
             if (multiplier == 0) multiplier = 1;
-            return BaseSize + 18 * multiplier;
+            return 20 * multiplier;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Notifications.Wpf.ViewModels.Base;
+﻿using System.Windows;
+using Notifications.Wpf.ViewModels.Base;
 
 // ReSharper disable once CheckNamespace
 namespace Utilities.WPF.Notifications
@@ -15,8 +16,6 @@ namespace Utilities.WPF.Notifications
 
         public bool LeftButtonVisibility { get; set; }
         public bool RightButtonVisibility { get; set; }
-        public bool AttachButtonVisibility { get; set; }
-
         /// <summary>
         /// Содержимое правой кнопки
         /// </summary>

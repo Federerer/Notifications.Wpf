@@ -78,15 +78,15 @@ namespace Notification.Wpf.Controls
 
         }
 #if NET40
-        public void ShowAction(object content, TimeSpan expirationTime, RoutedEventHandler LeftButton, RoutedEventHandler RightButton)
+        public void ShowAction(object content, TimeSpan expirationTime, RoutedEventHandler LeftButtonAction, RoutedEventHandler RightButtonAction)
 #else
-        public async void Show(object model, TimeSpan expirationTime, RoutedEventHandler LeftButton = null, RoutedEventHandler RightButton = null)
+        public async void Show(object model, TimeSpan expirationTime, RoutedEventHandler LeftButtonAction = null, RoutedEventHandler RightButtonAction = null)
 #endif
         {
 
             var content = new NotificationInfoView {DataContext = model};
-            if(RightButton!=null) content.Ok.Click += RightButton;
-            if(LeftButton!=null) content.Cancel.Click += LeftButton;
+            if(RightButtonAction!=null) content.Ok.Click += RightButtonAction;
+            if(LeftButtonAction!=null) content.Cancel.Click += LeftButtonAction;
 
             var notification = new Notification
             {

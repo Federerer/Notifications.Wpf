@@ -21,19 +21,14 @@ namespace Notification.Wpf
             if (_defaultStringTemplate == null && _defaultNotificationTemplate == null)
             {
                 GetTemplatesFromResources((FrameworkElement)container);                            
-            }           
-
-            if (item is string)
-            {
-                return _defaultStringTemplate;
-            }
-            if (item is NotificationContent)
-            {
-                return _defaultNotificationTemplate;
             }
 
-            return base.SelectTemplate(item, container);
-
+            return item switch
+            {
+                string => _defaultStringTemplate,
+                NotificationContent => _defaultNotificationTemplate,
+                _ => base.SelectTemplate(item, container)
+            };
         }
     }
 }

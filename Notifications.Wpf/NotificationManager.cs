@@ -37,19 +37,28 @@ namespace Notification.Wpf
             ShowContent(content, expirationTime, areaName, onClick, onClose);
         }
 
-        public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
-            Action onClose = null, NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2)
+        public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null,
+            Action onClick = null, Action onClose = null, Action LeftButton = null, string LeftButtonText = null, Action RightButton = null, string RightButtonText = null,
+            NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2)
         {
-            var content = new NotificationContent { Type = type, TrimType = trim, RowsCount = RowsCountWhenTrim };
-            if (message != null)
-                content.Message = message;
-            if (title != null) content.Title = title;
-
+            var content = new NotificationContent
+            {
+                Type = type, TrimType = trim, RowsCount = RowsCountWhenTrim, LeftButtonAction = LeftButton, LeftButtonContent = LeftButtonText,
+                RightButtonAction = RightButton, RightButtonContent = RightButtonText, Message = message, Title = title
+            };
+            //if (LeftButtonText != null)
+            //{
+            //    content.LeftButtonContent = LeftButtonText ;
+            //}
+            //if (RightButtonText != null)
+            //{
+            //    content.RightButtonContent = RightButtonText;
+            //}
 
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose, trim, RowsCountWhenTrim)));
+                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose, LeftButton, LeftButtonText, RightButton, RightButtonText, trim, RowsCountWhenTrim)));
                 return;
             }
             ShowContent(content, expirationTime, areaName, onClick, onClose);
@@ -58,30 +67,33 @@ namespace Notification.Wpf
         public void Show(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null, string LeftButtonText = null,
             RoutedEventHandler RightButton = null, string RightButtonText = null)
         {
-            var content = new NotificationViewModel();
-            if (message != null)
-                content.Message = message;
-            if (title != null) content.Title = title;
-            if (LeftButton != null)
-            {
-                content.LeftButtonContent = LeftButtonText ?? "Ok";
+            Show(title,message,NotificationType.Notification, areaName,expirationTime, null,null, LeftButton is null? null: () => LeftButton.Invoke(null,null), LeftButtonText,
+                RightButton is null? null: () => RightButton.Invoke(null,null),
+                RightButtonText, NotificationTextTrimType.NoTrim);
+            //var content = new NotificationViewModel();
+            //if (message != null)
+            //    content.Message = message;
+            //if (title != null) content.Title = title;
+            //if (LeftButton != null)
+            //{
+            //    content.LeftButtonContent = LeftButtonText ?? "Ok";
 
-                content.LeftButtonVisibility = true;
-            } 
-            if (RightButton != null)
-            {
-                content.RightButtonContent = RightButtonText ?? "Cancel";
-                content.RightButtonVisibility = true;
-            }
+            //    content.LeftButtonVisibility = true;
+            //}
+            //if (RightButton != null)
+            //{
+            //    content.RightButtonContent = RightButtonText ?? "Cancel";
+            //    content.RightButtonVisibility = true;
+            //}
 
-            if (!_dispatcher.CheckAccess())
-            {
-                _dispatcher.BeginInvoke(
-                    new Action(() => Show(title, message, areaName, expirationTime, LeftButton, LeftButtonText, RightButton, RightButtonText)));
-                return;
-            }
+            //if (!_dispatcher.CheckAccess())
+            //{
+            //    _dispatcher.BeginInvoke(
+            //        new Action(() => Show(title, message, areaName, expirationTime, LeftButton, LeftButtonText, RightButton, RightButtonText)));
+            //    return;
+            //}
 
-            ShowContent(content, expirationTime, areaName, null, null, LeftButton, RightButton);
+            //ShowContent(content, expirationTime, areaName, null, null, LeftButton, RightButton);
         }
         
 

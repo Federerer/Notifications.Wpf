@@ -10,6 +10,86 @@ namespace Notification.Wpf.Sample
 {
     public partial class MainWindow
     {
+        #region ShowLeftButton : bool - Show left button
+
+        /// <summary>Show left button</summary>
+        public static readonly DependencyProperty ShowLeftButtonProperty =
+            DependencyProperty.Register(
+                nameof(ShowLeftButton),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>Show left button</summary>
+        public bool ShowLeftButton { get => (bool) GetValue(ShowLeftButtonProperty); set => SetValue(ShowLeftButtonProperty, value); }
+
+        #endregion 
+
+        #region ShowRightButton : bool - Show right button
+
+        /// <summary>Show right button</summary>
+        public static readonly DependencyProperty ShowRightButtonProperty =
+            DependencyProperty.Register(
+                nameof(ShowRightButton),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(true));
+
+        /// <summary>Show right button</summary>
+        public bool ShowRightButton { get => (bool) GetValue(ShowRightButtonProperty); set => SetValue(ShowRightButtonProperty, value); }
+
+        #endregion
+
+        #region LeftButtonText : string - Left button text
+
+        /// <summary>Left button text</summary>
+        public static readonly DependencyProperty LeftButtonTextProperty =
+            DependencyProperty.Register(
+                nameof(LeftButtonText),
+                typeof(string),
+                typeof(MainWindow),
+                new PropertyMetadata("Ok"));
+
+        /// <summary>Left button text</summary>
+        public string LeftButtonText { get => (string) GetValue(LeftButtonTextProperty); set => SetValue(LeftButtonTextProperty, value); }
+
+        #endregion
+
+        #region RightButtonText : string - Right button text
+
+        /// <summary>Right button text</summary>
+        public static readonly DependencyProperty RightButtonTextProperty =
+            DependencyProperty.Register(
+                nameof(RightButtonText),
+                typeof(string),
+                typeof(MainWindow),
+                new PropertyMetadata("Cancel"));
+
+        /// <summary>Right button text</summary>
+        public string RightButtonText { get => (string) GetValue(RightButtonTextProperty); set => SetValue(RightButtonTextProperty, value); }
+
+        #endregion
+
+        #region ContentText : string - Content string
+
+        /// <summary>Content string</summary>
+        public static readonly DependencyProperty ContentTextProperty =
+            DependencyProperty.Register(
+                nameof(ContentText),
+                typeof(string),
+                typeof(MainWindow),
+                new PropertyMetadata("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod accumsan orci vel varius. Nulla consectetur egestas est,"
+                                     + " in porttitor elit placerat non. Cras dapibus cursus magna. Nunc ac malesuada lacus. Etiam non luctus magna, nec vulputate diam."
+                                     + " Sed porta mi at tristique bibendum. Nunc luctus libero ut mauris cursus, eget dignissim est luctus.Sed ac nibh dignissim, elementum mi ut,"
+                                     + " tempor quam.Donec quis ornare sapien. Maecenas arcu elit, blandit quis odio eu, elementum bibendum leo."
+                                     + " Etiam iaculis consectetur metus. Donec in bibendum massa. Nam nec facilisis eros, sit amet blandit magna.Duis vitae"
+                                     + " justo nec nisi maximus efficitur vitae non mauris."));
+
+        /// <summary>Content string</summary>
+        public string ContentText { get => (string) GetValue(ContentTextProperty); set => SetValue(ContentTextProperty, value); }
+
+        #endregion
+
         #region TrimType : NotificationTextTrimType - способ обрезки текста
 
         /// <summary>способ обрезки текста</summary>
@@ -24,6 +104,7 @@ namespace Notification.Wpf.Sample
         public NotificationTextTrimType TrimType { get => (NotificationTextTrimType) GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
 
         #endregion
+
         #region RowCount : int - количество строк в сообщении
 
         /// <summary>количество строк в сообщении</summary>
@@ -38,8 +119,11 @@ namespace Notification.Wpf.Sample
         public uint RowCount { get => (uint) GetValue(RowCountProperty); set => SetValue(RowCountProperty, value); }
 
         #endregion
+
+        
         private readonly NotificationManager _notificationManager = new NotificationManager();
-        //private readonly Random _random = new Random();
+
+        Action ButtonClick(string button) => ()=>_notificationManager.Show($"{button} button click");
 
         public MainWindow()
         {
@@ -56,34 +140,55 @@ namespace Notification.Wpf.Sample
             else Timer.Stop();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void UpperPanel(object sender, RoutedEventArgs e)
         {
-            for (var i = 0; i <= 0; i++)
+            for (var i = 0; i <= 5; i++)
             {
                 var content = new NotificationContent
                 {
                     Title = "Sample notification",
-                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Message = ContentText,
                     Type = (NotificationType)i,
+                    LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
+                    RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
+                    LeftButtonContent = LeftButtonText,
+                    RightButtonContent = RightButtonText,
+                    RowsCount = RowCount,
+                    TrimType = TrimType
+
                 };
-                _notificationManager.Show(content);
+                _notificationManager.Show(content,expirationTime:TimeSpan.FromSeconds(5));
                 await Task.Delay(TimeSpan.FromSeconds(1));
 
             }
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void InWindow(object sender, RoutedEventArgs e)
         {
-            var content = new NotificationContent {Title = "Notification in window", Message = "Click me!"};
             var clickContent = new NotificationContent
             {
                 Title = "Clicked!",
                 Message = "Window notification was clicked!",
                 Type = NotificationType.Success,
-                
+
             };
-            _notificationManager.Show(content, "WindowArea", onClick: () => _notificationManager.Show(clickContent));
+            var rnd = new Random();
+            var content = new NotificationContent
+                {
+                    Title = "Sample notification",
+                    Message = ContentText,
+                    Type = (NotificationType)rnd.Next(0,5),
+                    LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
+                    RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
+                    LeftButtonContent = LeftButtonText,
+                    RightButtonContent = RightButtonText,
+                    RowsCount = RowCount,
+                    TrimType = TrimType
+
+                };
+                _notificationManager.Show(content, "WindowArea", expirationTime: TimeSpan.FromSeconds(5), onClick: () => _notificationManager.Show(clickContent));
+
         }
 
         private void Message_Click(object sender, RoutedEventArgs e)
@@ -217,20 +322,12 @@ namespace Notification.Wpf.Sample
 
         private async void ShowAttachMessage(object Sender, RoutedEventArgs E)
         {
-            var long_text =
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod accumsan orci vel varius. Nulla consectetur egestas est,"
-                + " in porttitor elit placerat non. Cras dapibus cursus magna. Nunc ac malesuada lacus. Etiam non luctus magna, nec vulputate diam."
-                + " Sed porta mi at tristique bibendum. Nunc luctus libero ut mauris cursus, eget dignissim est luctus.Sed ac nibh dignissim, elementum mi ut,"
-                + " tempor quam.Donec quis ornare sapien. Maecenas arcu elit, blandit quis odio eu, elementum bibendum leo."
-                + " Etiam iaculis consectetur metus. Donec in bibendum massa. Nam nec facilisis eros, sit amet blandit magna.Duis vitae justo nec nisi maximus efficitur vitae non mauris.";
-
-
             for (var i = 0; i <= 5; i++)
             {
                 var content = new NotificationContent
                 {
                     Title = "Sample notification",
-                    Message = long_text,
+                    Message = ContentText,
                     Type = (NotificationType)i,
                     TrimType = TrimType,
                     RowsCount = RowCount
