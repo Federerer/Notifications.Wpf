@@ -13,10 +13,6 @@ namespace Notification.Wpf
             Action onClose = null, Action LeftButton = null, string LeftButtonText = null, Action RightButton = null, string RightButtonText = null,
             NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2);
 
-        void Show(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null,
-            string LeftButtonText = null,
-            RoutedEventHandler RightButton = null, string RightButtonText = null);
-
         void ShowProgressBar(
             out ProgressFinaly<(int? value, string message, string title, bool? showCancel)> progress, out CancellationToken Cancel, string Title = null,
             bool ShowCancelButton = true, bool ShowProgress = true, string areaName = "");

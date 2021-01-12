@@ -190,17 +190,17 @@
                     <DataTrigger Binding="{Binding TrimType}" Value="Attach">
                         <Setter TargetName="Attach" Property="Visibility" Value="Visible"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter TargetName="MessageBox" Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=18}}"/>
+                        <Setter TargetName="MessageBox" Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=20}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="AttachIfMoreRows">
                         <Setter TargetName="Attach" Property="Visibility" Value="{Binding Converter={wpf:NotificationAttachVisibleConverter}}"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter TargetName="MessageBox" Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=18}}"/>
+                        <Setter TargetName="MessageBox" Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=20}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="Trim">
                         <Setter TargetName="Attach" Property="Visibility" Value="Collapsed"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="CharacterEllipsis"/>
-                        <Setter TargetName="MessageBox"  Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=18}}"/>
+                        <Setter TargetName="MessageBox"  Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=20}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding TrimType}" Value="NoTrim">
                         <Setter TargetName="Attach" Property="Visibility" Value="Collapsed"/>

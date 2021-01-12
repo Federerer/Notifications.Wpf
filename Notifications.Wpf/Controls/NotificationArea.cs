@@ -77,26 +77,6 @@ namespace Notification.Wpf.Controls
             await OnShowContent(notification, expirationTime);
 
         }
-#if NET40
-        public void ShowAction(object content, TimeSpan expirationTime, RoutedEventHandler LeftButtonAction, RoutedEventHandler RightButtonAction)
-#else
-        public async void Show(object model, TimeSpan expirationTime, RoutedEventHandler LeftButtonAction = null, RoutedEventHandler RightButtonAction = null)
-#endif
-        {
-
-            var content = new NotificationInfoView {DataContext = model};
-            if(RightButtonAction!=null) content.Ok.Click += RightButtonAction;
-            if(LeftButtonAction!=null) content.Cancel.Click += LeftButtonAction;
-
-            var notification = new Notification
-            {
-                Content = content
-            };
-            
-            notification.NotificationClosed += OnNotificationClosed;
-
-            await OnShowContent(notification, expirationTime);
-        }
 
         /// <summary>
         /// Отображает окно прогресса

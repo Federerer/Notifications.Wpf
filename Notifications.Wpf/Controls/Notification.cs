@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Notification.Wpf.Utils;
 using Notifications.Wpf.View;
-using Utilities.WPF.Notifications;
 
 namespace Notification.Wpf.Controls
 {
@@ -32,14 +31,14 @@ namespace Notification.Wpf.Controls
 
         public event RoutedEventHandler NotificationCloseInvoked
         {
-            add { AddHandler(NotificationCloseInvokedEvent, value); }
-            remove { RemoveHandler(NotificationCloseInvokedEvent, value); }
+            add => AddHandler(NotificationCloseInvokedEvent, value);
+            remove => RemoveHandler(NotificationCloseInvokedEvent, value);
         }
 
         public event RoutedEventHandler NotificationClosed
         {
-            add { AddHandler(NotificationClosedEvent, value); }
-            remove { RemoveHandler(NotificationClosedEvent, value); }
+            add => AddHandler(NotificationClosedEvent, value);
+            remove => RemoveHandler(NotificationClosedEvent, value);
         }
 
         public static bool GetCloseOnClick(DependencyObject obj)
@@ -57,8 +56,7 @@ namespace Notification.Wpf.Controls
 
         private static void CloseOnClickChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var button = dependencyObject as Button;
-            if (button == null)
+            if (!(dependencyObject is Button button))
             {
                 return;
             }
@@ -79,16 +77,11 @@ namespace Notification.Wpf.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            var closeButton = GetTemplateChild("PART_CloseButton") as Button;
-            if (closeButton != null)
+            if (GetTemplateChild("PART_CloseButton") is Button closeButton)
                 closeButton.Click += OnCloseButtonOnClick;
 
-            var AttachButton = GetTemplateChild("PART_AttachButton") as Button;
-            if (AttachButton != null)
+            if (GetTemplateChild("PART_AttachButton") is Button AttachButton)
                 AttachButton.Click += OnAttachButtonOnClick;
-
-            //var storyboards = Template.Triggers.OfType<EventTrigger>().FirstOrDefault(t => t.RoutedEvent == NotificationAttachInvokedEvent)?.Actions.OfType<BeginStoryboard>().Select(a => a.Storyboard);
-            //_closingAnimationTime = new TimeSpan(storyboards?.Max(s => Math.Min((s.Duration.HasTimeSpan ? s.Duration.TimeSpan + (s.BeginTime ?? TimeSpan.Zero) : TimeSpan.MaxValue).Ticks, s.Children.Select(ch => ch.Duration.TimeSpan + (s.BeginTime ?? TimeSpan.Zero)).Max().Ticks)) ?? 0);
 
             var storyboards = Template.Triggers.OfType<EventTrigger>().FirstOrDefault(t => t.RoutedEvent == NotificationCloseInvokedEvent)?.Actions.OfType<BeginStoryboard>().Select(a => a.Storyboard);
             _closingAnimationTime = new TimeSpan(storyboards?.Max(s => Math.Min((s.Duration.HasTimeSpan ? s.Duration.TimeSpan + (s.BeginTime ?? TimeSpan.Zero) : TimeSpan.MaxValue).Ticks, s.Children.Select(ch => ch.Duration.TimeSpan + (s.BeginTime ?? TimeSpan.Zero)).Max().Ticks)) ?? 0);
@@ -97,8 +90,7 @@ namespace Notification.Wpf.Controls
 
         private void OnCloseButtonOnClick(object sender, RoutedEventArgs args)
         {
-            var button = sender as Button;
-            if (button == null) return;
+            if (!(sender is Button button)) return;
 
             button.Click -= OnCloseButtonOnClick;
             Close();
@@ -169,8 +161,7 @@ namespace Notification.Wpf.Controls
 
         private static void AttachOnClickChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var button = dependencyObject as Button;
-            if (button == null)
+            if (!(dependencyObject is Button button))
             {
                 return;
             }
@@ -212,8 +203,7 @@ namespace Notification.Wpf.Controls
 
         private void OnAttachButtonOnClick(object sender, RoutedEventArgs args)
         {
-            var button = sender as Button;
-            if (button == null) return;
+            if (!(sender is Button button)) return;
 
             button.Click -= OnAttachButtonOnClick;
             Attach();

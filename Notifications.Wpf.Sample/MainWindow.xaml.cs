@@ -269,21 +269,6 @@ namespace Notification.Wpf.Sample
                 }
             }, cancel);
 
-        private void Message_button(object sender, RoutedEventArgs e)
-        {
-            _notificationManager.Show("2 button","This is 2 button on form", string.Empty,TimeSpan.MaxValue,
-                (o, args) => _notificationManager.Show("Left button click", string.Empty,TimeSpan.FromSeconds(3)),"Left Button",
-                (o, args) => _notificationManager.Show("Right button click", string.Empty, TimeSpan.FromSeconds(3)), "Right Button"); 
-            
-            _notificationManager.Show("2 button", "This is 2 button on form with standard name", string.Empty,TimeSpan.MaxValue,
-                (o, args) => _notificationManager.Show("Left button click", string.Empty,TimeSpan.FromSeconds(3)),null,
-                (o, args) => _notificationManager.Show("Right button click", string.Empty, TimeSpan.FromSeconds(3)), null);
-
-            _notificationManager.Show("1 right button","This is 1 button on form with standard name","",TimeSpan.MaxValue,
-                (o, args) => _notificationManager.Show("Right button click", string.Empty, TimeSpan.FromSeconds(3)));
-
-        }
-
         private void Show_Any_content(object sender, RoutedEventArgs e)
         {
             var grid = new Grid();

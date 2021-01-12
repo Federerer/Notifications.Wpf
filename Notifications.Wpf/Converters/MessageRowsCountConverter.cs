@@ -11,14 +11,14 @@ namespace Notification.Wpf
     {
         public double BaseSize { get; set; }
 
-        public MessageRowsCountConverter(double size = 18)
+        public MessageRowsCountConverter(double size = 20)
         {
             BaseSize = size;
         }
 
         public MessageRowsCountConverter()
         {
-            BaseSize = 18;
+            BaseSize = 20;
         }
         public static double ToDouble(object v) => v is null ? double.NaN : v is double d ? d : System.Convert.ToDouble(v);
 
@@ -27,7 +27,7 @@ namespace Notification.Wpf
 
             var multiplier = ToDouble(v);
             if (multiplier == 0) multiplier = 1;
-            return 20 * multiplier;
+            return BaseSize * multiplier;
         }
     }
 }

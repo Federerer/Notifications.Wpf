@@ -10,6 +10,12 @@ namespace Notification.Wpf
         public string Title { get; set; }
         public string Message { get; set; }
 
+        public NotificationType Type { get; set; }
+        public NotificationTextTrimType TrimType { get; set; } = NotificationTextTrimType.NoTrim;
+        public uint RowsCount { get; set; } = 2;
+
+        #region Left button
+
         private object _LeftButtonContent = "Ok";
 
         /// <summary>
@@ -36,8 +42,10 @@ namespace Notification.Wpf
         /// Left button action
         /// </summary>
         public Action LeftButtonAction { get; set; }
-        
-        public bool LeftButtonVisibility => LeftButtonAction is not null;
+
+        #endregion
+
+        #region RightButton
 
         private object _RightButtonContent = "Cancel";
 
@@ -65,69 +73,8 @@ namespace Notification.Wpf
         /// Right button action
         /// </summary>
         public Action RightButtonAction { get; set; }
-        public bool RightButtonVisibility => RightButtonAction is not null;
-
-        #region LeftButtonCommand : ICommand - Левая кнопка нажата
-
-        /// <summary>Левая кнопка нажата</summary>
-        private ICommand _LeftButtonCommand;
-
-        /// <summary>Левая кнопка нажата</summary>
-        public ICommand LeftButtonCommand
-        {
-            get
-            {
-                if (LeftButtonVisibility)
-                    _LeftButtonCommand = new LamdaCommand(O => LeftButtonAction?.Invoke());
-                return _LeftButtonCommand;
-            }
-        }
 
         #endregion
 
-        #region RightButtonCommand : ICommand - Правая кнопка нажата
-
-        /// <summary>Правая кнопка нажата</summary>
-        private ICommand _RightButtonCommand;
-
-        /// <summary>Правая кнопка нажата</summary>
-        public ICommand RightButtonCommand
-        {
-            get
-            {
-                if (RightButtonVisibility)
-                    _RightButtonCommand = new LamdaCommand(O => RightButtonAction?.Invoke());
-                return _RightButtonCommand;
-            }
-        }
-
-
-        #endregion
-        public NotificationType Type { get; set; }
-        public NotificationTextTrimType TrimType { get; set; } = NotificationTextTrimType.NoTrim;
-        public uint RowsCount { get; set; } = 2;
-    }
-
-    /// <summary>
-    /// Способ отображения текста в сообщении
-    /// </summary>
-    public enum NotificationTextTrimType
-    {
-        NoTrim,
-        Trim,
-        Attach,
-        AttachIfMoreRows
-    }
-    /// <summary>
-    /// Тип сообщения
-    /// </summary>
-    public enum NotificationType   
-    {
-        Information,
-        Success,
-        Warning,
-        Error,
-        Notification,
-        AttachText
     }
 }

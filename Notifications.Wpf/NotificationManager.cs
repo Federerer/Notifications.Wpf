@@ -7,7 +7,6 @@ using System.Windows.Threading;
 using Notification.Wpf.Classes;
 using Notification.Wpf.Controls;
 using Notifications.Wpf.ViewModels;
-using Utilities.WPF.Notifications;
 
 namespace Notification.Wpf
 {
@@ -46,15 +45,6 @@ namespace Notification.Wpf
                 Type = type, TrimType = trim, RowsCount = RowsCountWhenTrim, LeftButtonAction = LeftButton, LeftButtonContent = LeftButtonText,
                 RightButtonAction = RightButton, RightButtonContent = RightButtonText, Message = message, Title = title
             };
-            //if (LeftButtonText != null)
-            //{
-            //    content.LeftButtonContent = LeftButtonText ;
-            //}
-            //if (RightButtonText != null)
-            //{
-            //    content.RightButtonContent = RightButtonText;
-            //}
-
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
@@ -63,40 +53,6 @@ namespace Notification.Wpf
             }
             ShowContent(content, expirationTime, areaName, onClick, onClose);
         }
-
-        public void Show(string title, string message, string areaName = "", TimeSpan? expirationTime = null, RoutedEventHandler LeftButton = null, string LeftButtonText = null,
-            RoutedEventHandler RightButton = null, string RightButtonText = null)
-        {
-            Show(title,message,NotificationType.Notification, areaName,expirationTime, null,null, LeftButton is null? null: () => LeftButton.Invoke(null,null), LeftButtonText,
-                RightButton is null? null: () => RightButton.Invoke(null,null),
-                RightButtonText, NotificationTextTrimType.NoTrim);
-            //var content = new NotificationViewModel();
-            //if (message != null)
-            //    content.Message = message;
-            //if (title != null) content.Title = title;
-            //if (LeftButton != null)
-            //{
-            //    content.LeftButtonContent = LeftButtonText ?? "Ok";
-
-            //    content.LeftButtonVisibility = true;
-            //}
-            //if (RightButton != null)
-            //{
-            //    content.RightButtonContent = RightButtonText ?? "Cancel";
-            //    content.RightButtonVisibility = true;
-            //}
-
-            //if (!_dispatcher.CheckAccess())
-            //{
-            //    _dispatcher.BeginInvoke(
-            //        new Action(() => Show(title, message, areaName, expirationTime, LeftButton, LeftButtonText, RightButton, RightButtonText)));
-            //    return;
-            //}
-
-            //ShowContent(content, expirationTime, areaName, null, null, LeftButton, RightButton);
-        }
-        
-
 
         /// <summary>
         /// Show ProgressBar
@@ -176,8 +132,6 @@ namespace Notification.Wpf
             {
                 switch (content)
                 {
-                    case NotificationViewModel : area.Show(content, (TimeSpan)expirationTime, LeftButton, RightButton);
-                        break;
                     case NotificationProgressViewModel : area.Show(content);
                         break;
                     default: area.Show(content, (TimeSpan)expirationTime, onClick, onClose);

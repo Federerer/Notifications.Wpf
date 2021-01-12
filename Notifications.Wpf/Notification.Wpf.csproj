@@ -92,6 +92,8 @@
     <Compile Include="NotificationContent.cs" />
     <Compile Include="NotificationManager.cs" />
     <Compile Include="NotificationTemplateSelector.cs" />
+    <Compile Include="Classes\Enums\NotificationTextTrimType.cs" />
+    <Compile Include="Classes\Enums\NotificationType.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NotificationsOverlayWindow.xaml.cs">
@@ -99,11 +101,7 @@
     </Compile>
     <Compile Include="Utils\VisualTreeHelperExtensions.cs" />
     <Compile Include="ViewModels\NotificationProgressViewModel.cs" />
-    <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="ViewModels\Base\ViewModel.cs" />
-    <Compile Include="View\NotificationInfoView.xaml.cs">
-      <DependentUpon>NotificationInfoView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\NotificationProgress.xaml.cs">
       <DependentUpon>NotificationProgress.xaml</DependentUpon>
     </Compile>
@@ -164,10 +162,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\NotificationInfoView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\NotificationProgress.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -183,6 +177,7 @@
     <None Include="pack.bat" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
