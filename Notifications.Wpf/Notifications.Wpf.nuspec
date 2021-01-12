@@ -15,6 +15,6 @@
     <license type="expression">MIT</license>
   </metadata>
   <files>
-    <file src="bin\Release\net461\$id$.dll" target="lib\net461\" />
+    <file src="bin\Release\net461\Notifications.Wpf.dll" target="lib\net461\" />
   </files>
 </package>
