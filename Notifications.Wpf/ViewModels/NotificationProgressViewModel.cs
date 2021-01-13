@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using Notification.Wpf;
 using Notification.Wpf.Classes;
 using Notifications.Wpf.Command;
 using Notifications.Wpf.ViewModels.Base; //using GalaSoft.MvvmLight;
@@ -136,18 +137,41 @@ namespace Notifications.Wpf.ViewModels
         }
 
         #endregion
+
+        #region TrimType : NotificationTextTrimType - Обрезать сообщения за выходом размера
+
+        /// <summary>Обрезать сообщения за выходом размера</summary>
+        private NotificationTextTrimType _TrimType = NotificationTextTrimType.NoTrim;
+
+        /// <summary>Обрезать сообщения за выходом размера</summary>
+        public NotificationTextTrimType TrimType { get => _TrimType; set => Set(ref _TrimType, value); }
+
+        #endregion
+        #region RowsCount : uint - Число строк текста
+
+        /// <summary>Число строк текста</summary>
+        private uint _RowsCount = 2U;
+
+        /// <summary>Число строк текста</summary>
+        public uint RowsCount { get => _RowsCount; set => Set(ref _RowsCount, value); }
+
+        #endregion
         /// <summary>
         /// Содержимое левой кнопки
         /// </summary>
         public object RightButtonContent { get; set; } = "Cancel";
 
-        public NotificationProgressViewModel(out ProgressFinaly<(int?, string, string, bool?)> progresModel, CancellationTokenSource cancel, bool showCancelButton, bool showProgress)
+        public NotificationProgressViewModel(out ProgressFinaly<(int? Value, string Message, string Title, bool? ShowCancel)> progresModel, CancellationTokenSource cancel,
+            bool showCancelButton, bool showProgress, bool trimText, uint DefaultRowsCount)
         {
             ShowProgress = showProgress;
             Cancel = cancel;
-            progress = progresModel = new ProgressFinaly<(int?, string, string, bool?)>(OnProgress);
+            progress = progresModel = new ProgressFinaly<(int? Value, string Message, string Title, bool? ShowCancel)>(OnProgress);
             ShowCancelButton = showCancelButton;
             CollapseWindowCommand = new LamdaCommand(CollapseWindow);
+            if(trimText)
+                TrimType = NotificationTextTrimType.Trim;
+            RowsCount = DefaultRowsCount;
         }
 
         void OnProgress((int? percent, string msg, string title, bool? showCancel) ProgressInfo)

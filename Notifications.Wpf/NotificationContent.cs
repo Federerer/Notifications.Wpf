@@ -7,11 +7,15 @@ namespace Notification.Wpf
 {
     public class NotificationContent
     {
+        /// <summary> Top Title text </summary>
         public string Title { get; set; }
+        /// <summary> Body message text </summary>
         public string Message { get; set; }
-
+        /// <summary> Notification type (change color) </summary>
         public NotificationType Type { get; set; }
+        /// <summary> Trimming long text if need </summary>
         public NotificationTextTrimType TrimType { get; set; } = NotificationTextTrimType.NoTrim;
+        /// <summary> Set rows of message that will show if set Trim </summary>
         public uint RowsCount { get; set; } = 2;
 
         #region Left button
@@ -75,6 +79,9 @@ namespace Notification.Wpf
         public Action RightButtonAction { get; set; }
 
         #endregion
+
+        /// <summary> close message when OnClick to message window </summary>
+        public bool CloseOnClick { get; set; } = true;
 
     }
 }

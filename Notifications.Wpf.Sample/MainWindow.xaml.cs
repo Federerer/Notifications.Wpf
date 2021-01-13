@@ -154,8 +154,8 @@ namespace Notification.Wpf.Sample
                     LeftButtonContent = LeftButtonText,
                     RightButtonContent = RightButtonText,
                     RowsCount = RowCount,
-                    TrimType = TrimType
-
+                    TrimType = TrimType,
+                    CloseOnClick = false
                 };
                 _notificationManager.Show(content,expirationTime:TimeSpan.FromSeconds(5));
                 await Task.Delay(TimeSpan.FromSeconds(1));
@@ -212,7 +212,7 @@ namespace Notification.Wpf.Sample
         {
             var title = "Прогресс бар";
 
-            _notificationManager.ShowProgressBar(out var progress, out var Cancel, title, true, true);
+            _notificationManager.ShowProgressBar(out var progress, out var Cancel, title, true, true, "",true, 2u);
             using (progress)
                 try
                 {

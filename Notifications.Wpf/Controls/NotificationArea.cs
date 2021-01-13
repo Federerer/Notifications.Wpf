@@ -55,7 +55,7 @@ namespace Notification.Wpf.Controls
 #if NET40
         public void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose)
 #else
-        public async void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose)
+        public async void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose, bool CloseOnClick)
 #endif
         {
             var notification = new Notification
@@ -65,6 +65,12 @@ namespace Notification.Wpf.Controls
             
             notification.MouseLeftButtonDown += (sender, _) =>
             {
+                if(content is NotificationContent message)
+                    CloseOnClick = message.CloseOnClick;
+
+                if (CloseOnClick)
+                    (sender as Notification)?.Close();
+                
                 if (onClick == null) return;
                 onClick.Invoke();
                 (sender as Notification)?.Close();

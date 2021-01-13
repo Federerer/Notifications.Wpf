@@ -8,6 +8,7 @@
         xmlns:elements="clr-namespace:Notification.Wpf.Sample.Elements"
         xmlns:helpers="clr-namespace:Notification.Wpf.Sample.Helpers"
         xmlns:wpf="clr-namespace:Notification.Wpf;assembly=Notifications.Wpf"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600"
         >
@@ -21,7 +22,13 @@
         <TextBox Grid.Row="0" Text="{Binding ContentText, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"
                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="200" VerticalAlignment="Top"/>
         <StackPanel Grid.Row="1"  HorizontalAlignment="Right" VerticalAlignment="Bottom" DockPanel.Dock="Right" Orientation="Horizontal">
-                <StackPanel>
+            <ProgressBar Width="200" Height="20" IsIndeterminate="False" Value="{Binding RowCount,
+                    RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <controls:ProgresBarAnimateBehavior />
+                </i:Interaction.Behaviors>
+            </ProgressBar>
+            <StackPanel>
                     <ComboBox ItemsSource="{helpers:EnumValues {x:Type wpf:NotificationTextTrimType}}" 
                               SelectedItem="{Binding TrimType, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"/>
                     <elements:NumericUpDownControl Value="{Binding RowCount,

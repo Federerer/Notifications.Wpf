@@ -24,34 +24,34 @@ namespace Notification.Wpf
         }
 
         public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
-            Action onClose = null)
+            Action onClose = null, bool CloseOnClick = true)
         {
             areaName ??= "";
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(content, areaName, expirationTime, onClick, onClose)));
+                    new Action(() => Show(content, areaName, expirationTime, onClick, onClose, CloseOnClick)));
                 return;
             }
-            ShowContent(content, expirationTime, areaName, onClick, onClose);
+            ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
         }
 
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null,
             Action onClick = null, Action onClose = null, Action LeftButton = null, string LeftButtonText = null, Action RightButton = null, string RightButtonText = null,
-            NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2)
+            NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2, bool CloseOnClick = true)
         {
             var content = new NotificationContent
             {
                 Type = type, TrimType = trim, RowsCount = RowsCountWhenTrim, LeftButtonAction = LeftButton, LeftButtonContent = LeftButtonText,
-                RightButtonAction = RightButton, RightButtonContent = RightButtonText, Message = message, Title = title
+                RightButtonAction = RightButton, RightButtonContent = RightButtonText, Message = message, Title = title, CloseOnClick = CloseOnClick
             };
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose, LeftButton, LeftButtonText, RightButton, RightButtonText, trim, RowsCountWhenTrim)));
+                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose, LeftButton, LeftButtonText, RightButton, RightButtonText, trim, RowsCountWhenTrim, CloseOnClick)));
                 return;
             }
-            ShowContent(content, expirationTime, areaName, onClick, onClose);
+            ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
         }
 
         /// <summary>
@@ -63,12 +63,14 @@ namespace Notification.Wpf
         /// <param name="Cancel">CancellationTokenSource, if it null - ShowCancelButton will state false</param>
         /// <param name="ShowCancelButton">Show Cancel button or not</param>
         /// <param name="areaName">window are where show notification</param>
+        /// <param name="TrimText">Обрезать текст превышающий размеры</param>
+        /// <param name="DefaultRowsCount">Базовое число строк при обрезке</param>
         public void ShowProgressBar(out ProgressFinaly<(int? value, string message, string title, bool? showCancel)> progress, out CancellationToken Cancel, string Title = null,
-            bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "")
+            bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U)
         {
             var CancelSource = new CancellationTokenSource();
             Cancel = CancelSource.Token;
-            var model = new NotificationProgressViewModel(out var progressModel, CancelSource, ShowCancelButton, ShowProgress);
+            var model = new NotificationProgressViewModel(out var progressModel, CancelSource, ShowCancelButton, ShowProgress, TrimText, DefaultRowsCount);
             progress = progressModel;
             if (Title != null) model.Title = Title;
             Cancel.ThrowIfCancellationRequested();
@@ -81,7 +83,7 @@ namespace Notification.Wpf
                 _dispatcher.Invoke(
                     () =>
                     {
-                        ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName);
+                        ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName, TrimText, DefaultRowsCount);
                         bar = progress1;
                         CancelFirst = Cancel1;
                     });
@@ -92,6 +94,7 @@ namespace Notification.Wpf
 
             ShowContent(model);
         }
+
         /// <summary>
         /// Запуск отображения в зависимости от типа контента
         /// </summary>
@@ -100,11 +103,9 @@ namespace Notification.Wpf
         /// <param name="areaName">зона отображения</param>
         /// <param name="onClick">действие при клике</param>
         /// <param name="onClose">действие при закрытии</param>
-        /// <param name="LeftButton">левая кнопка</param>
-        /// <param name="RightButton">правая кнопка</param>
+        /// <param name="CloseOnClick">Закрыть сообщение при клике по телу</param>
         static void ShowContent( object content, TimeSpan? expirationTime = null, string areaName = "",
-            Action onClick = null, Action onClose = null,
-            RoutedEventHandler LeftButton = null, RoutedEventHandler RightButton = null)
+            Action onClick = null, Action onClose = null, bool CloseOnClick = true)
         {
             expirationTime ??= TimeSpan.FromSeconds(5);
 
@@ -134,7 +135,7 @@ namespace Notification.Wpf
                 {
                     case NotificationProgressViewModel : area.Show(content);
                         break;
-                    default: area.Show(content, (TimeSpan)expirationTime, onClick, onClose);
+                    default: area.Show(content, (TimeSpan)expirationTime, onClick, onClose, CloseOnClick);
                         break;
                 }
             }
