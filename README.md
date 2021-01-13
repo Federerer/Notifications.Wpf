@@ -2,13 +2,14 @@
 WPF toast notifications.
 
 ### Installation:
-Install-Package Notification.WPF -Version 1.0.4.1
+Install-Package Notification.WPF -Version 2.0.0.1
 
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/info_button.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/content.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/sample_attach.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/all_styles.gif)
 ### Known issue
 
 If you have problem with close notification window after closing you app, use this row: 
@@ -73,8 +74,13 @@ var content = new NotificationContent
                     Title = "Sample notification",
                     Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     Type = NotificationType.Error,
-                    TrimType = NotificationTextTrimType.Attach // will show attach buttron on message
-                    RowsCont = 3 //Will show 3 rows and trim after
+                    TrimType = NotificationTextTrimType.Attach, // will show attach buttron on message
+                    RowsCont = 3, //Will show 3 rows and trim after
+                    LeftButtonAction = () => SomeAction(), //Action on left button click, button will not show if it null 
+                    RightButtonAction = () => SomeAction(), //Action on right button click,  button will not show if it null
+                    LeftButtonContent, // Left button content (string or what u want
+                    RightButtonContent, // Right button content (string or what u want
+                    CloseOnClick = true // Set true if u want close message when left mouse button click on message (base = true)
                 };
                 _notificationManager.Show(content);
 ```
@@ -156,15 +162,15 @@ notificationManager.Show("String notification", onClick: () => Console.WriteLine
 #### Notifi with button:
 ```C#
 notificationManager.Show("2 button","This is 2 button on form","",TimeSpan.MaxValue,
-     (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),"Left Button",
-     (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), "Right Button"); 
+     () => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),"Left Button",
+     () => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), "Right Button"); 
 
 notificationManager.Show("2 button","This is 2 button on form","",TimeSpan.MaxValue,
-     (o, args) => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),null,
-     (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), null);
+     () => _notificationManager.Show("Left button click","",TimeSpan.FromSeconds(3)),null,
+     () => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)), null);
 
 notificationManager.Show("1 right button","This is 2 button on form","",TimeSpan.MaxValue,
-     (o, args) => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)));
+     () => _notificationManager.Show("Right button click", "", TimeSpan.FromSeconds(3)));
 ```
 
 ![Demo](http://i.imgur.com/G1ZU2ID.gif)
