@@ -102,7 +102,7 @@ namespace Notifications.Wpf.Classes
         public string GetStringTime(double current_index, double total_index)
         {
             var time = CalculateOperationTime(current_index, total_index);
-            return time is null ? BaseWaitingMessage :
+            return time is null ? BaseWaitingMessage ?? "" :
                 time.Value.Days > 0 ? time.Value.ToString(@"d\.hh\:mm\:ss") :
                 time.Value.Hours > 0 ? time.Value.ToString(@"hh\:mm\:ss") :
                 time.Value.Minutes > 0 ? time.Value.ToString(@"mm\:ss") : $"{Math.Round(time.Value.TotalSeconds, 0)} c";

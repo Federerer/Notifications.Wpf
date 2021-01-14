@@ -16,13 +16,11 @@ namespace Notification.Wpf.Classes
 
         #endregion
 
-        public OperationTimer WaitingTimer { get; private set; }
+        public OperationTimer WaitingTimer { get; } = new ();
         private Controls.Notification Area;
 
         public ProgressFinaly(Action<T> handler) : base(handler)
-        {
-            WaitingTimer = new OperationTimer();
-        }
+        { }
 
         public void Report(T value) { base.OnReport(value); }
 
@@ -31,7 +29,6 @@ namespace Notification.Wpf.Classes
             _IsFinished = true;
             try
             {
-                WaitingTimer = null;
                 Application.Current.Dispatcher.Invoke(() => Area.Close());
             }
             catch
