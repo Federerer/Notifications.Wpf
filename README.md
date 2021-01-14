@@ -1,8 +1,8 @@
 # Notification.Wpf
-WPF toast notifications.
+WPF toast notifications. (Messages and progress bars)
 
 ### Installation:
-Install-Package Notification.WPF -Version 2.0.0.1
+Install-Package Notification.WPF -Version 2.0.0.2
 
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
@@ -70,19 +70,19 @@ if you need All text, but you dont need big window - use TrimTipe - Attach, it w
 if you need All text, but you dont need big window and you want defined window size - use TrimTipe - AttachIfMoreRows, it will trim text and show small button if count of rows in message will be more that that you set.
 ```C#
 var content = new NotificationContent
-                {
-                    Title = "Sample notification",
-                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    Type = NotificationType.Error,
-                    TrimType = NotificationTextTrimType.Attach, // will show attach buttron on message
-                    RowsCont = 3, //Will show 3 rows and trim after
-                    LeftButtonAction = () => SomeAction(), //Action on left button click, button will not show if it null 
-                    RightButtonAction = () => SomeAction(), //Action on right button click,  button will not show if it null
-                    LeftButtonContent, // Left button content (string or what u want
-                    RightButtonContent, // Right button content (string or what u want
-                    CloseOnClick = true // Set true if u want close message when left mouse button click on message (base = true)
-                };
-                _notificationManager.Show(content);
+    {
+        Title = "Sample notification",
+        Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        Type = NotificationType.Error,
+        TrimType = NotificationTextTrimType.Attach, // will show attach button on message
+        RowsCont = 3, //Will show 3 rows and trim after
+        LeftButtonAction = () => SomeAction(), //Action on left button click, button will not show if it null 
+        RightButtonAction = () => SomeAction(), //Action on right button click,  button will not show if it null
+        LeftButtonContent, // Left button content (string or what u want
+        RightButtonContent, // Right button content (string or what u want
+        CloseOnClick = true // Set true if u want close message when left mouse button click on message (base = true)
+    };
+    _notificationManager.Show(content);
 ```
 
 #### Notification ProgressBar:
@@ -95,10 +95,13 @@ ShowProgressBar(out ProgressFinaly<ValueTuple<int?, string, string, bool?>> prog
                 string Title = null,
                 bool ShowCancelButton = true,
                 bool ShowProgress = true,
-                string areaName = "")
+                string areaName = "", 
+                bool TrimText = false,
+                uint DefaultRowsCount = 1,
+                string BaseWaitingMessage = "Calculation time")
       
       
-notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, true, false);
+notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, true, false, true, 2U, "Wait");
             using (progress)
                 try
                 {
@@ -153,6 +156,8 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
             }, cancel);            
 ```
 Just send null as progress count that change bar to "running line".
+
+##### Progress will calculate approximate waiting time and show it in left bottom corner, if u not need it - set progress.WaitingTimer.BaseWaitingMessage = null, or set it in intializer
 
 #### Simple text with OnClick & OnClose actions:
 ```C#
