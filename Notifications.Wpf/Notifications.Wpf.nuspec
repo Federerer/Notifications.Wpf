@@ -6,7 +6,7 @@
     <title>Notification.WPF</title>
     <authors>APlatonenkov</authors>
 	  <owners>https://github.com/Platonenkov</owners>
-    <projectUrl>https://github.com/Platonenkov/Notifications.Wpf</projectUrl>
+    <projectUrl>https://github.com/Platonenkov/Notification.Wpf</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This project will help you take notification window like in windows</description>
     <releaseNotes>progress bug fix</releaseNotes>
