@@ -8,7 +8,7 @@
         xmlns:elements="clr-namespace:Notification.Wpf.Sample.Elements"
         xmlns:helpers="clr-namespace:Notification.Wpf.Sample.Helpers"
         xmlns:wpf="clr-namespace:Notification.Wpf;assembly=Notifications.Wpf"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600"
         >
@@ -24,9 +24,9 @@
         <StackPanel Grid.Row="1"  HorizontalAlignment="Right" VerticalAlignment="Bottom" DockPanel.Dock="Right" Orientation="Horizontal">
             <ProgressBar Width="200" Height="20" IsIndeterminate="False" Value="{Binding RowCount,
                     RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <i:Interaction.Behaviors>
+                <b:Interaction.Behaviors>
                     <controls:ProgresBarAnimateBehavior />
-                </i:Interaction.Behaviors>
+                </b:Interaction.Behaviors>
             </ProgressBar>
             <StackPanel>
                     <ComboBox ItemsSource="{helpers:EnumValues {x:Type wpf:NotificationTextTrimType}}" 

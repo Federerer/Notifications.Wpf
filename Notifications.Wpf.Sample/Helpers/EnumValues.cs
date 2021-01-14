@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using Notifications.Wpf.Annotations;
-using System.Windows.Interactivity;
 using System.Windows.Media.Animation;
 
 namespace Notification.Wpf.Sample.Helpers
