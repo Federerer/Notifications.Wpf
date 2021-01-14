@@ -1,8 +1,10 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Notification.Wpf;
 using Notification.Wpf.Classes;
+using Notifications.Wpf.Classes;
 using Notifications.Wpf.Command;
 using Notifications.Wpf.ViewModels.Base; //using GalaSoft.MvvmLight;
 //using GalaSoft.MvvmLight.Command;
@@ -53,10 +55,10 @@ namespace Notifications.Wpf.ViewModels
         #region ProgressBar : IProgress<(double, string, string,bool)> - Прогресс
 
         /// <summary>Прогресс</summary>
-        private ProgressFinaly<(int?, string, string, bool?)> _progress;
+        private ProgressFinaly<(int? percent, string message, string title, bool? showCancel)> _progress;
 
         /// <summary>Прогресс</summary>
-        public ProgressFinaly<(int?, string, string, bool?)> progress
+        public ProgressFinaly<(int? percent, string message, string title, bool? showCancel)> progress
         {
             get => _progress;
             set => Set(ref _progress, value);
@@ -147,6 +149,7 @@ namespace Notifications.Wpf.ViewModels
         public NotificationTextTrimType TrimType { get => _TrimType; set => Set(ref _TrimType, value); }
 
         #endregion
+
         #region RowsCount : uint - Число строк текста
 
         /// <summary>Число строк текста</summary>
@@ -156,38 +159,63 @@ namespace Notifications.Wpf.ViewModels
         public uint RowsCount { get => _RowsCount; set => Set(ref _RowsCount, value); }
 
         #endregion
+
+        #region WaitingTime : string - Время ожидания окончания операции
+
+        /// <summary>Время ожидания окончания операции</summary>
+        private string _WaitingTime;
+
+        /// <summary>Время ожидания окончания операции</summary>
+        public string WaitingTime { get => _WaitingTime; set => Set(ref _WaitingTime, value); }
+
+        #endregion
         /// <summary>
         /// Содержимое левой кнопки
         /// </summary>
         public object RightButtonContent { get; set; } = "Cancel";
 
-        public NotificationProgressViewModel(out ProgressFinaly<(int? Value, string Message, string Title, bool? ShowCancel)> progresModel, CancellationTokenSource cancel,
-            bool showCancelButton, bool showProgress, bool trimText, uint DefaultRowsCount)
+        public NotificationProgressViewModel(out ProgressFinaly<(int? percent, string message, string title, bool? showCancel)> progresModel, CancellationTokenSource cancel,
+            bool showCancelButton, bool showProgress, bool trimText, uint DefaultRowsCount, string BaseWaitingMessage)
         {
             ShowProgress = showProgress;
             Cancel = cancel;
-            progress = progresModel = new ProgressFinaly<(int? Value, string Message, string Title, bool? ShowCancel)>(OnProgress);
+            progress = progresModel = new ProgressFinaly<(int? percent, string message, string title, bool? showCancel)>(OnProgress);
             ShowCancelButton = showCancelButton;
             CollapseWindowCommand = new LamdaCommand(CollapseWindow);
             if(trimText)
                 TrimType = NotificationTextTrimType.Trim;
             RowsCount = DefaultRowsCount;
+            if (BaseWaitingMessage != null) progress.WaitingTimer.BaseWaitingMessage = BaseWaitingMessage;
         }
 
-        void OnProgress((int? percent, string msg, string title, bool? showCancel) ProgressInfo)
+        void OnProgress((int? percent, string message, string title, bool? showCancel) ProgressInfo)
         {
-            if (ProgressInfo.percent is null)
-                ShowProgress = false;
-            else
-            {
-                ShowProgress = true;
-                process = (double) ProgressInfo.percent;
-            }
-            Message = ProgressInfo.msg;
-            if (ProgressInfo.title != null) Title = ProgressInfo.title;
-            if(ProgressInfo.showCancel != null)
-                ShowCancelButton = (bool) ProgressInfo.showCancel;
+                if (ProgressInfo.percent is null)
+                {
+                    if (ShowProgress)
+                    {
+                        ShowProgress = false;
+                        progress.WaitingTimer.Restart();
+                        WaitingTime = string.Empty;
+                    }
+                }
+                else
+                {
+                    if (!ShowProgress)
+                    {
+                        ShowProgress = true;
+                        progress.WaitingTimer.Restart();
+                    }
+                    process = (double)ProgressInfo.percent;
+
+                    WaitingTime = progress.WaitingTimer.BaseWaitingMessage is null ? null: process > 10 ? progress.WaitingTimer.GetStringTime(ProgressInfo.percent.Value, 100) : progress.WaitingTimer.BaseWaitingMessage;
+                }
+                Message = ProgressInfo.message;
+                if (ProgressInfo.title != null) Title = ProgressInfo.title;
+                if (ProgressInfo.showCancel != null)
+                    ShowCancelButton = (bool)ProgressInfo.showCancel;
         }
+
 
         public void CancelProgress(object Sender, RoutedEventArgs E) => Cancel.Cancel();
 

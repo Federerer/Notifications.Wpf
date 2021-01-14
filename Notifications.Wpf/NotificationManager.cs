@@ -65,12 +65,13 @@ namespace Notification.Wpf
         /// <param name="areaName">window are where show notification</param>
         /// <param name="TrimText">Обрезать текст превышающий размеры</param>
         /// <param name="DefaultRowsCount">Базовое число строк при обрезке</param>
+        /// <param name="BaseWaitingMessage">Сообщение при подсчёте времени ожидания, установите null если не хотите видеть время в прогресс баре</param>
         public void ShowProgressBar(out ProgressFinaly<(int? value, string message, string title, bool? showCancel)> progress, out CancellationToken Cancel, string Title = null,
-            bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U)
+            bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U, string BaseWaitingMessage = "Calculation time")
         {
             var CancelSource = new CancellationTokenSource();
             Cancel = CancelSource.Token;
-            var model = new NotificationProgressViewModel(out var progressModel, CancelSource, ShowCancelButton, ShowProgress, TrimText, DefaultRowsCount);
+            var model = new NotificationProgressViewModel(out var progressModel, CancelSource, ShowCancelButton, ShowProgress, TrimText, DefaultRowsCount, BaseWaitingMessage);
             progress = progressModel;
             if (Title != null) model.Title = Title;
             Cancel.ThrowIfCancellationRequested();
@@ -83,7 +84,7 @@ namespace Notification.Wpf
                 _dispatcher.Invoke(
                     () =>
                     {
-                        ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName, TrimText, DefaultRowsCount);
+                        ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName, TrimText, DefaultRowsCount, BaseWaitingMessage);
                         bar = progress1;
                         CancelFirst = Cancel1;
                     });
@@ -133,7 +134,7 @@ namespace Notification.Wpf
             {
                 switch (content)
                 {
-                    case NotificationProgressViewModel : area.Show(content);
+                    case NotificationProgressViewModel: area.Show(content);
                         break;
                     default: area.Show(content, (TimeSpan)expirationTime, onClick, onClose, CloseOnClick);
                         break;

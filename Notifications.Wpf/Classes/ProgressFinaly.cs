@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows;
+using Notifications.Wpf.Classes;
 
 namespace Notification.Wpf.Classes
 {
-    public class ProgressFinaly<T> : Progress<T>,IDisposable
+    public class ProgressFinaly<T> : Progress<T>, IDisposable
     {
         #region IsFinished : bool - progress was finished
 
@@ -15,8 +16,13 @@ namespace Notification.Wpf.Classes
 
         #endregion
 
+        public OperationTimer WaitingTimer { get; private set; }
         private Controls.Notification Area;
-        public ProgressFinaly(Action<T> handler) : base(handler) { }
+
+        public ProgressFinaly(Action<T> handler) : base(handler)
+        {
+            WaitingTimer = new OperationTimer();
+        }
 
         public void Report(T value) { base.OnReport(value); }
 
@@ -25,6 +31,7 @@ namespace Notification.Wpf.Classes
             _IsFinished = true;
             try
             {
+                WaitingTimer = null;
                 Application.Current.Dispatcher.Invoke(() => Area.Close());
             }
             catch
@@ -37,6 +44,6 @@ namespace Notification.Wpf.Classes
         {
             Area = area;
         }
-
+        
     }
 }

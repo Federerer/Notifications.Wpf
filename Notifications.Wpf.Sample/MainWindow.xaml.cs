@@ -225,6 +225,13 @@ namespace Notification.Wpf.Sample
                             Cancel.ThrowIfCancellationRequested();
                             progress.Report((i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
                                                 + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
+                            if (i > 30 && i < 70)
+                                progress.WaitingTimer.BaseWaitingMessage = null;
+                            else
+                            {
+                                progress.WaitingTimer.BaseWaitingMessage = "Calculation time";
+
+                            }
                             await Task.Delay(TimeSpan.FromSeconds(0.03), Cancel);
                         }
                     }, Cancel).ConfigureAwait(false);

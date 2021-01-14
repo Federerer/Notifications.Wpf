@@ -15,6 +15,6 @@ namespace Notification.Wpf
 
         void ShowProgressBar(
             out ProgressFinaly<(int? value, string message, string title, bool? showCancel)> progress, out CancellationToken Cancel, string Title = null,
-            bool ShowCancelButton = true, bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U);
+            bool ShowCancelButton = true, bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U, string BaseWaitingMessage = "Calculation time");
     }
 }

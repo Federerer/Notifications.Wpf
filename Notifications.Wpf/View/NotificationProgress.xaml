@@ -54,7 +54,7 @@
     </UserControl.InputBindings>
 
     <Border Padding="{Binding BarMargin}" Background="#FF444444" MinHeight="20">
-        <Grid>
+        <Grid ToolTip="{Binding WaitingTime}">
             <Grid.ColumnDefinitions>
                 <extensions:ColumnDefinitionCollapsable Width="Auto" Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                 <extensions:ColumnDefinitionCollapsable Width="*"/>
@@ -98,9 +98,13 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <Button Grid.Row="3" x:Name="Cancel" Width="100" HorizontalAlignment="Right" Content="{Binding RightButtonContent}"
-                        DockPanel.Dock="Right" Margin="0,0,5,0" controls:Notification.CloseOnClick="True"
-                        Visibility="{Binding ShowCancelButton, Converter={converters:BoolToVisibility Collapse=True}}"/>
+                <DockPanel Grid.Row="3">
+                    <TextBlock Text="{Binding WaitingTime}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                    <Button x:Name="Cancel" Width="100" HorizontalAlignment="Right" Content="{Binding RightButtonContent}"
+                            DockPanel.Dock="Right" Margin="0,0,5,0" controls:Notification.CloseOnClick="True"
+                            Visibility="{Binding ShowCancelButton, Converter={converters:BoolToVisibility Collapse=True}}"/>
+
+                </DockPanel>
 
             </Grid>
         </Grid>

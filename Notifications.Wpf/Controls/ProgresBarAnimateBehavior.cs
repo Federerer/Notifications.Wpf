@@ -9,7 +9,7 @@ namespace Notification.Wpf.Controls
 {
     public class ProgresBarAnimateBehavior : Behavior<ProgressBar>
     {
-        bool _IsAnimating = false;
+        bool _IsAnimating;
 
         protected override void OnAttached()
         {
