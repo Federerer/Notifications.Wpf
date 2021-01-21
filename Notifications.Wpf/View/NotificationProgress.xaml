@@ -52,12 +52,12 @@
     </UserControl.InputBindings>
 
     <Border Padding="{Binding BarMargin}" Background="#FF444444" MinHeight="20">
-        <Grid ToolTip="{Binding WaitingTime}">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <extensions:ColumnDefinitionCollapsable Width="Auto" Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                 <extensions:ColumnDefinitionCollapsable Width="*"/>
             </Grid.ColumnDefinitions>
-            <ContentControl Margin="0,0,12,0" Width="25" Height="25" VerticalAlignment="Top">
+            <ContentControl Margin="0,0,12,0" Width="25" Height="25" VerticalAlignment="Top" Opacity="0.8">
                 <ContentControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{StaticResource LoadIcon}"/>
             </ContentControl>
             <Grid Grid.Column="1">
@@ -75,10 +75,6 @@
                             <controls:ProgresBarAnimateBehavior />
                         </b:Interaction.Behaviors>
                     </ProgressBar>
-
-                    <!--<ProgressBar Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
-                                 Value="{Binding process}" IsIndeterminate="{Binding ShowProgress, Converter={wpf:BoolInverse}}">
-                    </ProgressBar>-->
                     <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis" Foreground="#FF444444" VerticalAlignment="Center" Visibility="{Binding Collapse, Converter={converters:BoolToVisibility Collapse=True}}"/>
                 </Grid>
                 <TextBlock x:Name="MessageBox" Grid.Row="2"  Text="{Binding Message}" Margin="{Binding BarMargin}" TextWrapping="Wrap" Opacity=".8" MinHeight="20" >
@@ -97,7 +93,11 @@
                     </TextBlock.Style>
                 </TextBlock>
                 <DockPanel Grid.Row="3">
-                    <TextBlock Text="{Binding WaitingTime}" DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="{Binding WaitingTime}" DockPanel.Dock="Left" Width="150" 
+                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                               TextWrapping="NoWrap" 
+                               TextTrimming="CharacterEllipsis"
+                               Opacity=".8" Margin="5,0,0,0"/>
                     <Button x:Name="Cancel" Width="100" HorizontalAlignment="Right" Content="{Binding RightButtonContent}"
                             DockPanel.Dock="Right" Margin="0,0,5,0" controls:Notification.CloseOnClick="True"
                             Visibility="{Binding ShowCancelButton, Converter={converters:BoolToVisibility Collapse=True}}"/>

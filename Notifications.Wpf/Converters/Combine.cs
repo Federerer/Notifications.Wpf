@@ -9,7 +9,7 @@ namespace Notification.Wpf
 {
     /// <summary>Конвертер, последовательно комбинирующий действия двух других конвертеров</summary>
     [MarkupExtensionReturnType(typeof(Combine))]
-    public class Combine : ValueConverter
+    internal class Combine : ValueConverter
     {
         /// <summary>Первый применяемый конвертер</summary>
         [CanBeNull]
