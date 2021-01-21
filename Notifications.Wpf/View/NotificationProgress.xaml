@@ -93,10 +93,11 @@
                     </TextBlock.Style>
                 </TextBlock>
                 <DockPanel Grid.Row="3">
-                    <TextBlock Text="{Binding WaitingTime}" DockPanel.Dock="Left" Width="150" 
+                    <TextBlock Text="{Binding WaitingTime}" DockPanel.Dock="Left" Width="190" 
                                HorizontalAlignment="Left" VerticalAlignment="Center"
                                TextWrapping="NoWrap" 
                                TextTrimming="CharacterEllipsis"
+                               FontSize="14"
                                Opacity=".8" Margin="5,0,0,0"/>
                     <Button x:Name="Cancel" Width="100" HorizontalAlignment="Right" Content="{Binding RightButtonContent}"
                             DockPanel.Dock="Right" Margin="0,0,5,0" controls:Notification.CloseOnClick="True"
