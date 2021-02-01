@@ -68,19 +68,21 @@
                     <extensions:RowDefinitionCollapsable Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Margin="{Binding BarMargin}" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
-                <Grid Grid.Row="1" >
+                <Grid Grid.Row="1" Background="Transparent" >
                     <ProgressBar  Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
-                                  Value="{Binding process}" IsIndeterminate="{Binding ShowProgress, Converter={wpf:BoolInverse}}" Panel.ZIndex="999"
-                                  Background="Transparent"
-                                  BorderThickness="0">
+                                  Value="{Binding process}" IsIndeterminate="{Binding ShowProgress, Converter={wpf:BoolInverse}}" Panel.ZIndex="900"
+                                  BorderThickness="0"                
+                                  Background="{StaticResource TransparentBrush}">
                         <b:Interaction.Behaviors>
                             <controls:ProgresBarAnimateBehavior />
                         </b:Interaction.Behaviors>
                     </ProgressBar>
-                    <ProgressBar Visibility="{Binding ShowProgress, Converter={converters:BoolToVisibility}}"  Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
-                                  IsIndeterminate="true" Opacity="0.5">
+                    <ProgressBar
+                                 Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
+                                  IsIndeterminate="{Binding ShowProgress}"      
+                                 Opacity="0.4" BorderThickness="0">
                     </ProgressBar>
-                    <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis" Foreground="#FF444444" VerticalAlignment="Center" Visibility="{Binding Collapse, Converter={converters:BoolToVisibility Collapse=True}}"/>
+                    <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" Panel.ZIndex="901" FontWeight="Medium" TextTrimming="CharacterEllipsis" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center" Visibility="{Binding Collapse, Converter={converters:BoolToVisibility Collapse=True}}"/>
                 </Grid>
                 <TextBlock x:Name="MessageBox" Grid.Row="2"  Text="{Binding Message}" Margin="{Binding BarMargin}" TextWrapping="Wrap" Opacity=".8" MinHeight="20" >
                     <TextBlock.Style>
