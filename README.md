@@ -2,7 +2,7 @@
 WPF toast notifications. (Messages and progress bars)
 
 ### Installation:
-Install-Package Notification.WPF -Version 2.0.0.5
+Install-Package Notification.WPF -Version 2.0.0.6
 
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
@@ -53,7 +53,7 @@ notificationManager.Show(title, Message, type, onClick: () => SomeAction();
 #### Notification inside application window:
 - Adding namespace:
 ```XAML
-xmlns:notifications="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
+xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notifications.Wpf"
 ```
 - Adding new NotificationArea:
 ```XAML
