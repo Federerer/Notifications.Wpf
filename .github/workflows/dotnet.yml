@@ -17,8 +17,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
                                 # восстановить зависимости
-    - name: Restore dependencies 
-      run: dotnet restore      
+   # - name: Restore dependencies 
+    #  run: dotnet restore      
                                 # собрать проект      
     - name: Build               
       run: dotnet build --no-restore
