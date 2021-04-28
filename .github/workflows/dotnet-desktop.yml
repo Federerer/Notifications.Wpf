@@ -1,0 +1,63 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    env:
+      Solution_Name: Notification.Wpf.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
+      
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@2008f912f56e61277eefaac6d1888b750582aa16
+
+    # Execute all unit tests in the solution
+    - name: Execute unit tests
+      run: dotnet test
+
+  # собрать проект      
+    - name: Build               
+      run: dotnet build --no-restore
+
+                                # провести тестирование      
+    - name: Test                
+      run: dotnet test --no-build --verbosity normal
+
+                                # собрать проект релиза и упаковать в пакет      
+    - name: Packing
+      run: |                    
+          dotnet build Notification.Wpf/Notification.Wpf.csproj -c Release
+          dotnet pack Notification.Wpf/Notification.Wpf.csproj -c Release
+      
+                                # опубликовать пакет в личном репозитории GitHub     
+    - name: Push package
+      run: dotnet nuget push "**/*.nupkg" --skip-duplicate --source https://nuget.pkg.github.com/Platonenkov/index.json -k ${{secrets.GITHUB_TOKEN}}       
+                                # опубликовать пакет в личном репозитории NuGet   
+    - name: Publishing
+      run: dotnet nuget push Notification.Wpf/bin/Release/*.nupkg -k ${{ secrets.NuGetApiKey }} --skip-duplicate -s https://api.nuget.org/v3/index.json
+	
