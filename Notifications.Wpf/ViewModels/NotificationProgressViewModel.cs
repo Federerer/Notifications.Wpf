@@ -210,7 +210,7 @@ namespace Notifications.Wpf.ViewModels
 
                     WaitingTime = progress.WaitingTimer.BaseWaitingMessage is null ? null: process > 10 ? progress.WaitingTimer.GetStringTime((double)ProgressInfo.percent, 100) : progress.WaitingTimer.BaseWaitingMessage;
                 }
-                Message = ProgressInfo.message;
+                if (ProgressInfo.message != null) Message = ProgressInfo.message;
                 if (ProgressInfo.title != null) Title = ProgressInfo.title;
                 if (ProgressInfo.showCancel != null)
                     ShowCancelButton = (bool)ProgressInfo.showCancel;
