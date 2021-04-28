@@ -60,4 +60,3 @@ jobs:
                                 # опубликовать пакет в личном репозитории NuGet   
     - name: Publishing
       run: dotnet nuget push Notification.Wpf/bin/Release/*.nupkg -k ${{ secrets.NuGetApiKey }} --skip-duplicate -s https://api.nuget.org/v3/index.json
-	
