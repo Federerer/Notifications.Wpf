@@ -21,14 +21,13 @@ jobs:
           dotnet-version: 5.0.x
         
       - name: Building
-        run: |
-          dotnet build Notification.Wpf\Notification.Wpf.csproj -c Release
+        run: dotnet build Notification.Wpf\Notification.Wpf.csproj -c Release
         
       - name: Packing
-        run: dotnet pack Notification.Wpf\Notification.Wpf.csproj --no-build -c Release -v q
-        
-     
-                                # опубликовать пакет в личном репозитории GitHub     
+        run: |                    
+          dotnet build Notification.Wpf/Notification.Wpf.csproj -c Release
+          dotnet pack Notification.Wpf/Notification.Wpf.csproj -c Release
+
       - name: Push package
         run: dotnet nuget push Notification.Wpf/bin/Release/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/Platonenkov/index.json -k ${{secrets.GITHUB_TOKEN}}       
                                   # опубликовать пакет в личном репозитории NuGet   
