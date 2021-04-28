@@ -21,7 +21,7 @@ jobs:
       run: dotnet restore      
                                 # собрать проект      
     - name: Build               
-      run: dotnet build --no-restore
+      run: dotnet build Notification.Wpf/Notification.Wpf.csproj -c Debug --no-restore
       
                                 # провести тестирование      
     - name: Test                
