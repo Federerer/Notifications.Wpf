@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Notification.Wpf;
 using Notification.Wpf.Classes;
-using Notifications.Wpf.Classes;
 using Notifications.Wpf.Command;
-using Notifications.Wpf.ViewModels.Base; //using GalaSoft.MvvmLight;
-//using GalaSoft.MvvmLight.Command;
+using Notifications.Wpf.ViewModels.Base;
 
 namespace Notifications.Wpf.ViewModels
 {

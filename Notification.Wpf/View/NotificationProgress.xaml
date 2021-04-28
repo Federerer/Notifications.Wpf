@@ -2,10 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Notification.Wpf.View"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Notification.Wpf.Controls"
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:converters="clr-namespace:Notification.Wpf.Converters"
              xmlns:wpf="clr-namespace:Notification.Wpf"
              xmlns:extensions="clr-namespace:Notifications.Wpf.Extensions"
@@ -80,8 +78,7 @@
                     <ProgressBar
                                  Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
                                   IsIndeterminate="{Binding ShowProgress}"      
-                                 Opacity="0.4" BorderThickness="0">
-                    </ProgressBar>
+                                 Opacity="0.4" BorderThickness="0" />
                     <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" Panel.ZIndex="901" FontWeight="Medium" TextTrimming="CharacterEllipsis" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center" Visibility="{Binding Collapse, Converter={converters:BoolToVisibility Collapse=True}}"/>
                 </Grid>
                 <TextBlock x:Name="MessageBox" Grid.Row="2"  Text="{Binding Message}" Margin="{Binding BarMargin}" TextWrapping="Wrap" Opacity=".8" MinHeight="20" >

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Input;
-using Notifications.Wpf.Command;
 
 namespace Notification.Wpf
 {
