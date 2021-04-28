@@ -38,6 +38,12 @@
     <Reference Include="FontAwesome.WPF">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="FontAwesome5, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome5.2.1.0\lib\net40\FontAwesome5.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome5.Net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome5.2.1.0\lib\net40\FontAwesome5.Net.dll</HintPath>
+    </Reference>
     <Reference Include="MathCore, Version=0.0.36.0, Culture=neutral, PublicKeyToken=d1a4491910fe6bbb, processorArchitecture=MSIL">
       <HintPath>..\packages\MathCore.0.0.36\lib\netstandard2.0\MathCore.dll</HintPath>
     </Reference>

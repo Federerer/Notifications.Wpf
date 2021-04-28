@@ -5,7 +5,8 @@
                     xmlns:wpf="clr-namespace:Notification.Wpf"
                     xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:converters="clr-namespace:Notification.Wpf.Converters"
-                    xmlns:fa="http://schemas.fontawesome.io/icons/">
+                    xmlns:fa="http://schemas.fontawesome.io/icons/"
+                    xmlns:fa5="http://schemas.fontawesome.com/icons/">
 
     <SolidColorBrush x:Key="BorderBrush" Color="#EEE" p:Freeze="True"/>
     <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" p:Freeze="True"/>
@@ -34,22 +35,22 @@
     <Color x:Key="WhiteColor" A="255"  R="255" G="255" B="255"/>
     <Color x:Key="BlackColor" A="255"  R="0" G="0" B="0"/>
 
-    <fa:ImageAwesome x:Key="LinkIcon" Icon="Link" Foreground="{StaticResource WhiteBrush}" Height="20" Rotation="135" x:Shared="False"/>
-    <fa:ImageAwesome x:Key="MinimizeIcon" Icon="WindowMinimize" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
-    <fa:ImageAwesome x:Key="MaximizeIcon" Icon="WindowMaximize" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
-    <fa:ImageAwesome x:Key="SettingIcon" Icon="Cog" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
-    <fa:ImageAwesome x:Key="LoadIcon" Icon="Spinner" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False" Spin="True" SpinDuration="1"/>
-    <fa:ImageAwesome x:Key="ErrorIcon" Icon="Bug" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
-    <fa:ImageAwesome x:Key="CloseIcon" Icon="Close" Foreground="{StaticResource WhiteBrush}" Height="12" x:Shared="False"/>
-    <fa:ImageAwesome x:Key="AttachIcon" Icon="Paperclip" Rotation="45" Foreground="{StaticResource WhiteBrush}" Height="25" x:Shared="False">
-        <fa:ImageAwesome.Triggers>
-            <EventTrigger RoutedEvent="fa:ImageAwesome.Loaded">
+    <fa5:ImageAwesome x:Key="LinkIcon" Icon="Solid_Link" Foreground="{StaticResource WhiteBrush}" Height="20" Rotation="135" x:Shared="False"/>
+    <fa5:ImageAwesome x:Key="MinimizeIcon" Icon="Regular_WindowMinimize" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
+    <fa5:ImageAwesome x:Key="MaximizeIcon" Icon="Regular_WindowMaximize" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
+    <fa5:ImageAwesome x:Key="SettingIcon" Icon="Solid_Cog" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
+    <fa5:ImageAwesome x:Key="LoadIcon" Icon="Solid_Spinner" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False" Spin="True" SpinDuration="1"/>
+    <fa5:ImageAwesome x:Key="ErrorIcon" Icon="Solid_Bug" Foreground="{StaticResource WhiteBrush}" Height="20" x:Shared="False"/>
+    <fa5:ImageAwesome x:Key="CloseIcon" Icon="Regular_WindowClose" Foreground="{StaticResource WhiteBrush}" Height="12" x:Shared="False"/>
+    <fa5:ImageAwesome x:Key="AttachIcon" Icon="Solid_Paperclip"  Foreground="{StaticResource WhiteBrush}" Height="25" x:Shared="False">
+        <fa5:ImageAwesome.Triggers>
+            <EventTrigger RoutedEvent="fa5:ImageAwesome.Loaded">
             <EventTrigger.Actions>
                 <BeginStoryboard>
                     <Storyboard>
                         <ColorAnimationUsingKeyFrames
                             Storyboard.TargetProperty
-                            ="(fa:ImageAwesome.Foreground).(SolidColorBrush.Color)"
+                            ="(fa5:ImageAwesome.Foreground).(SolidColorBrush.Color)"
                             RepeatBehavior="10x"
                             AutoReverse="True">
                             <LinearColorKeyFrame
@@ -63,8 +64,8 @@
                 </BeginStoryboard>
             </EventTrigger.Actions>
         </EventTrigger>
-        </fa:ImageAwesome.Triggers>
-    </fa:ImageAwesome>
+        </fa5:ImageAwesome.Triggers>
+    </fa5:ImageAwesome>
 
     <!--<Path x:Key="CloseIcon" Data="M 2.6874995 2.8246546e-7 -4.7683716e-7 2.6855503 5.3007795 7.9863303 -4.7683716e-7 13.28516 2.6874995 15.97266 l 5.29883 -5.30079 5.3007805 5.30079 2.68554 -2.6875 -5.29882 -5.2988297 5.29882 -5.30078 L 13.28711 2.8246546e-7 7.9863295 5.2988303 2.6874995 2.8246546e-7 Z" Fill="White" x:Shared="False"/>-->
     <Path x:Key="SuccessIcon" Data="M 15.56055 5.9323048e-7 7.53125 10.197261 2.73242 5.2304706 0 7.8710906 7.82422 15.968751 18.54492 2.3515606 15.56055 5.9323048e-7 Z" Fill="{StaticResource WhiteBrush}" x:Shared="False"/>
