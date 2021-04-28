@@ -1,0 +1,36 @@
+name: Publish NuGet.org
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    name: Update package
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      
+      - name: Use .NET 5.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+        
+      - name: Building
+        run: |
+          dotnet build Notification.Wpf\Notification.Wpf.csproj -c Release
+        
+      - name: Packing
+        run: dotnet pack Notification.Wpf\Notification.Wpf.csproj --no-build -c Release -v q
+        
+     
+                                # опубликовать пакет в личном репозитории GitHub     
+      - name: Push package
+        run: dotnet nuget push Notification.Wpf/bin/Release/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/Platonenkov/index.json -k ${{secrets.GITHUB_TOKEN}}       
+                                  # опубликовать пакет в личном репозитории NuGet   
+      - name: Publishing
+        run: dotnet nuget push Notification.Wpf/bin/Release/*.nupkg -k ${{ secrets.NuGetApiKey }} --skip-duplicate -s https://api.nuget.org/v3/index.json
