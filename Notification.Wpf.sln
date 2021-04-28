@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.Wpf", "Notifications.Wpf\Notification.Wpf.csproj", "{5C9A4F46-263D-4C23-B361-F09E14BB109E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notification.Wpf", "Notification.Wpf\Notification.Wpf.csproj", "{5C9A4F46-263D-4C23-B361-F09E14BB109E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Wpf.Sample", "Notifications.Wpf.Sample\Notifications.Wpf.Sample.csproj", "{A5C53F98-245C-4385-8950-42C4545C9CCD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{0297D99B-FAB0-439B-BE32-D01C069A80E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +15,9 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Release|Any CPU.ActiveCfg = Release 4.6.1|Any CPU
-		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Release|Any CPU.Build.0 = Release 4.6.1|Any CPU
-		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Release|Any CPU.Deploy.0 = Release 4.6.1|Any CPU
+		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C9A4F46-263D-4C23-B361-F09E14BB109E}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{A5C53F98-245C-4385-8950-42C4545C9CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5C53F98-245C-4385-8950-42C4545C9CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5C53F98-245C-4385-8950-42C4545C9CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,9 +25,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{A5C53F98-245C-4385-8950-42C4545C9CCD} = {0297D99B-FAB0-439B-BE32-D01C069A80E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {390EEA52-ED66-42A0-BE35-094EF711AE40}

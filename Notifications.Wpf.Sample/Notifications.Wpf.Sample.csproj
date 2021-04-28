@@ -125,7 +125,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Notifications.Wpf\Notification.Wpf.csproj">
+    <ProjectReference Include="..\Notification.Wpf\Notification.Wpf.csproj">
       <Project>{5c9a4f46-263d-4c23-b361-f09e14bb109e}</Project>
       <Name>Notification.Wpf</Name>
     </ProjectReference>
