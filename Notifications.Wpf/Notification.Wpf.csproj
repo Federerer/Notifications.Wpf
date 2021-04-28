@@ -1,209 +1,42 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C9A4F46-263D-4C23-B361-F09E14BB109E}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Notifications.Wpf</RootNamespace>
-    <AssemblyName>Notifications.Wpf</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.0|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;NET40</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <OutputPath>bin\Release\net40\</OutputPath>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.5|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;NET45</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <OutputPath>bin\Release\net45\</OutputPath>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release 4.6.1|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;NET461</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <OutputPath>bin\Release\net461\</OutputPath>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
+    <TargetFrameworks>net5.0-windows;netcoreapp3.1-windows;net4.6-windows;net4.6.1-windows;net4.7-windows;net4.8-windows</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <Version>5.0.0.0</Version>
+    <Description>This project will help you take notification window like in windows</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/Platonenkov/Notification.Wpf</PackageProjectUrl>
+    <Copyright>https://github.com/Platonenkov</Copyright>
+    <Authors>Platonenkov</Authors>
+    <Company>https://github.com/Platonenkov</Company>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Platonenkov/Notification.Wpf</RepositoryUrl>
+    <PackageTags>Toast Notifications WPF</PackageTags>
+    <PackageReleaseNotes>Migrate to net5, support platforms</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
     <AssemblyOriginatorKeyFile>Notifications.Wpf.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="FontAwesome5, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
-      <HintPath>..\packages\FontAwesome5.2.1.0\lib\net40\FontAwesome5.dll</HintPath>
-    </Reference>
-    <Reference Include="FontAwesome5.Net, Version=2.1.0.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
-      <HintPath>..\packages\FontAwesome5.2.1.0\lib\net40\FontAwesome5.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="FontAwesome5" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Classes\OperationTimer.cs" />
-    <Compile Include="Classes\ProgressFinaly.cs" />
-    <Compile Include="Command\LamdaCommand.cs" />
-    <Compile Include="Controls\Notification.cs" />
-    <Compile Include="Controls\NotificationArea.cs" />
-    <Compile Include="Controls\NotificationPosition.cs" />
-    <Compile Include="Controls\ProgresBarAnimateBehavior.cs" />
-    <Compile Include="Controls\ReversibleStackPanel.cs" />
-    <Compile Include="Converters\ActionToCommandConverter.cs" />
-    <Compile Include="Converters\BoolToVisibility.cs" />
-    <Compile Include="Converters\Combine.cs" />
-    <Compile Include="Converters\IsNull.cs" />
-    <Compile Include="Converters\MessageRowsCountConverter.cs" />
-    <Compile Include="Converters\NotificationAttachVisibleConverter.cs" />
-    <Compile Include="Converters\NotificationTextAttachConverter.cs" />
-    <Compile Include="Converters\NotificationTextTrimmingConverter.cs" />
-    <Compile Include="Converters\StringIsNullOrWhiteSpace.cs" />
-    <Compile Include="Converters\ValueConverter.cs" />
-    <Compile Include="Extensions\ColumnDefinitionCollapsable.cs" />
-    <Compile Include="Extensions\RowDefinitionCollapsable.cs" />
-    <Compile Include="INotificationManager.cs" />
-    <Compile Include="Converters\BoolInverse.cs" />
-    <Compile Include="NotificationContent.cs" />
-    <Compile Include="NotificationManager.cs" />
-    <Compile Include="NotificationTemplateSelector.cs" />
-    <Compile Include="Classes\Enums\NotificationTextTrimType.cs" />
-    <Compile Include="Classes\Enums\NotificationType.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NotificationsOverlayWindow.xaml.cs">
-      <DependentUpon>NotificationsOverlayWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\VisualTreeHelperExtensions.cs" />
-    <Compile Include="ViewModels\NotificationProgressViewModel.cs" />
-    <Compile Include="ViewModels\Base\ViewModel.cs" />
-    <Compile Include="View\NotificationProgress.xaml.cs">
-      <DependentUpon>NotificationProgress.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TextContentView.xaml.cs">
-      <DependentUpon>TextContentView.xaml</DependentUpon>
-    </Compile>
+    <None Include="..\Files\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Page Include="Themes\Elements\Base.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Elements\ScrollViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Elements\Button.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NotificationsOverlayWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Main.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Sources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Sources\Animations.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Sources\Colors.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Sources\EasingFunctions.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Sources\Effects.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Sources\Geometry.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Sources\Transformations.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\NotificationProgress.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\TextContentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Notifications.Wpf.nuspec" />
-    <None Include="Notifications.Wpf.snk" />
-    <None Include="pack.bat" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>-->
-  <Target Name="AfterBuild">
-    <GetAssemblyIdentity AssemblyFiles="$(OutputPath)$(AssemblyName).dll">
-      <Output TaskParameter="Assemblies" ItemName="OutputAssemblyInfo" />
-    </GetAssemblyIdentity>
-    <Message Text="Info: %(OutputAssemblyInfo.Version)" />
-  </Target>
-  <Target Name="Package">
-    <!-- Ensure the Package directory exists for this project -->
-    <RemoveDir Directories="NuGet" />
-    <MakeDir Directories="NuGet" />
-    <!-- Package the project -->
-    <Exec WorkingDirectory="$(BuildDir)" Command="NuGet.exe pack -OutputDir &quot;NuGet&quot; -Properties &quot;Configuration=$(Configuration)&quot;" />
-  </Target>
+
 </Project>
