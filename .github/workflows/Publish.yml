@@ -29,7 +29,7 @@ jobs:
           dotnet pack Notification.Wpf/Notification.Wpf.csproj -c Release
 
       - name: Push package
-        run: dotnet nuget push Notification.Wpf/bin/Release/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/Platonenkov/index.json -k ${{secrets.GITHUB_TOKEN}}       
+        run: dotnet nuget push "*/.nupkg" --skip-duplicate --source https://nuget.pkg.github.com/Platonenkov/index.json -k ${{secrets.GITHUB_TOKEN}}       
                                   # опубликовать пакет в личном репозитории NuGet   
       - name: Publishing
-        run: dotnet nuget push Notification.Wpf/bin/Release/*.nupkg -k ${{ secrets.NuGetApiKey }} --skip-duplicate -s https://api.nuget.org/v3/index.json
+        run: dotnet nuget push "*/.nupkg" -k ${{ secrets.NuGetApiKey }} --skip-duplicate -s https://api.nuget.org/v3/index.json
