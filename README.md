@@ -53,7 +53,7 @@ notificationManager.Show(title, Message, type, onClick: () => SomeAction();
 #### Notification inside application window:
 - Adding namespace:
 ```XAML
-xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notifications.Wpf"
+xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
 ```
 - Adding new NotificationArea:
 ```XAML
