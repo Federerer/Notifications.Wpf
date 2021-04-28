@@ -1,0 +1,41 @@
+# платформа проекта
+name: .NET
+          # условия выполнения 
+on:
+  push:                  # при публикацмм в ветку
+    branches: [ master ]
+  pull_request:          # при пул-реквесте в ветку
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+                                # восстановить зависимости
+    - name: Restore dependencies 
+      run: dotnet restore      
+                                # собрать проект      
+    - name: Build               
+      run: dotnet build --no-restore
+      
+                                # провести тестирование      
+    - name: Test                
+      run: dotnet test --no-build --verbosity normal
+      
+                                # собрать проект релиза и упаковать в пакет      
+    - name: Packing
+      run: |                    
+          dotnet build Notification.Wpf/Notification.Wpf.csproj -c Release
+          dotnet pack Notification.Wpf/Notification.Wpf.csproj -c Release
+      
+                                # опубликовать пакет в личном репозитории GitHub     
+    - name: Push package
+      run: dotnet nuget push "**/*.nupkg" --skip-duplicate --source https://nuget.pkg.github.com/Platonenkov/index.json -k ${{secrets.GITHUB_TOKEN}}       
+                                # опубликовать пакет в личном репозитории NuGet   
+    - name: Publishing
+      run: dotnet nuget push Notification.Wpf/bin/Release/*.nupkg -k ${{ secrets.NuGetApiKey }} --skip-duplicate -s https://api.nuget.org/v3/index.json
