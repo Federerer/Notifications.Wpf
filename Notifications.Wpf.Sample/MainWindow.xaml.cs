@@ -212,8 +212,7 @@ namespace Notification.Wpf.Sample
         {
             var title = "Прогресс бар";
 
-            _notificationManager.ShowProgressBar(out var progress, out var Cancel, title, true, true, "",true, 2u);
-            using (progress)
+            using var progress = _notificationManager.ShowProgressBar(out var Cancel, title, true, true, "",true, 2u);
                 try
                 {
                     //await CalcAsync(progress, Cancel).ConfigureAwait(false);
@@ -265,7 +264,7 @@ namespace Notification.Wpf.Sample
                 }
         }
 
-        public Task CalcAsync(IProgress<(int, string,string,bool?)> progress, CancellationToken cancel) =>
+        public Task CalcAsync(IProgress<(int?, string,string,bool?)> progress, CancellationToken cancel) =>
             Task.Run(async () =>
             {
                 for (var i = 0; i <= 100; i++)
@@ -331,5 +330,17 @@ namespace Notification.Wpf.Sample
 
 
         }
+
+        private async void Button_Test_async(object Sender, RoutedEventArgs E)
+        {
+            await Task.Yield();
+            this.Title = Thread.GetCurrentProcessorId().ToString();
+            using var progress = _notificationManager.ShowProgressBar(out var Cancel, "Async test", true);
+            await CalcAsync(progress, Cancel).ConfigureAwait(true);
+             await CalcAsync(progress, Cancel).ConfigureAwait(false);
+
+
+        }
+
     }
 }

@@ -54,6 +54,7 @@ namespace Notification.Wpf
             ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
         }
 
+
         /// <summary>
         /// Show ProgressBar
         /// </summary>
@@ -66,34 +67,32 @@ namespace Notification.Wpf
         /// <param name="TrimText">Обрезать текст превышающий размеры</param>
         /// <param name="DefaultRowsCount">Базовое число строк при обрезке</param>
         /// <param name="BaseWaitingMessage">Сообщение при подсчёте времени ожидания, установите null если не хотите видеть время в прогресс баре</param>
-        public void ShowProgressBar(out ProgressFinaly<(int? value, string message, string title, bool? showCancel)> progress, out CancellationToken Cancel, string Title = null,
+        public ProgressFinaly<(int? value, string message, string title, bool? showCancel)> ShowProgressBar(out CancellationToken Cancel, string Title = null,
             bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U, string BaseWaitingMessage = "Calculation time")
         {
             var CancelSource = new CancellationTokenSource();
             Cancel = CancelSource.Token;
             var model = new NotificationProgressViewModel(out var progressModel, CancelSource, ShowCancelButton, ShowProgress, TrimText, DefaultRowsCount, BaseWaitingMessage);
-            progress = progressModel;
             if (Title != null) model.Title = Title;
             Cancel.ThrowIfCancellationRequested();
 
             if (!_dispatcher.CheckAccess())
             {
-                ProgressFinaly<(int?, string, string, bool?)> bar = null;
                 var CancelFirst= new CancellationToken();
 
-                _dispatcher.Invoke(
+                var pr = _dispatcher.Invoke(
                     () =>
                     {
-                        ShowProgressBar(out var progress1, out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName, TrimText, DefaultRowsCount, BaseWaitingMessage);
-                        bar = progress1;
+                        var progress = ShowProgressBar(out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName, TrimText, DefaultRowsCount, BaseWaitingMessage);
                         CancelFirst = Cancel1;
+                        return progress;
                     });
-                progress = bar;
                 Cancel = CancelFirst;
-                return;
+                return pr;
             }
 
             ShowContent(model);
+            return progressModel;
         }
 
         /// <summary>

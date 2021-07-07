@@ -12,8 +12,7 @@ namespace Notification.Wpf
             Action onClose = null, Action LeftButton = null, string LeftButtonText = null, Action RightButton = null, string RightButtonText = null,
             NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2, bool CloseOnClick = true);
 
-        void ShowProgressBar(
-            out ProgressFinaly<(int? value, string message, string title, bool? showCancel)> progress, out CancellationToken Cancel, string Title = null,
+        ProgressFinaly<(int? value, string message, string title, bool? showCancel)> ShowProgressBar(out CancellationToken Cancel, string Title = null,
             bool ShowCancelButton = true, bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U, string BaseWaitingMessage = "Calculation time");
     }
 }
