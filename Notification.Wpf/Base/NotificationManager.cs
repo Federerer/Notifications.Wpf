@@ -60,7 +60,6 @@ namespace Notification.Wpf
         /// </summary>
         /// <param name="Title">Title of window</param>
         /// <param name="ShowProgress">Show or not progress status</param>
-        /// <param name="progress">Progress</param>
         /// <param name="Cancel">CancellationTokenSource, if it null - ShowCancelButton will state false</param>
         /// <param name="ShowCancelButton">Show Cancel button or not</param>
         /// <param name="areaName">window are where show notification</param>
