@@ -336,8 +336,9 @@ namespace Notification.Wpf.Sample
             await Task.Yield();
             this.Title = Thread.GetCurrentProcessorId().ToString();
             using var progress = _notificationManager.ShowProgressBar(out var Cancel, "Async test", true);
+            await CalcAsync(progress, Cancel);
             await CalcAsync(progress, Cancel).ConfigureAwait(true);
-             await CalcAsync(progress, Cancel).ConfigureAwait(false);
+            await CalcAsync(progress, Cancel).ConfigureAwait(false);
 
 
         }
