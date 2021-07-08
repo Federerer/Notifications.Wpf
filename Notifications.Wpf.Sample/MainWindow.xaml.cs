@@ -26,9 +26,9 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata(default(bool)));
 
         /// <summary>Show left button</summary>
-        public bool ShowLeftButton { get => (bool)GetValue(ShowLeftButtonProperty); set => SetValue(ShowLeftButtonProperty, value); }
+        public bool ShowLeftButton { get => (bool) GetValue(ShowLeftButtonProperty); set => SetValue(ShowLeftButtonProperty, value); }
 
-        #endregion 
+        #endregion
 
         #region ShowRightButton : bool - Show right button
 
@@ -41,7 +41,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata(true));
 
         /// <summary>Show right button</summary>
-        public bool ShowRightButton { get => (bool)GetValue(ShowRightButtonProperty); set => SetValue(ShowRightButtonProperty, value); }
+        public bool ShowRightButton { get => (bool) GetValue(ShowRightButtonProperty); set => SetValue(ShowRightButtonProperty, value); }
 
         #endregion
 
@@ -56,7 +56,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata("Ok"));
 
         /// <summary>Left button text</summary>
-        public string LeftButtonText { get => (string)GetValue(LeftButtonTextProperty); set => SetValue(LeftButtonTextProperty, value); }
+        public string LeftButtonText { get => (string) GetValue(LeftButtonTextProperty); set => SetValue(LeftButtonTextProperty, value); }
 
         #endregion
 
@@ -71,7 +71,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata("Cancel"));
 
         /// <summary>Right button text</summary>
-        public string RightButtonText { get => (string)GetValue(RightButtonTextProperty); set => SetValue(RightButtonTextProperty, value); }
+        public string RightButtonText { get => (string) GetValue(RightButtonTextProperty); set => SetValue(RightButtonTextProperty, value); }
 
         #endregion
 
@@ -83,15 +83,16 @@ namespace Notification.Wpf.Sample
                 nameof(ContentText),
                 typeof(string),
                 typeof(MainWindow),
-                new PropertyMetadata("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod accumsan orci vel varius. Nulla consectetur egestas est,"
-                                     + " in porttitor elit placerat non. Cras dapibus cursus magna. Nunc ac malesuada lacus. Etiam non luctus magna, nec vulputate diam."
-                                     + " Sed porta mi at tristique bibendum. Nunc luctus libero ut mauris cursus, eget dignissim est luctus.Sed ac nibh dignissim, elementum mi ut,"
-                                     + " tempor quam.Donec quis ornare sapien. Maecenas arcu elit, blandit quis odio eu, elementum bibendum leo."
-                                     + " Etiam iaculis consectetur metus. Donec in bibendum massa. Nam nec facilisis eros, sit amet blandit magna.Duis vitae"
-                                     + " justo nec nisi maximus efficitur vitae non mauris."));
+                new PropertyMetadata(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis euismod accumsan orci vel varius. Nulla consectetur egestas est,"
+                    + " in porttitor elit placerat non. Cras dapibus cursus magna. Nunc ac malesuada lacus. Etiam non luctus magna, nec vulputate diam."
+                    + " Sed porta mi at tristique bibendum. Nunc luctus libero ut mauris cursus, eget dignissim est luctus.Sed ac nibh dignissim, elementum mi ut,"
+                    + " tempor quam.Donec quis ornare sapien. Maecenas arcu elit, blandit quis odio eu, elementum bibendum leo."
+                    + " Etiam iaculis consectetur metus. Donec in bibendum massa. Nam nec facilisis eros, sit amet blandit magna.Duis vitae"
+                    + " justo nec nisi maximus efficitur vitae non mauris."));
 
         /// <summary>Content string</summary>
-        public string ContentText { get => (string)GetValue(ContentTextProperty); set => SetValue(ContentTextProperty, value); }
+        public string ContentText { get => (string) GetValue(ContentTextProperty); set => SetValue(ContentTextProperty, value); }
 
         #endregion
 
@@ -106,7 +107,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata(default(NotificationTextTrimType)));
 
         /// <summary>способ обрезки текста</summary>
-        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType)GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
+        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType) GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
 
         #endregion
 
@@ -121,19 +122,19 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata(2U));
 
         /// <summary>количество строк в сообщении</summary>
-        public uint RowCount { get => (uint)GetValue(RowCountProperty); set => SetValue(RowCountProperty, value); }
+        public uint RowCount { get => (uint) GetValue(RowCountProperty); set => SetValue(RowCountProperty, value); }
 
         #endregion
 
 
-        private readonly NotificationManager _notificationManager = new ();
+        private readonly NotificationManager _notificationManager = new();
 
         Action ButtonClick(string button) => () => _notificationManager.Show($"{button} button click");
 
         public MainWindow()
         {
             InitializeComponent();
-            Timer = new Timer { Interval = 1000 };
+            Timer = new Timer {Interval = 1000};
             Timer.Elapsed += (s, a) => _notificationManager.Show("Pink string from another thread!");
         }
 
@@ -153,7 +154,7 @@ namespace Notification.Wpf.Sample
                 {
                     Title = "Sample notification",
                     Message = ContentText,
-                    Type = (NotificationType)i,
+                    Type = (NotificationType) i,
                     LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
                     RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
                     LeftButtonContent = LeftButtonText,
@@ -183,7 +184,7 @@ namespace Notification.Wpf.Sample
             {
                 Title = "Sample notification",
                 Message = ContentText,
-                Type = (NotificationType)rnd.Next(0, 5),
+                Type = (NotificationType) rnd.Next(0, 5),
                 LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
                 RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
                 LeftButtonContent = LeftButtonText,
@@ -213,6 +214,7 @@ namespace Notification.Wpf.Sample
             _notificationManager.Show(title, Message, type, string.Empty, onClick: () => _notificationManager.Show(clickContent));
 
         }
+
         private async void Progress_Click(object sender, RoutedEventArgs e)
         {
             var title = "Прогресс бар";
@@ -222,23 +224,26 @@ namespace Notification.Wpf.Sample
             {
                 //await CalcAsync(progress, Cancel).ConfigureAwait(false);
 
-                await Task.Run(async () =>
-                {
-                    for (var i = 0; i <= 100; i++)
+                await Task.Run(
+                    async () =>
                     {
-                        progress.Cancel.ThrowIfCancellationRequested();
-                        progress.Report((i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
-                                            + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
-                        if (i > 30 && i < 70)
-                            progress.WaitingTimer.BaseWaitingMessage = null;
-                        else
+                        for (var i = 0; i <= 100; i++)
                         {
-                            progress.WaitingTimer.BaseWaitingMessage = "Calculation time";
+                            progress.Cancel.ThrowIfCancellationRequested();
+                            progress.Report(
+                                (i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
+                                    + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
+                            if (i > 30 && i < 70)
+                                progress.WaitingTimer.BaseWaitingMessage = null;
+                            else
+                            {
+                                progress.WaitingTimer.BaseWaitingMessage = "Calculation time";
 
+                            }
+
+                            await Task.Delay(TimeSpan.FromSeconds(0.03), progress.Cancel);
                         }
-                        await Task.Delay(TimeSpan.FromSeconds(0.03), progress.Cancel);
-                    }
-                }, progress.Cancel).ConfigureAwait(false);
+                    }, progress.Cancel).ConfigureAwait(false);
 
                 for (var i = 0; i <= 100; i++)
                 {
@@ -269,26 +274,17 @@ namespace Notification.Wpf.Sample
             }
         }
 
-        public Task CalcAsync(IProgress<(double?, string, string, bool?)> progress, CancellationToken cancel) =>
-            Task.Run(async () =>
-            {
-                for (var i = 0; i <= 100; i++)
-                {
-                    cancel.ThrowIfCancellationRequested();
-                    progress.Report((i, $"Процесс {i}", null, null));
-                    await Task.Delay(TimeSpan.FromSeconds(0.03), cancel);
-                }
-            }, cancel);
 
         private void Show_Any_content(object sender, RoutedEventArgs e)
         {
             var grid = new Grid();
-            var text_block = new TextBlock { Text = "Some Text", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center };
+            var text_block = new TextBlock {Text = "Some Text", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center};
 
 
-            var panelBTN = new StackPanel { Height = 100, Margin = new Thickness(0, 40, 0, 0) };
-            var btn1 = new Button { Width = 200, Height = 40, Content = "Cancel" };
-            var text = new TextBlock { Foreground = Brushes.White, Text = "Hello, world", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center };
+            var panelBTN = new StackPanel {Height = 100, Margin = new Thickness(0, 40, 0, 0)};
+            var btn1 = new Button {Width = 200, Height = 40, Content = "Cancel"};
+            var text = new TextBlock
+                {Foreground = Brushes.White, Text = "Hello, world", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center};
             panelBTN.VerticalAlignment = VerticalAlignment.Bottom;
             panelBTN.Children.Add(btn1);
 
@@ -324,7 +320,7 @@ namespace Notification.Wpf.Sample
                 {
                     Title = "Sample notification",
                     Message = ContentText,
-                    Type = (NotificationType)i,
+                    Type = (NotificationType) i,
                     TrimType = TrimType,
                     RowsCount = RowCount
                 };
@@ -344,13 +340,61 @@ namespace Notification.Wpf.Sample
             //await CalcAsync(progress, Cancel).ConfigureAwait(true);
             //await CalcAsync(progress, Cancel).ConfigureAwait(false);
 
-            using var pr = new SlowedProgress<(double?, string,string,bool?)>(d =>
-            {
-                progress.Report(d);
-            },300);
-            await CalcAsync(pr, progress.Cancel);
+            //using var pr = new SlowedProgress<(double?, string, string, bool?)>(d => { progress.Report(d); }, 300);
+            await CalcAsync(progress, progress.Cancel);
+            await CalcAsync(progress.GetProgress<double>(false), progress.Cancel);
+            await CalcAsync(progress.GetProgress<(double,string)>(true), progress.Cancel);
+            await CalcAsync(progress.GetProgress<(double,string,string)>(false), progress.Cancel);
 
         }
+
+        public Task CalcAsync(IProgress<(double?, string, string, bool?)> progress, CancellationToken cancel) =>
+            Task.Run(
+                async () =>
+                {
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        cancel.ThrowIfCancellationRequested();
+                        progress.Report((i, $"Процесс {i}", null, null));
+                        await Task.Delay(TimeSpan.FromSeconds(0.03), cancel);
+                    }
+                }, cancel);
+        public Task CalcAsync(IProgress<(double, string, string)> progress, CancellationToken cancel) =>
+            Task.Run(
+                async () =>
+                {
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        cancel.ThrowIfCancellationRequested();
+                        progress.Report((i, $"Процесс {i}", "Title"));
+                        await Task.Delay(TimeSpan.FromSeconds(0.03), cancel);
+                    }
+                }, cancel);
+        public Task CalcAsync(IProgress<(double, string)> progress, CancellationToken cancel) =>
+            Task.Run(
+                async () =>
+                {
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        cancel.ThrowIfCancellationRequested();
+                        progress.Report((i, $"Процесс {i}"));
+                        await Task.Delay(TimeSpan.FromSeconds(0.03), cancel);
+                    }
+                }, cancel);
+
+        public Task CalcAsync(IProgress<double> progress, CancellationToken cancel) =>
+            Task.Run(
+                async () =>
+                {
+                    for (var i = 0; i <= 100; i++)
+                    {
+                        cancel.ThrowIfCancellationRequested();
+                        progress.Report(i);
+                        await Task.Delay(TimeSpan.FromSeconds(0.03), cancel);
+                    }
+                }, cancel);
+
+
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Notification.Wpf;
@@ -177,38 +178,55 @@ namespace Notifications.Wpf.ViewModels
             NotifierProgress = new NotifierProgress<(double? percent, string message, string title, bool? showCancel)>(OnProgress);
             ShowCancelButton = showCancelButton;
             CollapseWindowCommand = new LamdaCommand(CollapseWindow);
-            if(trimText)
+            if (trimText)
                 TrimType = NotificationTextTrimType.Trim;
             RowsCount = DefaultRowsCount;
             if (BaseWaitingMessage != null) NotifierProgress.WaitingTimer.BaseWaitingMessage = BaseWaitingMessage;
+            _Timer.Start();
         }
 
+        private Stopwatch _Timer = new();
         void OnProgress((double? percent, string message, string title, bool? showCancel) ProgressInfo)
         {
-                if (ProgressInfo.percent is null)
+            if (_Timer.ElapsedMilliseconds < 100)
+                return;
+            _Timer.Restart();
+            if (ProgressInfo.percent is null)
+            {
+                if (ShowProgress)
                 {
-                    if (ShowProgress)
-                    {
-                        ShowProgress = false;
-                        NotifierProgress.WaitingTimer.Restart();
-                        WaitingTime = string.Empty;
-                    }
+                    ShowProgress = false;
+                    NotifierProgress.WaitingTimer.Restart();
+                    WaitingTime = string.Empty;
+                }
+            }
+            else
+            {
+                if (!ShowProgress)
+                {
+                    ShowProgress = true;
+                    NotifierProgress.WaitingTimer.Restart();
+                }
+                process = (double)ProgressInfo.percent;
+                if (NotifierProgress.WaitingTimer.BaseWaitingMessage is null)
+                    WaitingTime = null;
+                else if (process > 10)
+                {
+                    WaitingTime = NotifierProgress.WaitingTimer.GetStringTime((double)ProgressInfo.percent, 100);
+
                 }
                 else
-                {
-                    if (!ShowProgress)
-                    {
-                        ShowProgress = true;
-                        NotifierProgress.WaitingTimer.Restart();
-                    }
-                    process = (double)ProgressInfo.percent;
-
-                    WaitingTime = NotifierProgress.WaitingTimer.BaseWaitingMessage is null ? null: process > 10 ? NotifierProgress.WaitingTimer.GetStringTime((double)ProgressInfo.percent, 100) : NotifierProgress.WaitingTimer.BaseWaitingMessage;
-                }
-                if (ProgressInfo.message != null) Message = ProgressInfo.message;
-                if (ProgressInfo.title != null) Title = ProgressInfo.title;
-                if (ProgressInfo.showCancel != null)
-                    ShowCancelButton = (bool)ProgressInfo.showCancel;
+                    WaitingTime = NotifierProgress.WaitingTimer.BaseWaitingMessage;
+                //WaitingTime = NotifierProgress.WaitingTimer.BaseWaitingMessage is null 
+                //        ? null
+                //        : process > 10
+                //            ? NotifierProgress.WaitingTimer.GetStringTime((double)ProgressInfo.percent, 100) 
+                //            : NotifierProgress.WaitingTimer.BaseWaitingMessage;
+            }
+            if (ProgressInfo.message != null) Message = ProgressInfo.message;
+            if (ProgressInfo.title != null) Title = ProgressInfo.title;
+            if (ProgressInfo.showCancel != null)
+                ShowCancelButton = (bool)ProgressInfo.showCancel;
         }
 
 
