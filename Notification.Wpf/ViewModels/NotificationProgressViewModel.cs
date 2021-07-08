@@ -188,7 +188,7 @@ namespace Notifications.Wpf.ViewModels
         private Stopwatch _Timer = new();
         void OnProgress((double? percent, string message, string title, bool? showCancel) ProgressInfo)
         {
-            if (_Timer.ElapsedMilliseconds < 100)
+            if (_Timer.ElapsedMilliseconds < 100 && ProgressInfo.percent is not null && ProgressInfo.percent != 100 && ProgressInfo.percent != 0) 
                 return;
             _Timer.Restart();
             if (ProgressInfo.percent is null)
