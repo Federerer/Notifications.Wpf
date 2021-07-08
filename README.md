@@ -2,7 +2,7 @@
 WPF toast notifications. (Messages and progress bars)
 
 ### Installation:
-Install-Package Notification.WPF -Version 5.0.0.0
+Install-Package Notification.WPF -Version 5.1.0.0
 
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
@@ -101,48 +101,47 @@ ShowProgressBar(out ProgressFinaly<ValueTuple<int?, string, string, bool?>> prog
                 string BaseWaitingMessage = "Calculation time")
       
       
-notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, true, false, true, 2U, "Wait");
-            using (progress)
-                try
-                {
-                    await SomeMetod(progress, Cancel).ConfigureAwait(false);
-                    
-                     await Task.Run(async () =>
-                    {
-                        for (var i = 0; i <= 100; i++)
-                        {
-                            Cancel.ThrowIfCancellationRequested();
-                            progress.Report((i, $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
-                                                + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
-                            await Task.Delay(TimeSpan.FromSeconds(0.03), Cancel);
-                        }
-                    }, Cancel).ConfigureAwait(false);
+using var progress = notificationManager.ShowProgressBar(title, true, false, true, 2U, "Wait");
+    try
+    {
+        await SomeMetod(progress, Cancel).ConfigureAwait(false);
 
-                    for (var i = 0; i <= 100; i++)
-                    {
-                        Cancel.ThrowIfCancellationRequested();
-                        progress.Report((i,$"Progress {i}", "Whith progress", true));
-                        await Task.Delay(TimeSpan.FromSeconds(0.02), Cancel).ConfigureAwait(false);
-                    }
+         await Task.Run(async () =>
+        {
+            for (var i = 0; i <= 100; i++)
+            {
+                progress.Cancel.ThrowIfCancellationRequested();
+                progress.Report((i, $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
+                                    + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
+                await Task.Delay(TimeSpan.FromSeconds(0.03), progress.Cancel);
+            }
+        }, Cancel).ConfigureAwait(false);
 
-                    for (var i = 0; i <= 100; i++)
-                    {
-                        Cancel.ThrowIfCancellationRequested();
-                        progress.Report((null,$"{i}", "Whithout progress", null));
-                        await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
-                    }
+        for (var i = 0; i <= 100; i++)
+        {
+            progress.Cancel.ThrowIfCancellationRequested();
+            progress.Report((i,$"Progress {i}", "Whith progress", true));
+            await Task.Delay(TimeSpan.FromSeconds(0.02), progress.Cancel).ConfigureAwait(false);
+        }
 
-                    for (var i = 0; i <= 100; i++)
-                    {
-                        Cancel.ThrowIfCancellationRequested();
-                        progress.Report((i, null, "Agane whith progress", null));
-                        await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel).ConfigureAwait(false);
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    _notificationManager.Show("operation was cancelled", "", TimeSpan.FromSeconds(3));
-                }
+        for (var i = 0; i <= 100; i++)
+        {
+            progress.Cancel.ThrowIfCancellationRequested();
+            progress.Report((null,$"{i}", "Whithout progress", null));
+            await Task.Delay(TimeSpan.FromSeconds(0.05), progress.Cancel).ConfigureAwait(false);
+        }
+
+        for (var i = 0; i <= 100; i++)
+        {
+            progress.Cancel.ThrowIfCancellationRequested();
+            progress.Report((i, null, "Agane whith progress", null));
+            await Task.Delay(TimeSpan.FromSeconds(0.01), progress.Cancel).ConfigureAwait(false);
+        }
+    }
+    catch (OperationCanceledException)
+    {
+        _notificationManager.Show("operation was cancelled", "", TimeSpan.FromSeconds(3));
+    }
                 
      public Task SomeMetod(IProgress<(int?, string,string,bool?)> progress, CancellationToken cancel) =>
             Task.Run(async () =>
@@ -155,7 +154,6 @@ notificationManager.ShowProgressBar(out var progress2, out var Cancel2, title, t
                 }
             }, cancel);            
 ```
-Just send null as progress count that change bar to "running line".
 
 ##### Progress will calculate approximate waiting time and show it in left bottom corner, if u not need it - set progress.WaitingTimer.BaseWaitingMessage = null, or set it in intializer
 

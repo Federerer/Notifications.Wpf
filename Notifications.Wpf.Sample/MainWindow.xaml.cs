@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Notification.Wpf.Classes;
 using Timer = System.Timers.Timer;
 
 namespace Notification.Wpf.Sample
@@ -21,7 +26,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata(default(bool)));
 
         /// <summary>Show left button</summary>
-        public bool ShowLeftButton { get => (bool) GetValue(ShowLeftButtonProperty); set => SetValue(ShowLeftButtonProperty, value); }
+        public bool ShowLeftButton { get => (bool)GetValue(ShowLeftButtonProperty); set => SetValue(ShowLeftButtonProperty, value); }
 
         #endregion 
 
@@ -36,7 +41,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata(true));
 
         /// <summary>Show right button</summary>
-        public bool ShowRightButton { get => (bool) GetValue(ShowRightButtonProperty); set => SetValue(ShowRightButtonProperty, value); }
+        public bool ShowRightButton { get => (bool)GetValue(ShowRightButtonProperty); set => SetValue(ShowRightButtonProperty, value); }
 
         #endregion
 
@@ -51,7 +56,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata("Ok"));
 
         /// <summary>Left button text</summary>
-        public string LeftButtonText { get => (string) GetValue(LeftButtonTextProperty); set => SetValue(LeftButtonTextProperty, value); }
+        public string LeftButtonText { get => (string)GetValue(LeftButtonTextProperty); set => SetValue(LeftButtonTextProperty, value); }
 
         #endregion
 
@@ -66,7 +71,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata("Cancel"));
 
         /// <summary>Right button text</summary>
-        public string RightButtonText { get => (string) GetValue(RightButtonTextProperty); set => SetValue(RightButtonTextProperty, value); }
+        public string RightButtonText { get => (string)GetValue(RightButtonTextProperty); set => SetValue(RightButtonTextProperty, value); }
 
         #endregion
 
@@ -86,7 +91,7 @@ namespace Notification.Wpf.Sample
                                      + " justo nec nisi maximus efficitur vitae non mauris."));
 
         /// <summary>Content string</summary>
-        public string ContentText { get => (string) GetValue(ContentTextProperty); set => SetValue(ContentTextProperty, value); }
+        public string ContentText { get => (string)GetValue(ContentTextProperty); set => SetValue(ContentTextProperty, value); }
 
         #endregion
 
@@ -101,7 +106,7 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata(default(NotificationTextTrimType)));
 
         /// <summary>способ обрезки текста</summary>
-        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType) GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
+        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType)GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
 
         #endregion
 
@@ -116,14 +121,14 @@ namespace Notification.Wpf.Sample
                 new PropertyMetadata(2U));
 
         /// <summary>количество строк в сообщении</summary>
-        public uint RowCount { get => (uint) GetValue(RowCountProperty); set => SetValue(RowCountProperty, value); }
+        public uint RowCount { get => (uint)GetValue(RowCountProperty); set => SetValue(RowCountProperty, value); }
 
         #endregion
 
-        
-        private readonly NotificationManager _notificationManager = new NotificationManager();
 
-        Action ButtonClick(string button) => ()=>_notificationManager.Show($"{button} button click");
+        private readonly NotificationManager _notificationManager = new ();
+
+        Action ButtonClick(string button) => () => _notificationManager.Show($"{button} button click");
 
         public MainWindow()
         {
@@ -136,7 +141,7 @@ namespace Notification.Wpf.Sample
 
         private void Button_Timer(object sender, RoutedEventArgs e)
         {
-            if(!Timer.Enabled) Timer.Start();
+            if (!Timer.Enabled) Timer.Start();
             else Timer.Stop();
         }
 
@@ -157,7 +162,7 @@ namespace Notification.Wpf.Sample
                     TrimType = TrimType,
                     CloseOnClick = false
                 };
-                _notificationManager.Show(content,expirationTime:TimeSpan.FromSeconds(5));
+                _notificationManager.Show(content, expirationTime: TimeSpan.FromSeconds(5));
                 await Task.Delay(TimeSpan.FromSeconds(1));
 
             }
@@ -175,19 +180,19 @@ namespace Notification.Wpf.Sample
             };
             var rnd = new Random();
             var content = new NotificationContent
-                {
-                    Title = "Sample notification",
-                    Message = ContentText,
-                    Type = (NotificationType)rnd.Next(0,5),
-                    LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
-                    RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
-                    LeftButtonContent = LeftButtonText,
-                    RightButtonContent = RightButtonText,
-                    RowsCount = RowCount,
-                    TrimType = TrimType
+            {
+                Title = "Sample notification",
+                Message = ContentText,
+                Type = (NotificationType)rnd.Next(0, 5),
+                LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
+                RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
+                LeftButtonContent = LeftButtonText,
+                RightButtonContent = RightButtonText,
+                RowsCount = RowCount,
+                TrimType = TrimType
 
-                };
-                _notificationManager.Show(content, "WindowArea", expirationTime: TimeSpan.FromSeconds(5), onClick: () => _notificationManager.Show(clickContent));
+            };
+            _notificationManager.Show(content, "WindowArea", expirationTime: TimeSpan.FromSeconds(5), onClick: () => _notificationManager.Show(clickContent));
 
         }
 
@@ -212,67 +217,66 @@ namespace Notification.Wpf.Sample
         {
             var title = "Прогресс бар";
 
-            _notificationManager.ShowProgressBar(out var progress, out var Cancel, title, true, true, "",true, 2u);
-            using (progress)
-                try
-                {
-                    //await CalcAsync(progress, Cancel).ConfigureAwait(false);
+            using var progress = _notificationManager.ShowProgressBar(title, true, true, "", true, 2u);
+            try
+            {
+                //await CalcAsync(progress, Cancel).ConfigureAwait(false);
 
-                    await Task.Run(async () =>
+                await Task.Run(async () =>
+                {
+                    for (var i = 0; i <= 100; i++)
                     {
-                        for (var i = 0; i <= 100; i++)
+                        progress.Cancel.ThrowIfCancellationRequested();
+                        progress.Report((i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
+                                            + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
+                        if (i > 30 && i < 70)
+                            progress.WaitingTimer.BaseWaitingMessage = null;
+                        else
                         {
-                            Cancel.ThrowIfCancellationRequested();
-                            progress.Report((i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
-                                                + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
-                            if (i > 30 && i < 70)
-                                progress.WaitingTimer.BaseWaitingMessage = null;
-                            else
-                            {
-                                progress.WaitingTimer.BaseWaitingMessage = "Calculation time";
+                            progress.WaitingTimer.BaseWaitingMessage = "Calculation time";
 
-                            }
-                            await Task.Delay(TimeSpan.FromSeconds(0.03), Cancel);
                         }
-                    }, Cancel).ConfigureAwait(false);
-
-                    for (var i = 0; i <= 100; i++)
-                    {
-                        Cancel.ThrowIfCancellationRequested();
-                        progress.Report((i,$"Progress {i}", "Whith progress", true));
-                        await Task.Delay(TimeSpan.FromSeconds(0.02), Cancel).ConfigureAwait(false);
+                        await Task.Delay(TimeSpan.FromSeconds(0.03), progress.Cancel);
                     }
+                }, progress.Cancel).ConfigureAwait(false);
 
-                    for (var i = 0; i <= 100; i++)
-                    {
-                        Cancel.ThrowIfCancellationRequested();
-                        progress.Report((null,$"{i}", "Whithout progress", null));
-                        await Task.Delay(TimeSpan.FromSeconds(0.05), Cancel).ConfigureAwait(false);
-                    }
-
-                    for (var i = 0; i <= 100; i++)
-                    {
-                        Cancel.ThrowIfCancellationRequested();
-                        progress.Report((i, null, "Agane whith progress", null));
-                        await Task.Delay(TimeSpan.FromSeconds(0.01), Cancel).ConfigureAwait(false);
-                    }
-
-
-                }
-                catch (OperationCanceledException)
+                for (var i = 0; i <= 100; i++)
                 {
-                    _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3));
+                    progress.Cancel.ThrowIfCancellationRequested();
+                    progress.Report((i, $"Progress {i}", "Whith progress", true));
+                    await Task.Delay(TimeSpan.FromSeconds(0.02), progress.Cancel).ConfigureAwait(false);
                 }
+
+                for (var i = 0; i <= 100; i++)
+                {
+                    progress.Cancel.ThrowIfCancellationRequested();
+                    progress.Report((null, $"{i}", "Whithout progress", null));
+                    await Task.Delay(TimeSpan.FromSeconds(0.03), progress.Cancel).ConfigureAwait(false);
+                }
+
+                for (var i = 0; i <= 100; i++)
+                {
+                    progress.Cancel.ThrowIfCancellationRequested();
+                    progress.Report((i, null, "Agane whith progress", null));
+                    await Task.Delay(TimeSpan.FromSeconds(0.02), progress.Cancel).ConfigureAwait(false);
+                }
+
+
+            }
+            catch (OperationCanceledException)
+            {
+                _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3));
+            }
         }
 
-        public Task CalcAsync(IProgress<(int, string,string,bool?)> progress, CancellationToken cancel) =>
+        public Task CalcAsync(IProgress<(double?, string, string, bool?)> progress, CancellationToken cancel) =>
             Task.Run(async () =>
             {
                 for (var i = 0; i <= 100; i++)
                 {
                     cancel.ThrowIfCancellationRequested();
-                    progress.Report((i, $"Процесс {i}",null, null));
-                    await Task.Delay(TimeSpan.FromSeconds(0.01), cancel);
+                    progress.Report((i, $"Процесс {i}", null, null));
+                    await Task.Delay(TimeSpan.FromSeconds(0.03), cancel);
                 }
             }, cancel);
 
@@ -284,7 +288,7 @@ namespace Notification.Wpf.Sample
 
             var panelBTN = new StackPanel { Height = 100, Margin = new Thickness(0, 40, 0, 0) };
             var btn1 = new Button { Width = 200, Height = 40, Content = "Cancel" };
-            var text = new TextBlock {Foreground = Brushes.White, Text = "Hello, world", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center};
+            var text = new TextBlock { Foreground = Brushes.White, Text = "Hello, world", Margin = new Thickness(0, 10, 0, 0), HorizontalAlignment = HorizontalAlignment.Center };
             panelBTN.VerticalAlignment = VerticalAlignment.Bottom;
             panelBTN.Children.Add(btn1);
 
@@ -308,7 +312,7 @@ namespace Notification.Wpf.Sample
 
             object content = grid;
 
-            _notificationManager.Show(content,null,TimeSpan.MaxValue);
+            _notificationManager.Show(content, null, TimeSpan.MaxValue);
 
         }
 
@@ -331,5 +335,22 @@ namespace Notification.Wpf.Sample
 
 
         }
+
+        private async void Button_Test_async(object Sender, RoutedEventArgs E)
+        {
+            await Task.Yield();
+            this.Title = Thread.GetCurrentProcessorId().ToString();
+            using var progress = _notificationManager.ShowProgressBar("Async test", true);
+            //await CalcAsync(progress, Cancel).ConfigureAwait(true);
+            //await CalcAsync(progress, Cancel).ConfigureAwait(false);
+
+            using var pr = new SlowedProgress<(double?, string,string,bool?)>(d =>
+            {
+                progress.Report(d);
+            },300);
+            await CalcAsync(pr, progress.Cancel);
+
+        }
+
     }
 }

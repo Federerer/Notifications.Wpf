@@ -11,9 +11,10 @@ namespace Notifications.Wpf.Classes
         /// <summary> Base waiting message, will show when calculation </summary>
         public string BaseWaitingMessage { get; set; } = "Calculation time";
         /// <summary> timer </summary>
-        private Stopwatch Watch { get; set; } = new ();
+        private Stopwatch Watch = new ();
+
         /// <summary> Last calculate value </summary>
-        private double LastSpan { get; set; }
+        private double LastSpan;
         /// <summary> Start timer </summary>
         public void Start()
         {

@@ -48,8 +48,15 @@
                     </StackPanel>
               </StackPanel>
         </StackPanel>
-        <DockPanel Grid.Row="2">
-                <UniformGrid DockPanel.Dock="Bottom" Rows="1">
+        <WrapPanel Grid.Row="2">
+            <WrapPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+
+            </WrapPanel.Resources>
+            <Button Content="Test" Click="Button_Test_async"/>
                     <Button Content="Timer" Click="Button_Timer"/>
                     <Button Content="Show" Click="UpperPanel"/>
                     <Button Content="Show in window" Click="InWindow" />
@@ -57,7 +64,6 @@
                     <Button Content="Show Info" Click="Message_Click" />
                     <Button Content="Show content" Click="Show_Any_content" />
                     <Button Content="Attach" Click="ShowAttachMessage" />
-                </UniformGrid>
-            </DockPanel>
+            </WrapPanel>
     </Grid>
 </Window>
