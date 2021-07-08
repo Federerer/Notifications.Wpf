@@ -79,7 +79,12 @@
                                  Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
                                   IsIndeterminate="{Binding ShowProgress}"      
                                  Opacity="0.4" BorderThickness="0" />
-                    <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" Panel.ZIndex="901" FontWeight="Medium" TextTrimming="CharacterEllipsis" Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center" Visibility="{Binding Collapse, Converter={converters:BoolToVisibility Collapse=True}}"/>
+                    <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" 
+                               Panel.ZIndex="901" 
+                               FontWeight="Medium" 
+                               TextTrimming="CharacterEllipsis" 
+                               Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center"
+                               Visibility="{Binding Collapse, Converter={converters:BoolToVisibility Collapse=True}}"/>
                 </Grid>
                 <TextBlock x:Name="MessageBox" Grid.Row="2"  Text="{Binding Message}" Margin="{Binding BarMargin}" TextWrapping="Wrap" Opacity=".8" MinHeight="20" >
                     <TextBlock.Style>

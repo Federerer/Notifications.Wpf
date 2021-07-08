@@ -10,7 +10,7 @@ namespace Notifications.Wpf.ViewModels
 {
     public class NotificationProgressViewModel : ViewModel
     {
-        public readonly CancellationTokenSource Cancel;
+        public CancellationTokenSource Cancel => NotifierProgress.CancelSource;
 
         #region Титул окна
 
@@ -52,13 +52,13 @@ namespace Notifications.Wpf.ViewModels
         #region ProgressBar : IProgress<(double, string, string,bool)> - Прогресс
 
         /// <summary>Прогресс</summary>
-        private ProgressFinaly<(int? percent, string message, string title, bool? showCancel)> _progress;
+        private NotifierProgress<(double? percent, string message, string title, bool? showCancel)> _NotifierProgress;
 
         /// <summary>Прогресс</summary>
-        public ProgressFinaly<(int? percent, string message, string title, bool? showCancel)> progress
+        public NotifierProgress<(double? percent, string message, string title, bool? showCancel)> NotifierProgress
         {
-            get => _progress;
-            set => Set(ref _progress, value);
+            get => _NotifierProgress;
+            set => Set(ref _NotifierProgress, value);
         }
 
         #endregion
@@ -171,28 +171,26 @@ namespace Notifications.Wpf.ViewModels
         /// </summary>
         public object RightButtonContent { get; set; } = "Cancel";
 
-        public NotificationProgressViewModel(out ProgressFinaly<(int? percent, string message, string title, bool? showCancel)> progresModel, CancellationTokenSource cancel,
-            bool showCancelButton, bool showProgress, bool trimText, uint DefaultRowsCount, string BaseWaitingMessage)
+        public NotificationProgressViewModel(bool showCancelButton, bool showProgress, bool trimText, uint DefaultRowsCount, string BaseWaitingMessage)
         {
             ShowProgress = showProgress;
-            Cancel = cancel;
-            progress = progresModel = new ProgressFinaly<(int? percent, string message, string title, bool? showCancel)>(OnProgress);
+            NotifierProgress = new NotifierProgress<(double? percent, string message, string title, bool? showCancel)>(OnProgress);
             ShowCancelButton = showCancelButton;
             CollapseWindowCommand = new LamdaCommand(CollapseWindow);
             if(trimText)
                 TrimType = NotificationTextTrimType.Trim;
             RowsCount = DefaultRowsCount;
-            if (BaseWaitingMessage != null) progress.WaitingTimer.BaseWaitingMessage = BaseWaitingMessage;
+            if (BaseWaitingMessage != null) NotifierProgress.WaitingTimer.BaseWaitingMessage = BaseWaitingMessage;
         }
 
-        void OnProgress((int? percent, string message, string title, bool? showCancel) ProgressInfo)
+        void OnProgress((double? percent, string message, string title, bool? showCancel) ProgressInfo)
         {
                 if (ProgressInfo.percent is null)
                 {
                     if (ShowProgress)
                     {
                         ShowProgress = false;
-                        progress.WaitingTimer.Restart();
+                        NotifierProgress.WaitingTimer.Restart();
                         WaitingTime = string.Empty;
                     }
                 }
@@ -201,11 +199,11 @@ namespace Notifications.Wpf.ViewModels
                     if (!ShowProgress)
                     {
                         ShowProgress = true;
-                        progress.WaitingTimer.Restart();
+                        NotifierProgress.WaitingTimer.Restart();
                     }
                     process = (double)ProgressInfo.percent;
 
-                    WaitingTime = progress.WaitingTimer.BaseWaitingMessage is null ? null: process > 10 ? progress.WaitingTimer.GetStringTime((double)ProgressInfo.percent, 100) : progress.WaitingTimer.BaseWaitingMessage;
+                    WaitingTime = NotifierProgress.WaitingTimer.BaseWaitingMessage is null ? null: process > 10 ? NotifierProgress.WaitingTimer.GetStringTime((double)ProgressInfo.percent, 100) : NotifierProgress.WaitingTimer.BaseWaitingMessage;
                 }
                 if (ProgressInfo.message != null) Message = ProgressInfo.message;
                 if (ProgressInfo.title != null) Title = ProgressInfo.title;

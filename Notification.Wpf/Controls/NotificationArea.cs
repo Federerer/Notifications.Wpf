@@ -99,13 +99,13 @@ namespace Notification.Wpf.Controls
             };
             notification.NotificationClosed += progress.CancelProgress;
             notification.NotificationClosed += OnNotificationClosed;
-            progress.progress.SetArea(notification);
+            progress.NotifierProgress.SetArea(notification);
 
             await OnShowContent(notification);
 
             try
             {
-                while (progress.progress.IsFinished != true)
+                while (progress.NotifierProgress.IsFinished != true)
                 {
                     progress.Cancel.Token.ThrowIfCancellationRequested();
                     await Task.Delay(TimeSpan.FromSeconds(1), progress.Cancel.Token);

@@ -60,38 +60,25 @@ namespace Notification.Wpf
         /// </summary>
         /// <param name="Title">Title of window</param>
         /// <param name="ShowProgress">Show or not progress status</param>
-        /// <param name="Cancel">CancellationTokenSource, if it null - ShowCancelButton will state false</param>
         /// <param name="ShowCancelButton">Show Cancel button or not</param>
         /// <param name="areaName">window are where show notification</param>
         /// <param name="TrimText">Обрезать текст превышающий размеры</param>
         /// <param name="DefaultRowsCount">Базовое число строк при обрезке</param>
-        /// <param name="BaseWaitingMessage">Сообщение при подсчёте времени ожидания, установите null если не хотите видеть время в прогресс баре</param>
-        public ProgressFinaly<(int? value, string message, string title, bool? showCancel)> ShowProgressBar(out CancellationToken Cancel, string Title = null,
+        /// <param name="BaseWaitingMessage">Сообщение при подсчете времени ожидания, установите null если не хотите видеть время в прогресс баре</param>
+        public NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(string Title = null,
             bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U, string BaseWaitingMessage = "Calculation time")
         {
-            var CancelSource = new CancellationTokenSource();
-            Cancel = CancelSource.Token;
-            var model = new NotificationProgressViewModel(out var progressModel, CancelSource, ShowCancelButton, ShowProgress, TrimText, DefaultRowsCount, BaseWaitingMessage);
+            var model = new NotificationProgressViewModel(ShowCancelButton, ShowProgress, TrimText, DefaultRowsCount, BaseWaitingMessage);
             if (Title != null) model.Title = Title;
-            Cancel.ThrowIfCancellationRequested();
 
             if (!_dispatcher.CheckAccess())
             {
-                var CancelFirst= new CancellationToken();
-
-                var pr = _dispatcher.Invoke(
-                    () =>
-                    {
-                        var progress = ShowProgressBar(out var Cancel1, Title, ShowCancelButton, ShowProgress, areaName, TrimText, DefaultRowsCount, BaseWaitingMessage);
-                        CancelFirst = Cancel1;
-                        return progress;
-                    });
-                Cancel = CancelFirst;
-                return pr;
+                return _dispatcher.Invoke(
+                    () => ShowProgressBar(Title, ShowCancelButton, ShowProgress, areaName, TrimText, DefaultRowsCount, BaseWaitingMessage));
             }
 
             ShowContent(model);
-            return progressModel;
+            return model.NotifierProgress;
         }
 
         /// <summary>
