@@ -104,7 +104,7 @@ ShowProgressBar(out ProgressFinaly<ValueTuple<int?, string, string, bool?>> prog
 using var progress = notificationManager.ShowProgressBar(title, true, false, true, 2U, "Wait");
     try
     {
-        await SomeMetod(progress, Cancel).ConfigureAwait(false);
+        await SomeMetod(progress, progress.Cancel).ConfigureAwait(false);
 
          await Task.Run(async () =>
         {
@@ -115,7 +115,7 @@ using var progress = notificationManager.ShowProgressBar(title, true, false, tru
                                     + $"Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
                 await Task.Delay(TimeSpan.FromSeconds(0.03), progress.Cancel);
             }
-        }, Cancel).ConfigureAwait(false);
+        }, progress.Cancel).ConfigureAwait(false);
 
         for (var i = 0; i <= 100; i++)
         {
