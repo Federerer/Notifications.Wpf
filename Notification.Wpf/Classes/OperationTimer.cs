@@ -64,7 +64,9 @@ namespace Notifications.Wpf.Classes
         /// <returns></returns>
         public TimeSpan? CalculateOperationTime(double current_index, double total_index)
         {
-            if(!IsRunning)
+            if (Watch is null)
+                return null;
+            if (!IsRunning)
                 Start();
 
             if (current_index == 0)
