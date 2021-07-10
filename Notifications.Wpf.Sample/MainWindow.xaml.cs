@@ -8,10 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using MathCore.Values;
 using Notification.Wpf.Classes;
-using RRJ_Express.ContainerCore;
-using RRJExpress.ContainerCore.Algorithms;
 using Timer = System.Timers.Timer;
 
 namespace Notification.Wpf.Sample
@@ -340,11 +337,17 @@ namespace Notification.Wpf.Sample
             await Task.Yield();
             this.Title = Thread.GetCurrentProcessorId().ToString();
             using var progress = _notificationManager.ShowProgressBar("Async test", true);
+            //await CalcAsync(progress, Cancel).ConfigureAwait(true);
+            //await CalcAsync(progress, Cancel).ConfigureAwait(false);
+
+            //using var pr = new SlowedProgress<(double?, string, string, bool?)>(d => { progress.Report(d); }, 300);
             await CalcAsync(progress, progress.Cancel);
             await CalcAsync(progress.GetProgress<double>(false), progress.Cancel);
-            await CalcAsync(progress.GetProgress<(double, string)>(true), progress.Cancel);
-            await CalcAsync(progress.GetProgress<(double, string, string)>(false), progress.Cancel);
-       }
+            await CalcAsync(progress.GetProgress<(double,string)>(true), progress.Cancel);
+            await CalcAsync(progress.GetProgress<(double,string,string)>(false), progress.Cancel);
+
+        }
+
         public Task CalcAsync(IProgress<(double?, string, string, bool?)> progress, CancellationToken cancel) =>
             Task.Run(
                 async () =>
