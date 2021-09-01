@@ -95,7 +95,7 @@ namespace Notification.Wpf.Controls
             if (!(sender is Button button)) return;
 
             button.Click -= OnCloseButtonOnClick;
-            if (this.Content is NotificationProgress { DataContext: NotificationProgressViewModel model } progress)
+            if (this.Content is NotificationProgress { DataContext: NotificationProgressViewModel model })
             {
                 model.Cancel.Cancel();
             }
@@ -122,7 +122,7 @@ namespace Notification.Wpf.Controls
             var notificationCount = VisualTreeHelperExtensions.GetActiveNotificationCount(currentWindow);
 
             if (notificationCount == 0)
-                currentWindow?.Close();
+                currentWindow.Close();
 
         }
 
