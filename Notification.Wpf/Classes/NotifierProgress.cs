@@ -51,6 +51,26 @@ namespace Notification.Wpf.Classes
     }
     public static class ProgressExtensions
     {
+        #region Sub operations
+
+        /// <summary>
+        /// выбор операции над числом
+        /// </summary>
+        /// <param name="value">значение</param>
+        /// <param name="MultyOrDeVide100">null - вернет значение без изменений, true - домножит на 100, false - разделит на 100</param>
+        /// <returns></returns>
+        private static double ChooseValueDouble(double value, bool? MultyOrDeVide100 = default)
+            => MultyOrDeVide100 is null ? value : MultyOrDeVide100 is true ? value * 100 : value / 100;
+        /// <summary>
+        /// выбор операции над числом
+        /// </summary>
+        /// <param name="value">значение</param>
+        /// <param name="MultyOrDeVide100">null - вернет значение без изменений, true - домножит на 100, false - разделит на 100</param>
+        /// <returns></returns>
+        private static int ChooseValueInt(int value, bool? MultyOrDeVide100 = default)
+            => MultyOrDeVide100 is null ? value : MultyOrDeVide100 is true ? value * 100 : value / 100;
+
+        #endregion
 
         /// <summary>
         /// получить прогресс типа T - (double, (double,string), (double,string,string), int, (int,string), (int,string,string)
@@ -58,79 +78,70 @@ namespace Notification.Wpf.Classes
         /// <typeparam name="T">тип прогресса </typeparam>
         /// <param name="progress">NotifierProgress</param>
         /// <param name="showCancel">showCancel</param>
-        /// <param name="MultyOrDeVide100">null - вернёт значение без изменений, true - домножит на 100, false - разделит на 100</param>
+        /// <param name="MultyOrDeVide100">null - вернет значение без изменений, true - домножит на 100, false - разделит на 100</param>
         /// <returns></returns>
         public static IProgress<T> GetProgress<T>(this IProgress<(double?, string, string, bool?)> progress, bool? showCancel, bool? MultyOrDeVide100 = default)
         {
             if (typeof(T) == typeof(double))
-                return (IProgress<T>)progress.Select<double, (double?, string, string, bool?)>(p => (MultyOrDeVide100 is null ? p : MultyOrDeVide100 is true ? p * 100 : p / 100, null, null, showCancel));
+                return (IProgress<T>)progress.Select<double, (double?, string, string, bool?)>(
+                    p => (ChooseValueDouble(p,MultyOrDeVide100), null, null, showCancel));
 
             if (typeof(T) == typeof((double, string)))
                 return (IProgress<T>) progress.Select<(double, string), (double?, string, string, bool?)>(
-                    p => (MultyOrDeVide100 is null
-                        ? p.Item1
-                        : MultyOrDeVide100 is true
-                            ? p.Item1 * 100
-                            : p.Item1 / 100, p.Item2, null, showCancel));
+                    p => (ChooseValueDouble(p.Item1, MultyOrDeVide100), p.Item2, null, showCancel));
             if (typeof(T) == typeof((double, string, string)))
                 return (IProgress<T>) progress.Select<(double, string, string), (double?, string, string, bool?)>(
-                    p => (MultyOrDeVide100 is null
-                        ? p.Item1
-                        : MultyOrDeVide100 is true
-                            ? p.Item1 * 100
-                            : p.Item1 / 100, p.Item2, p.Item3, showCancel));
+                    p => (ChooseValueDouble(p.Item1, MultyOrDeVide100), p.Item2, p.Item3, showCancel));
             if (typeof(T) == typeof(int))
                 return (IProgress<T>) progress.Select<int, (double?, string, string, bool?)>(
-                    p => (MultyOrDeVide100 is null
-                        ? p
-                        : MultyOrDeVide100 is true
-                            ? p * 100
-                            : p / 100, null, null, showCancel));
+                    p => (ChooseValueInt(p, MultyOrDeVide100), null, null, showCancel));
             if (typeof(T) == typeof((int, string)))
                 return (IProgress<T>) progress.Select<(int, string), (double?, string, string, bool?)>(
-                    p => (MultyOrDeVide100 is null
-                        ? p.Item1
-                        : MultyOrDeVide100 is true
-                            ? p.Item1 * 100
-                            : p.Item1 / 100, p.Item2, null, showCancel));
+                    p => (ChooseValueInt(p.Item1, MultyOrDeVide100), p.Item2, null, showCancel));
             if (typeof(T) == typeof((int, string, string)))
                 return (IProgress<T>) progress.Select<(int, string, string), (double?, string, string, bool?)>(
-                    p => (MultyOrDeVide100 is null
-                        ? p.Item1
-                        : MultyOrDeVide100 is true
-                            ? p.Item1 * 100
-                            : p.Item1 / 100, p.Item2, p.Item3, showCancel));
+                    p => (ChooseValueInt(p.Item1, MultyOrDeVide100), p.Item2, p.Item3, showCancel));
 
             throw new NotSupportedException("type of progress not supported");
         }
 
-        //public static IProgress<T> GetProgress<T>(this NotifierProgress<(double?, string, string, bool?)> progress, bool? showCancel)
-        //{
-        //    if (typeof(T) == typeof(double))
-        //        return (IProgress<T>)new SlowedProgress<double>(
-        //            d => progress.Report((d, null, null, showCancel)),
-        //            TimeOut);
-        //    if (typeof(T) == typeof((double, string)))
-        //        return (IProgress<T>)new SlowedProgress<(double, string)>(
-        //            d => progress.Report((d.Item1, d.Item2, null, showCancel)),
-        //            TimeOut);
-        //    if (typeof(T) == typeof((double, string, string)))
-        //        return (IProgress<T>)new SlowedProgress<(double, string, string)>(
-        //            d => progress.Report((d.Item1, d.Item2, d.Item3, showCancel)),
-        //            TimeOut);
-        //    if (typeof(T) == typeof(int))
-        //        return (IProgress<T>)new SlowedProgress<int>(
-        //            d => progress.Report((d, null, null, showCancel)),
-        //            TimeOut);
-        //    if (typeof(T) == typeof((int, string)))
-        //        return (IProgress<T>)new SlowedProgress<(int, string)>(
-        //            d => progress.Report((d.Item1, d.Item2, null, showCancel)),
-        //            TimeOut);
-        //    if (typeof(T) == typeof((int, string, string)))
-        //        return (IProgress<T>)new SlowedProgress<(int, string, string)>(
-        //            d => progress.Report((d.Item1, d.Item2, d.Item3, showCancel)),
-        //            TimeOut);
-        //    throw new NotSupportedException("type of progress not supported");
-        //}
+        /// <summary>
+        /// получить прогресс типа T c задержкой на пропуск частых сообщений
+        /// тип прогрессов - (double, (double,string), (double,string,string), int, (int,string), (int,string,string)
+        /// </summary>
+        /// <typeparam name="T">тип прогресса </typeparam>
+        /// <param name="progress">NotifierProgress</param>
+        /// <param name="showCancel">showCancel</param>
+        /// <param name="MultyOrDeVide100">null - вернет значение без изменений, true - домножит на 100, false - разделит на 100</param>
+        /// <param name="UpdateTimeOut">время задержки в миллисекундах</param>
+        /// <returns></returns>
+        public static IProgress<T> GetSlowedProgress<T>(
+            this IProgress<(double?, string, string, bool?)> progress,
+            bool? showCancel,
+            bool? MultyOrDeVide100 = default,
+            int UpdateTimeOut = 50)
+        {
+            if (typeof(T) == typeof(double))
+                return (IProgress<T>)new SlowedProgress<double>(d => progress.Select<double, (double?, string, string, bool?)>(
+                    p => (ChooseValueDouble(p, MultyOrDeVide100), null, null, showCancel)).Report(d), UpdateTimeOut);
+
+            if (typeof(T) == typeof((double, string)))
+                return (IProgress<T>)new SlowedProgress<(double, string)>(d => progress.Select<(double, string), (double?, string, string, bool?)>(
+                    p => (ChooseValueDouble(p.Item1, MultyOrDeVide100), p.Item2, null, showCancel)).Report((d.Item1, d.Item2)), UpdateTimeOut);
+            if (typeof(T) == typeof((double, string, string)))
+                return (IProgress<T>)new SlowedProgress<(double, string, string)>(d => progress.Select<(double, string, string), (double?, string, string, bool?)>(
+                    p => (ChooseValueDouble(p.Item1, MultyOrDeVide100), p.Item2, p.Item3, showCancel)).Report((d.Item1, d.Item2, d.Item3)), UpdateTimeOut);
+            if (typeof(T) == typeof(int))
+                return (IProgress<T>)new SlowedProgress<int>(d => progress.Select<int, (double?, string, string, bool?)>(
+                    p => (ChooseValueInt(p, MultyOrDeVide100), null, null, showCancel)).Report(d),UpdateTimeOut);
+            if (typeof(T) == typeof((int, string)))
+                return (IProgress<T>)new SlowedProgress<(int, string)>(d => progress.Select<(int, string), (double?, string, string, bool?)>(
+                    p => (ChooseValueInt(p.Item1, MultyOrDeVide100), p.Item2, null, showCancel)).Report((d.Item1, d.Item2)), UpdateTimeOut);
+            if (typeof(T) == typeof((int, string, string)))
+                return (IProgress<T>)new SlowedProgress<(int, string, string)>(d => progress.Select<(int, string, string), (double?, string, string, bool?)>(
+                    p => (ChooseValueInt(p.Item1, MultyOrDeVide100), p.Item2, p.Item3, showCancel)).Report((d.Item1, d.Item2, d.Item3)),UpdateTimeOut);
+
+            throw new NotSupportedException("type of progress not supported");
+        }
     }
 }

@@ -104,10 +104,10 @@ namespace Notification.Wpf.Sample
                 nameof(TrimType),
                 typeof(NotificationTextTrimType),
                 typeof(MainWindow),
-                new PropertyMetadata(default(NotificationTextTrimType)));
+                new PropertyMetadata(NotificationTextTrimType.AttachIfMoreRows));
 
         /// <summary>способ обрезки текста</summary>
-        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType) GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
+        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType)GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
 
         #endregion
 
@@ -341,10 +341,17 @@ namespace Notification.Wpf.Sample
             //await CalcAsync(progress, Cancel).ConfigureAwait(false);
 
             //using var pr = new SlowedProgress<(double?, string, string, bool?)>(d => { progress.Report(d); }, 300);
-            await CalcAsync(progress, progress.Cancel);
-            await CalcAsync(progress.GetProgress<double>(false), progress.Cancel);
-            await CalcAsync(progress.GetProgress<(double,string)>(true), progress.Cancel);
-            await CalcAsync(progress.GetProgress<(double,string,string)>(false), progress.Cancel);
+            try
+            {
+                await CalcAsync(progress, progress.Cancel);
+                await CalcAsync(progress.GetSlowedProgress<(double, string)>(true, UpdateTimeOut: 1000), progress.Cancel);
+                await CalcAsync(progress.GetProgress<(double, string)>(true), progress.Cancel);
+                await CalcAsync(progress.GetProgress<(double, string, string)>(false), progress.Cancel);
+            }
+            catch (OperationCanceledException)
+            {
+                _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3));
+            }
 
         }
 

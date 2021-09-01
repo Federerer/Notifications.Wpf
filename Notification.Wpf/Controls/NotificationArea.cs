@@ -87,7 +87,7 @@ namespace Notification.Wpf.Controls
         /// <summary>
         /// Отображает окно прогресса
         /// </summary>
-        /// <param name="model">модель прогрессбара</param>
+        /// <param name="model">модель прогресс бара</param>
         public async void Show(object model)
         {
             var progress = (NotificationProgressViewModel) model;
@@ -113,7 +113,8 @@ namespace Notification.Wpf.Controls
             }
             catch (OperationCanceledException)
             { }
-            notification.Close();
+            if(!notification.IsClosing)
+                notification.Close();
         }
 
         /// <summary>
@@ -126,16 +127,12 @@ namespace Notification.Wpf.Controls
         {
 
             if (!IsLoaded)
-            {
                 return;
-            }
 
             var w = Window.GetWindow(this);
             var x = PresentationSource.FromVisual(w);
             if (x == null)
-            {
                 return;
-            }
             lock (_items)
             {
                 _items.Add(notification);
