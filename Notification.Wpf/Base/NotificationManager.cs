@@ -95,7 +95,7 @@ namespace Notification.Wpf
         {
             expirationTime ??= TimeSpan.FromSeconds(5);
 
-            if (areaName == string.Empty && _window == null)
+            if (areaName == string.Empty && _window == null || !_window.IsInitialized || !_window.IsLoaded)
             {
                 var workArea = SystemParameters.WorkArea;
 
@@ -107,10 +107,10 @@ namespace Notification.Wpf
                     Height = workArea.Height
                 };
 
-                _window.Show();
+                //_window.Show();
             }
 
-            if (Areas != null && _window != null && !_window.IsVisible)
+            if (Areas != null && _window is { IsVisible: false })
                 _window.Show();
 
 
