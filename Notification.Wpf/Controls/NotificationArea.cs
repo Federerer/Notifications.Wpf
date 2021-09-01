@@ -92,7 +92,7 @@ namespace Notification.Wpf.Controls
         {
             var progress = (NotificationProgressViewModel) model;
             var content = new NotificationProgress { DataContext = progress };
-            //content.Cancel.Click += progress.CancelProgress;
+            content.Cancel.Click += progress.CancelProgress;
             var notification = new Notification
             {
                 Content = content

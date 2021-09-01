@@ -95,12 +95,8 @@ namespace Notification.Wpf.Controls
             if (!(sender is Button button)) return;
 
             button.Click -= OnCloseButtonOnClick;
-            if (this.Content is NotificationProgress { DataContext: NotificationProgressViewModel model })
-            {
-                model.Cancel.Cancel();
-            }
-            else
-                Close();
+
+            Close();
         }
 
         //TODO: .NET40
