@@ -42,8 +42,16 @@ namespace Notification.Wpf
         {
             var content = new NotificationContent
             {
-                Type = type, TrimType = trim, RowsCount = RowsCountWhenTrim, LeftButtonAction = LeftButton, LeftButtonContent = LeftButtonText,
-                RightButtonAction = RightButton, RightButtonContent = RightButtonText, Message = message, Title = title, CloseOnClick = CloseOnClick
+                Type = type,
+                TrimType = trim,
+                RowsCount = RowsCountWhenTrim,
+                LeftButtonAction = LeftButton,
+                LeftButtonContent = LeftButtonText,
+                RightButtonAction = RightButton,
+                RightButtonContent = RightButtonText,
+                Message = message,
+                Title = title,
+                CloseOnClick = CloseOnClick
             };
             if (!_dispatcher.CheckAccess())
             {
@@ -66,7 +74,7 @@ namespace Notification.Wpf
         /// <param name="DefaultRowsCount">Базовое число строк при обрезке</param>
         /// <param name="BaseWaitingMessage">Сообщение при подсчете времени ожидания, установите null если не хотите видеть время в прогресс баре</param>
         public NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(string Title = null,
-            bool ShowCancelButton = true,  bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U, string BaseWaitingMessage = "Calculation time")
+            bool ShowCancelButton = true, bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U, string BaseWaitingMessage = "Calculation time")
         {
             var model = new NotificationProgressViewModel(ShowCancelButton, ShowProgress, TrimText, DefaultRowsCount, BaseWaitingMessage);
             if (Title != null) model.Title = Title;
@@ -90,12 +98,12 @@ namespace Notification.Wpf
         /// <param name="onClick">действие при клике</param>
         /// <param name="onClose">действие при закрытии</param>
         /// <param name="CloseOnClick">Закрыть сообщение при клике по телу</param>
-        static void ShowContent( object content, TimeSpan? expirationTime = null, string areaName = "",
+        static void ShowContent(object content, TimeSpan? expirationTime = null, string areaName = "",
             Action onClick = null, Action onClose = null, bool CloseOnClick = true)
         {
             expirationTime ??= TimeSpan.FromSeconds(5);
 
-            if (areaName == string.Empty && _window == null || !_window.IsInitialized || !_window.IsLoaded)
+            if (areaName == string.Empty && _window == null)
             {
                 var workArea = SystemParameters.WorkArea;
 
@@ -106,22 +114,25 @@ namespace Notification.Wpf
                     Width = workArea.Width,
                     Height = workArea.Height
                 };
-
-                //_window.Show();
+                _window.Closed += (_,_) =>
+                {
+                    _window = null;
+                };
             }
 
             if (Areas != null && _window is { IsVisible: false })
                 _window.Show();
-
 
             if (Areas == null) return;
             foreach (var area in Areas.Where(a => a.Name == areaName))
             {
                 switch (content)
                 {
-                    case NotificationProgressViewModel: area.Show(content);
+                    case NotificationProgressViewModel:
+                        area.Show(content);
                         break;
-                    default: area.Show(content, (TimeSpan)expirationTime, onClick, onClose, CloseOnClick);
+                    default:
+                        area.Show(content, (TimeSpan)expirationTime, onClick, onClose, CloseOnClick);
                         break;
                 }
             }
