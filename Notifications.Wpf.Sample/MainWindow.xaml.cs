@@ -344,9 +344,9 @@ namespace Notification.Wpf.Sample
             try
             {
                 await CalcAsync(progress, progress.Cancel);
-                await CalcAsync(progress.GetProgress<double>(false), progress.Cancel);
-                await CalcAsync(progress.GetProgress<(double,string)>(true), progress.Cancel);
-                await CalcAsync(progress.GetProgress<(double,string,string)>(false), progress.Cancel);
+                await CalcAsync(progress.GetSlowedProgress<(double, string)>(true, UpdateTimeOut: 1000), progress.Cancel);
+                await CalcAsync(progress.GetProgress<(double, string)>(true), progress.Cancel);
+                await CalcAsync(progress.GetProgress<(double, string, string)>(false), progress.Cancel);
             }
             catch (OperationCanceledException)
             {
