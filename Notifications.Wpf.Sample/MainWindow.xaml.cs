@@ -104,10 +104,10 @@ namespace Notification.Wpf.Sample
                 nameof(TrimType),
                 typeof(NotificationTextTrimType),
                 typeof(MainWindow),
-                new PropertyMetadata(default(NotificationTextTrimType)));
+                new PropertyMetadata(NotificationTextTrimType.AttachIfMoreRows));
 
         /// <summary>способ обрезки текста</summary>
-        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType) GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
+        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType)GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
 
         #endregion
 
