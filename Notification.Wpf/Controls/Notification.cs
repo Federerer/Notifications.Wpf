@@ -6,7 +6,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Notification.Wpf.Utils;
+using Notification.Wpf.View;
 using Notifications.Wpf.View;
+using Notifications.Wpf.ViewModels;
 
 namespace Notification.Wpf.Controls
 {
@@ -93,7 +95,12 @@ namespace Notification.Wpf.Controls
             if (!(sender is Button button)) return;
 
             button.Click -= OnCloseButtonOnClick;
-            Close();
+            if (this.Content is NotificationProgress { DataContext: NotificationProgressViewModel model } progress)
+            {
+                model.Cancel.Cancel();
+            }
+            else
+                Close();
         }
 
         //TODO: .NET40
@@ -115,7 +122,7 @@ namespace Notification.Wpf.Controls
             var notificationCount = VisualTreeHelperExtensions.GetActiveNotificationCount(currentWindow);
 
             if (notificationCount == 0)
-                currentWindow?.Hide();
+                currentWindow?.Close();
 
         }
 

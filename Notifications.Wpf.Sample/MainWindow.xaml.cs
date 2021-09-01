@@ -341,10 +341,17 @@ namespace Notification.Wpf.Sample
             //await CalcAsync(progress, Cancel).ConfigureAwait(false);
 
             //using var pr = new SlowedProgress<(double?, string, string, bool?)>(d => { progress.Report(d); }, 300);
-            await CalcAsync(progress, progress.Cancel);
-            await CalcAsync(progress.GetProgress<double>(false), progress.Cancel);
-            await CalcAsync(progress.GetProgress<(double,string)>(true), progress.Cancel);
-            await CalcAsync(progress.GetProgress<(double,string,string)>(false), progress.Cancel);
+            try
+            {
+                await CalcAsync(progress, progress.Cancel);
+                await CalcAsync(progress.GetProgress<double>(false), progress.Cancel);
+                await CalcAsync(progress.GetProgress<(double,string)>(true), progress.Cancel);
+                await CalcAsync(progress.GetProgress<(double,string,string)>(false), progress.Cancel);
+            }
+            catch (OperationCanceledException)
+            {
+                _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3));
+            }
 
         }
 
