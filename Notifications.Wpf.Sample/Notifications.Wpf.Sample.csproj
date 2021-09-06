@@ -4,11 +4,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+  <LangVersion>latest</LangVersion>
 </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FontAwesome5" Version="2.1.2" />
-    <PackageReference Include="MathCore" Version="0.0.49" />
+    <PackageReference Include="FontAwesome5" Version="2.1.4" />
+    <PackageReference Include="MathCore" Version="0.0.55" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
