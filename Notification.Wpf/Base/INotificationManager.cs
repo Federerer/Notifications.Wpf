@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using Notification.Wpf.Classes;
 
 namespace Notification.Wpf

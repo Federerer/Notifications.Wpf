@@ -6,9 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Notification.Wpf.Utils;
-using Notification.Wpf.View;
 using Notifications.Wpf.View;
-using Notifications.Wpf.ViewModels;
 
 namespace Notification.Wpf.Controls
 {
