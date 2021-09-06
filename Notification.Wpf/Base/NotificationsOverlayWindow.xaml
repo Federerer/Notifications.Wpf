@@ -12,6 +12,7 @@
         AllowsTransparency="True"
         Topmost="True"
         ShowActivated="False"
+        WindowStartupLocation ="CenterScreen"
         d:DesignWidth="900"
         d:DesignHeight="600">
     <controls1:NotificationArea Position="BottomRight" Margin="8"/>
