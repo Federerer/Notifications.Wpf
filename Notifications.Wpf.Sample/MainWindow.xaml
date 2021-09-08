@@ -91,7 +91,7 @@
                      </RadioButton>
                  </StackPanel>
             </StackPanel>
-        <ListView  Grid.Row="4" Height="400"
+        <ListView  Grid.Row="4" Height="400" x:Name="lIco"
                    ItemsSource="{Binding Icons, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></ListView>
     </Grid>
 </Window>

@@ -440,7 +440,7 @@ namespace Notification.Wpf.Sample
                 RowsCount = RowCount,
                 TrimType = TrimType,
                 CloseOnClick = true,
-                Icon = Ico
+                Icon = lIco.SelectedItem
             };
             _notificationManager.Show(content, expirationTime: TimeSpan.FromSeconds(5));
 
