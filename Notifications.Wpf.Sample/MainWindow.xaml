@@ -9,20 +9,29 @@
         xmlns:helpers="clr-namespace:Notification.Wpf.Sample.Helpers"
         xmlns:wpf="clr-namespace:Notification.Wpf;assembly=Notification.Wpf"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        xmlns:fontAwesome5="clr-namespace:FontAwesome5;assembly=FontAwesome5"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600"
         >
+    <Window.Resources>
+        <fa5:LabelConverter x:Key="LabelConverter"/>
+    </Window.Resources>
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
             <controls:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="3" Panel.ZIndex="999"  Grid.Row="0" Grid.RowSpan="3"/>
         <TextBox Grid.Row="0" Text="{Binding ContentText, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"
-                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="200" VerticalAlignment="Top"/>
-        <StackPanel Grid.Row="1"  HorizontalAlignment="Right" VerticalAlignment="Bottom" DockPanel.Dock="Right" Orientation="Horizontal">
-            <ProgressBar Width="200" Height="20" IsIndeterminate="False" Value="{Binding RowCount,
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100" VerticalAlignment="Top"/>
+        <StackPanel Grid.Row="1"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal">
+
+                <ProgressBar Width="200" Height="20" IsIndeterminate="False" Value="{Binding RowCount,
                     RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <b:Interaction.Behaviors>
                     <controls:ProgresBarAnimateBehavior />
@@ -65,5 +74,24 @@
                     <Button Content="Show content" Click="Show_Any_content" />
                     <Button Content="Attach" Click="ShowAttachMessage" />
             </WrapPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="3">
+                <Button x:Name="BcgButton" Content="Background" Click="BackgroundColorSelect_Click" Margin="5"/>
+                <Button x:Name="FrgButton" Content="Foreground" Click="ForegroundColorSelect_Click" Margin="5"/>
+                <Button Content="Themed" Click="ShowThemedMessage" Margin="5"/>
+                 <StackPanel Orientation="Horizontal" Height="40">
+                    <RadioButton GroupName="ico" Margin="5" Click="ButtonBase_OnClick">
+                         <fa5:SvgAwesome Icon="Regular_Star" Foreground="Coral" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                     </RadioButton>
+                    <RadioButton GroupName="ico" Margin="5" Click="ButtonBase_OnClick">
+                         <fa5:SvgAwesome Icon="Brands_Airbnb" Foreground="Wheat" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                     </RadioButton>
+                    <RadioButton GroupName="ico" Margin="5" Click="ButtonBase_OnClick">
+                         <fa5:SvgAwesome Icon="Regular_Bell" Foreground="Blue" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                     </RadioButton>
+                 </StackPanel>
+            </StackPanel>
+        <ListView  Grid.Row="4" Height="400"
+                   ItemsSource="{Binding Icons, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></ListView>
     </Grid>
 </Window>

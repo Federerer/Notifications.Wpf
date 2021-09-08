@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Notification.Wpf
 {
@@ -10,6 +12,11 @@ namespace Notification.Wpf
         public string Message { get; set; }
         /// <summary> Notification type (change color) </summary>
         public NotificationType Type { get; set; }
+
+        public object Icon { get; set; }
+        public Brush Background { get; set; }
+        public Brush Foreground { get; set; }
+
         /// <summary> Trimming long text if need </summary>
         public NotificationTextTrimType TrimType { get; set; } = NotificationTextTrimType.NoTrim;
         /// <summary> Set rows of message that will show if set Trim </summary>

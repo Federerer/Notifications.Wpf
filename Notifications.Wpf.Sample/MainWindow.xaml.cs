@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -8,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ColorPickerWPF;
+using FontAwesome5;
 using Notification.Wpf.Classes;
 using Timer = System.Timers.Timer;
 
@@ -134,6 +137,7 @@ namespace Notification.Wpf.Sample
         public MainWindow()
         {
             InitializeComponent();
+            Icons = GetIcons();
             Timer = new Timer {Interval = 1000};
             Timer.Elapsed += (s, a) => _notificationManager.Show("Pink string from another thread!");
         }
@@ -402,6 +406,75 @@ namespace Notification.Wpf.Sample
                 }, cancel);
 
 
+        private void BackgroundColorSelect_Click(object Sender, RoutedEventArgs E)
+        {
+            if (!ColorPickerWindow.ShowDialog(out var color))
+                return;
+            if (Sender is not Button btn)
+                return;
+            btn.Background = new SolidColorBrush(color);
+        }
 
+        private void ForegroundColorSelect_Click(object Sender, RoutedEventArgs E)
+        {
+            if (!ColorPickerWindow.ShowDialog(out var color))
+                return;
+            if (Sender is not Button btn)
+                return;
+            btn.Background = new SolidColorBrush(color);
+        }
+
+        private void ShowThemedMessage(object Sender, RoutedEventArgs E)
+        {
+            var content = new NotificationContent
+            {
+                Title = "Sample notification",
+                Message = ContentText,
+                Background = BcgButton.Background,
+                Foreground = FrgButton.Background,
+                //Type = (NotificationType)i,
+                LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
+                RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
+                LeftButtonContent = LeftButtonText,
+                RightButtonContent = RightButtonText,
+                RowsCount = RowCount,
+                TrimType = TrimType,
+                CloseOnClick = true,
+                Icon = Ico
+            };
+            _notificationManager.Show(content, expirationTime: TimeSpan.FromSeconds(5));
+
+        }
+
+        private void ButtonBase_OnClick(object Sender, RoutedEventArgs E)
+        {
+            if(Sender is not RadioButton rb)
+                return;
+            Ico = rb.Content;
+            var i = new FontAwesome5.SvgAwesome();
+            i.Icon = EFontAwesomeIcon.Brands_Adversal;
+            i.Foreground = Brushes.Red;
+
+            Ico = i;
+        }
+
+        private object Ico;
+
+        #region Icons : IEnumerabSvgAwesome> - Icons
+
+        /// <summary>Icons</summary>
+        public static readonly DependencyProperty IconsProperty =
+            DependencyProperty.Register(
+                nameof(Icons),
+                typeof(IEnumerable<SvgAwesome>),
+                typeof(MainWindow),
+                new PropertyMetadata(default(IEnumerable<SvgAwesome>)));
+
+        /// <summary>Icons</summary>
+        public IEnumerable<SvgAwesome> Icons { get => (IEnumerable<SvgAwesome>)GetValue(IconsProperty); set => SetValue(IconsProperty, value); }
+
+        private static IEnumerable<SvgAwesome> GetIcons() => Enum.GetValues<EFontAwesomeIcon>().Select(s => new SvgAwesome() { Icon = s, Height = 20});
+
+        #endregion
     }
 }
