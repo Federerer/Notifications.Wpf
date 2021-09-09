@@ -8,11 +8,11 @@
 </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ColorPickerWPF" Version="1.0.9" />
     <PackageReference Include="FontAwesome5" Version="2.1.4" />
     <PackageReference Include="MathCore" Version="0.0.55" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="WPF.ColorPicker" Version="5.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>

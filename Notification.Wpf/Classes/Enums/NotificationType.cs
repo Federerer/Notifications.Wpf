@@ -5,6 +5,7 @@
     /// </summary>
     public enum NotificationType   
     {
+        None,
         Information,
         Success,
         Warning,

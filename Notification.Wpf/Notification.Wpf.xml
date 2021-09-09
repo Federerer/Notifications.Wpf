@@ -4,14 +4,28 @@
         <name>Notification.Wpf</name>
     </assembly>
     <members>
+        <member name="T:Notification.Wpf.NotificationContent">
+            <summary>
+            Message
+            </summary>
+        </member>
+        <member name="P:Notification.Wpf.NotificationContent.Type">
+            <summary> Notification type (change color) </summary>
+        </member>
         <member name="P:Notification.Wpf.NotificationContent.Title">
             <summary> Top Title text </summary>
         </member>
         <member name="P:Notification.Wpf.NotificationContent.Message">
             <summary> Body message text </summary>
         </member>
-        <member name="P:Notification.Wpf.NotificationContent.Type">
-            <summary> Notification type (change color) </summary>
+        <member name="P:Notification.Wpf.NotificationContent.Icon">
+            <summary> icon in left bar side </summary>
+        </member>
+        <member name="P:Notification.Wpf.NotificationContent.Background">
+            <summary> Notification background </summary>
+        </member>
+        <member name="P:Notification.Wpf.NotificationContent.Foreground">
+            <summary> Text foreground </summary>
         </member>
         <member name="P:Notification.Wpf.NotificationContent.TrimType">
             <summary> Trimming long text if need </summary>
