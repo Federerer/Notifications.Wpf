@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Notification.Wpf.View;
 using Notifications.Wpf.ViewModels;
 
@@ -60,7 +61,7 @@ namespace Notification.Wpf.Controls
         {
             var notification = new Notification
             {
-                Content = content
+                Content = content,
             };
             
             notification.MouseLeftButtonDown += (sender, _) =>

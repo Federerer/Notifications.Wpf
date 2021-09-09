@@ -3,51 +3,134 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Notification.Wpf.Sample"
         xmlns:controls="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
         xmlns:elements="clr-namespace:Notification.Wpf.Sample.Elements"
         xmlns:helpers="clr-namespace:Notification.Wpf.Sample.Helpers"
         xmlns:wpf="clr-namespace:Notification.Wpf;assembly=Notification.Wpf"
-        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
+        xmlns:wpf1="clr-namespace:Notification.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600"
+        Title="MainWindow" Width="800" MinWidth="800" Height="520" MinHeight="520"
         >
     <Grid>
+
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-            <controls:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="3" Panel.ZIndex="999"  Grid.Row="0" Grid.RowSpan="3"/>
+        <controls:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="3" Panel.ZIndex="999"  Grid.Row="0" Grid.RowSpan="4"/>
+
         <TextBox Grid.Row="0" Text="{Binding ContentText, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"
-                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="200" VerticalAlignment="Top"/>
-        <StackPanel Grid.Row="1"  HorizontalAlignment="Right" VerticalAlignment="Bottom" DockPanel.Dock="Right" Orientation="Horizontal">
-            <ProgressBar Width="200" Height="20" IsIndeterminate="False" Value="{Binding RowCount,
-                    RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-                <b:Interaction.Behaviors>
-                    <controls:ProgresBarAnimateBehavior />
-                </b:Interaction.Behaviors>
-            </ProgressBar>
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100" VerticalAlignment="Top"/>
+
+        <GroupBox Header="Settings" Grid.Row="1">
             <StackPanel>
+            <StackPanel Orientation="Horizontal">
+
+                <!--<ProgressBar Width="200" Height="20" IsIndeterminate="False" Value="{Binding RowCount,
+                RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <b:Interaction.Behaviors>
+                <controls:ProgresBarAnimateBehavior />
+            </b:Interaction.Behaviors>
+                </ProgressBar>-->
+                <GroupBox Header="Notification Type" >
+                    <ComboBox x:Name="ComboBoxType" ItemsSource="{helpers:EnumValues {x:Type wpf:NotificationType}}"
+                          SelectedItem="{Binding SelectedNotificationType, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"
+                          Width="100" VerticalAlignment="Center"/>
+                </GroupBox>
+                <GroupBox Header="Trim type" >
                     <ComboBox ItemsSource="{helpers:EnumValues {x:Type wpf:NotificationTextTrimType}}" 
-                              SelectedItem="{Binding TrimType, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"/>
+                          SelectedItem="{Binding SelectedTrimType, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"
+                          VerticalAlignment="Top" Width="100"
+                          Height="25"/>
+                </GroupBox>
+                <GroupBox Header="Rows count" >
                     <elements:NumericUpDownControl Value="{Binding RowCount,
-                    RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                   Minimum="1" Maximum="100" Margin="5" />
+                RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                               Minimum="1" Maximum="100" Height="25"/>
+                </GroupBox>
+                <GroupBox >
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Left button"/>
+                                <CheckBox IsChecked="{Binding ShowLeftButton, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}" Margin="5,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                    <TextBox Text="{Binding LeftButtonText, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                        UpdateSourceTrigger= PropertyChanged}"  Width="100"/>
+                </GroupBox>
+                <GroupBox>
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Right button"/>
+                                <CheckBox 
+                                IsChecked="{Binding ShowRightButton, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}" Margin="5,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                    <TextBox Text="{Binding RightButtonText, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                        UpdateSourceTrigger= PropertyChanged}"  Width="100"/>
+                </GroupBox>
+                <GroupBox>
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Close on click"/>
+                                <CheckBox 
+                                IsChecked="{Binding CloseOnClick, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}" Margin="5,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                    <TextBlock Text="{Binding CloseOnClick, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                        UpdateSourceTrigger= PropertyChanged}"/>
+                </GroupBox>
+
+                <Button Content="Test" Click="TestMessage" VerticalAlignment="Center" Width="100" Margin="10,0"/>
+
+            </StackPanel>
+            <GroupBox Header="Color section">
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="100"/>
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+
+                    </StackPanel.Resources>
+
+                    <StackPanel Orientation="Horizontal" >
+                        <Button x:Name="BcgButton" Content="Background" Click="ColorSelect_Click" />
+                        <Button x:Name="FrgButton" Content="Foreground" Click="ColorSelect_Click" />
+                        <Button x:Name="IconFrgButton" Content="Icon color" Click="ColorSelect_Click" />
+                            <fa5:SvgAwesome Icon="{Binding SelectedIcon, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                Converter={wpf1:IconConverter}}" Height="20"
+                                        Foreground="{Binding Background, ElementName=IconFrgButton}"/>
+                    </StackPanel>
+                    <ListView  x:Name="ListIcons" Height="220"
+                               ItemsSource="{Binding Icons, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                               SelectedItem="{Binding SelectedIcon, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                               ScrollViewer.PanningMode="VerticalOnly">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
                 </StackPanel>
-              <StackPanel Orientation="Vertical" >
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Left button:" Width="70"/>
-                    <CheckBox IsChecked="{Binding ShowLeftButton, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}" Margin="5"/>
-                    <TextBox Text="{Binding LeftButtonText, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"  Width="100"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Right button:"  Width="70"/>
-                    <CheckBox IsChecked="{Binding ShowRightButton, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}" Margin="5"/>
-                    <TextBox Text="{Binding RightButtonText, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"  Width="100"/>
-                    </StackPanel>
-              </StackPanel>
+
+            </GroupBox>
+
         </StackPanel>
+    </GroupBox>
         <WrapPanel Grid.Row="2">
             <WrapPanel.Resources>
                 <Style TargetType="Button">
@@ -56,14 +139,12 @@
                 </Style>
 
             </WrapPanel.Resources>
-            <Button Content="Test" Click="Button_Test_async"/>
                     <Button Content="Timer" Click="Button_Timer"/>
                     <Button Content="Show" Click="UpperPanel"/>
                     <Button Content="Show in window" Click="InWindow" />
                     <Button Content="Show Progress" Click="Progress_Click" />
-                    <Button Content="Show Info" Click="Message_Click" />
                     <Button Content="Show content" Click="Show_Any_content" />
-                    <Button Content="Attach" Click="ShowAttachMessage" />
             </WrapPanel>
+
     </Grid>
 </Window>

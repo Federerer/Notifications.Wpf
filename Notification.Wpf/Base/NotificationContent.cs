@@ -1,15 +1,28 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Notification.Wpf
 {
+    /// <summary>
+    /// Message
+    /// </summary>
     public class NotificationContent
     {
+        /// <summary> Notification type (change color) </summary>
+        public NotificationType Type { get; set; }
+
         /// <summary> Top Title text </summary>
         public string Title { get; set; }
         /// <summary> Body message text </summary>
         public string Message { get; set; }
-        /// <summary> Notification type (change color) </summary>
-        public NotificationType Type { get; set; }
+        /// <summary> icon in left bar side </summary>
+        public object Icon { get; set; }
+        /// <summary> Notification background </summary>
+        public Brush Background { get; set; }
+        /// <summary> Text foreground </summary>
+        public Brush Foreground { get; set; }
+
         /// <summary> Trimming long text if need </summary>
         public NotificationTextTrimType TrimType { get; set; } = NotificationTextTrimType.NoTrim;
         /// <summary> Set rows of message that will show if set Trim </summary>
