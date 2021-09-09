@@ -2,14 +2,15 @@
 WPF toast notifications. (Messages and progress bars)
 
 ### Installation:
-Install-Package Notification.WPF -Version 5.1.1.3
+Install-Package Notification.WPF -Version 5.2.0
 
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/notification.gif)
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/progress.gif)
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/info_button.gif)
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/content.gif)
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/sample_attach.gif)
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/master/Files/all_styles.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/notification.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/progress.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/info_button.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/content.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/sample_attach.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/all_styles.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/Colored.gif)
 ### Known issue
 
 If you have problem with close notification window after closing you app, use this row: 
@@ -27,6 +28,7 @@ Project was re-released due to lack of owner interest in updating it.
 ### Notifi type:
     public enum NotificationType   
     {
+        None,
         Information,
         Success,
         Warning,
@@ -80,7 +82,17 @@ var content = new NotificationContent
         RightButtonAction = () => SomeAction(), //Action on right button click,  button will not show if it null
         LeftButtonContent, // Left button content (string or what u want
         RightButtonContent, // Right button content (string or what u want
-        CloseOnClick = true // Set true if u want close message when left mouse button click on message (base = true)
+        CloseOnClick = true, // Set true if u want close message when left mouse button click on message (base = true)
+        
+        Background = new SolidColorBrush(Colors.White),
+        Foreground = new SolidColorBrush(Colors.DarkRed),
+        Icon = new SvgAwesome()
+                {
+                    Icon = EFontAwesomeIcon.Regular_Star,
+                    Height = 25,
+                    Foreground = new SolidColorBrush(Colors.Yellow)
+                }
+
     };
     _notificationManager.Show(content);
 ```
