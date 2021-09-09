@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Media;
 
 namespace Notification.Wpf
 {
-    /// <summary>
-    /// Message
-    /// </summary>
-    public class NotificationContent
+    /// <summary> Message </summary>
+    public class NotificationContent: INotification
     {
         /// <summary> Notification type (change color) </summary>
         public NotificationType Type { get; set; }
