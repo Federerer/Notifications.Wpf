@@ -172,12 +172,12 @@
                         </ContentControl>
 
                         <DockPanel Grid.Column="1">
-                            <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis" />
+                            <TextBlock x:Name="TitleTxt" DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis" />
                             <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="0,8,0,0">
-                                <Button x:Name="LeftButton" Style="{StaticResource NotifyButton}" Command="{Binding RightButtonAction, Converter={wpf:ActionToCommandConverter}}"
+                                <Button x:Name="RightButton" Style="{StaticResource NotifyButton}" Command="{Binding RightButtonAction, Converter={wpf:ActionToCommandConverter}}"
                                         Content="{Binding RightButtonContent}" DockPanel.Dock="Right" controls:Notification.CloseOnClick="True"
                                         Visibility="{Binding RightButtonAction, Converter={wpf:Combine First={wpf:IsNull}, Then={converters:BoolToVisibility Collapse=True, Inverse=True}}}"/>
-                                <Button x:Name="RightButton" Style="{StaticResource NotifyButton}" Command="{Binding LeftButtonAction, Converter={wpf:ActionToCommandConverter}}"
+                                <Button x:Name="LeftButton" Style="{StaticResource NotifyButton}" Command="{Binding LeftButtonAction, Converter={wpf:ActionToCommandConverter}}"
                                         Content="{Binding LeftButtonContent}" DockPanel.Dock="Right" Margin="0,0,8,0" controls:Notification.CloseOnClick="True"
                                         Visibility="{Binding LeftButtonAction, Converter={wpf:Combine First={wpf:IsNull}, Then={converters:BoolToVisibility Collapse=True, Inverse=True}}}"/>
                             </DockPanel>
@@ -225,6 +225,18 @@
                     <DataTrigger Binding="{Binding Type}" Value="Notification">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource InfoIcon}"/>
                         <Setter TargetName="Border" Property="Background" Value="#FF444444"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Icon, Converter={wpf:IsNull}}" Value="false">
+                        <Setter TargetName="Icon" Property="Content" Value="{Binding Icon}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Background, Converter={wpf:IsNull}}" Value="false">
+                        <Setter TargetName="Border" Property="Background" Value="{Binding Background}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Foreground, Converter={wpf:IsNull}}" Value="false">
+                        <Setter TargetName="TitleTxt" Property="Foreground" Value="{Binding Foreground}"/>
+                        <Setter TargetName="MessageBox" Property="Foreground" Value="{Binding Foreground}"/>
+                        <Setter TargetName="LeftButton" Property="Foreground" Value="{Binding Foreground}"/>
+                        <Setter TargetName="RightButton" Property="Foreground" Value="{Binding Foreground}"/>
                     </DataTrigger>
 
                 </DataTemplate.Triggers>

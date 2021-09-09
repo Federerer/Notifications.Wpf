@@ -4,7 +4,7 @@
     <TargetFrameworks>net5.0-windows;netcoreapp3.1-windows;net4.6-windows;net4.6.1-windows;net4.7-windows;net4.8-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
-    <Version>5.1.1.4</Version>
+    <Version>5.2.0</Version>
     <Description>This project will help you take notification window like in windows</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Platonenkov/Notification.Wpf</PackageProjectUrl>
@@ -14,7 +14,7 @@
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Platonenkov/Notification.Wpf</RepositoryUrl>
     <PackageTags>Toast Notifications WPF</PackageTags>
-    <PackageReleaseNotes>parent window startup position</PackageReleaseNotes>
+    <PackageReleaseNotes>settings was opened for users Colors and Icons</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Notifications.Wpf.snk</AssemblyOriginatorKeyFile>

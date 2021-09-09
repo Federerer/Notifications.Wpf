@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using FontAwesome5;
 using Notification.Wpf.Classes;
+using WPF.ColorPicker;
 using Timer = System.Timers.Timer;
 
 namespace Notification.Wpf.Sample
@@ -96,18 +96,33 @@ namespace Notification.Wpf.Sample
 
         #endregion
 
-        #region TrimType : NotificationTextTrimType - способ обрезки текста
+        #region SelectedTrimType : NotificationTextTrimType - способ обрезки текста
 
         /// <summary>способ обрезки текста</summary>
-        public static readonly DependencyProperty TrimTypeProperty =
+        public static readonly DependencyProperty SelectedTrimTypeProperty =
             DependencyProperty.Register(
-                nameof(TrimType),
+                nameof(SelectedTrimType),
                 typeof(NotificationTextTrimType),
                 typeof(MainWindow),
                 new PropertyMetadata(NotificationTextTrimType.AttachIfMoreRows));
 
         /// <summary>способ обрезки текста</summary>
-        public NotificationTextTrimType TrimType { get => (NotificationTextTrimType)GetValue(TrimTypeProperty); set => SetValue(TrimTypeProperty, value); }
+        public NotificationTextTrimType SelectedTrimType { get => (NotificationTextTrimType)GetValue(SelectedTrimTypeProperty); set => SetValue(SelectedTrimTypeProperty, value); }
+
+        #endregion
+
+        #region SelectedNotificationType : NotificationType - Тип сообщения
+
+        /// <summary>Тип сообщения</summary>
+        public static readonly DependencyProperty SelectedNotificationTypeProperty =
+            DependencyProperty.Register(
+                nameof(SelectedNotificationType),
+                typeof(NotificationType),
+                typeof(MainWindow),
+                new PropertyMetadata(NotificationType.None));
+
+        /// <summary>Тип сообщения</summary>
+        public NotificationType SelectedNotificationType { get => (NotificationType)GetValue(SelectedNotificationTypeProperty); set => SetValue(SelectedNotificationTypeProperty, value); }
 
         #endregion
 
@@ -125,7 +140,35 @@ namespace Notification.Wpf.Sample
         public uint RowCount { get => (uint) GetValue(RowCountProperty); set => SetValue(RowCountProperty, value); }
 
         #endregion
+        #region NotifiTypes : NotificationType - Notyfi Type
 
+        /// <summary>Message Type</summary>
+        public static readonly DependencyProperty NotifiTypesProperty =
+            DependencyProperty.Register(
+                nameof(NotifiTypes),
+                typeof(IEnumerable<NotificationType>),
+                typeof(MainWindow),
+                new PropertyMetadata(default(IEnumerable<NotificationType>)));
+
+        /// <summary>Message Type</summary>
+        public IEnumerable<NotificationType> NotifiTypes { get => (IEnumerable<NotificationType>)GetValue(NotifiTypesProperty); set => SetValue(NotifiTypesProperty, value); }
+        private static IEnumerable<NotificationType> GetTypes() => Enum.GetValues<NotificationType>();
+        #endregion
+
+        #region CloseOnClick : bool - Закрыть окно при клике
+
+        /// <summary>Закрыть окно при клике</summary>
+        public static readonly DependencyProperty CloseOnClickProperty =
+            DependencyProperty.Register(
+                nameof(CloseOnClick),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(true));
+
+        /// <summary>Закрыть окно при клике</summary>
+        public bool CloseOnClick { get => (bool)GetValue(CloseOnClickProperty); set => SetValue(CloseOnClickProperty, value); }
+
+        #endregion
 
         private readonly NotificationManager _notificationManager = new();
 
@@ -134,8 +177,14 @@ namespace Notification.Wpf.Sample
         public MainWindow()
         {
             InitializeComponent();
+            BcgButton.Background = new SolidColorBrush(Colors.White);
+            FrgButton.Background = new SolidColorBrush(Colors.DarkRed);
+            IconFrgButton.Background = new SolidColorBrush(Colors.DarkBlue);
+            Icons = GetIcons();
+            NotifiTypes = GetTypes();
+
             Timer = new Timer {Interval = 1000};
-            Timer.Elapsed += (s, a) => _notificationManager.Show("Pink string from another thread!");
+            Timer.Elapsed += (_, _) => _notificationManager.Show("Pink string from another thread!");
         }
 
         private readonly Timer Timer;
@@ -148,26 +197,52 @@ namespace Notification.Wpf.Sample
 
         private async void UpperPanel(object sender, RoutedEventArgs e)
         {
-            for (var i = 0; i <= 5; i++)
+            foreach (var type in NotifiTypes)
             {
-                var content = new NotificationContent
-                {
-                    Title = "Sample notification",
-                    Message = ContentText,
-                    Type = (NotificationType) i,
-                    LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
-                    RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
-                    LeftButtonContent = LeftButtonText,
-                    RightButtonContent = RightButtonText,
-                    RowsCount = RowCount,
-                    TrimType = TrimType,
-                    CloseOnClick = false
-                };
-                _notificationManager.Show(content, expirationTime: TimeSpan.FromSeconds(5));
-                await Task.Delay(TimeSpan.FromSeconds(1));
-
+                    var content = new NotificationContent
+                    {
+                        Title = "Sample notification",
+                        Message = ContentText,
+                        Type = type,
+                        LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
+                        RightButtonAction = ShowRightButton ? ButtonClick("Right") : null,
+                        LeftButtonContent = LeftButtonText,
+                        RightButtonContent = RightButtonText,
+                        RowsCount = RowCount,
+                        TrimType = SelectedTrimType,
+                        CloseOnClick = CloseOnClick
+                    };
+                    _notificationManager.Show(content, expirationTime: TimeSpan.FromSeconds(5));
+                    await Task.Delay(TimeSpan.FromSeconds(1));
             }
-
+        }
+        private void TestMessage(object sender, RoutedEventArgs e)
+        {
+            var type = SelectedNotificationType;
+            var isNone = type == NotificationType.None;
+            var content = new NotificationContent
+            {
+                Title = "Sample notification",
+                Message = ContentText,
+                Background = isNone? BcgButton.Background:null,
+                Foreground = isNone? FrgButton.Background:null,
+                Type = type,
+                LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
+                RightButtonAction = ShowRightButton ? ButtonClick("Right") : null,
+                LeftButtonContent = LeftButtonText,
+                RightButtonContent = RightButtonText,
+                RowsCount = RowCount,
+                TrimType = SelectedTrimType,
+                CloseOnClick = CloseOnClick,
+                Icon = isNone? new SvgAwesome()
+                {
+                    Icon = (EFontAwesomeIcon)(int)(SelectedIcon ?? new SvgAwesome()).Icon,
+                    Height = 25,
+                    Foreground = IconFrgButton.Background
+                }:
+                    null
+            };
+            _notificationManager.Show(content, expirationTime: TimeSpan.FromSeconds(5));
         }
 
         private void InWindow(object sender, RoutedEventArgs e)
@@ -184,34 +259,16 @@ namespace Notification.Wpf.Sample
             {
                 Title = "Sample notification",
                 Message = ContentText,
-                Type = (NotificationType) rnd.Next(0, 5),
+                Type = (NotificationType) rnd.Next(0, 6),
                 LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
-                RightButtonAction = ShowRightButton ? ButtonClick("Left") : null,
+                RightButtonAction = ShowRightButton ? ButtonClick("Right") : null,
                 LeftButtonContent = LeftButtonText,
                 RightButtonContent = RightButtonText,
                 RowsCount = RowCount,
-                TrimType = TrimType
+                TrimType = SelectedTrimType
 
             };
             _notificationManager.Show(content, "WindowArea", expirationTime: TimeSpan.FromSeconds(5), onClick: () => _notificationManager.Show(clickContent));
-
-        }
-
-        private void Message_Click(object sender, RoutedEventArgs e)
-        {
-            var clickContent = new NotificationContent
-            {
-                Title = "Clicked!",
-                Message = "Window notification was clicked!",
-                Type = NotificationType.Success
-            };
-
-            const string title = "Sample notification";
-            const string Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-            const NotificationType type = NotificationType.Notification;
-
-            _notificationManager.Show(title, Message, type, "WindowArea", onClick: () => _notificationManager.Show(clickContent));
-            _notificationManager.Show(title, Message, type, string.Empty, onClick: () => _notificationManager.Show(clickContent));
 
         }
 
@@ -312,49 +369,6 @@ namespace Notification.Wpf.Sample
 
         }
 
-        private async void ShowAttachMessage(object Sender, RoutedEventArgs E)
-        {
-            for (var i = 0; i <= 5; i++)
-            {
-                var content = new NotificationContent
-                {
-                    Title = "Sample notification",
-                    Message = ContentText,
-                    Type = (NotificationType) i,
-                    TrimType = TrimType,
-                    RowsCount = RowCount
-                };
-                await Task.Delay(TimeSpan.FromSeconds(1));
-                _notificationManager.Show(content);
-
-            }
-
-
-        }
-
-        private async void Button_Test_async(object Sender, RoutedEventArgs E)
-        {
-            await Task.Yield();
-            this.Title = Thread.GetCurrentProcessorId().ToString();
-            using var progress = _notificationManager.ShowProgressBar("Async test", true);
-            //await CalcAsync(progress, Cancel).ConfigureAwait(true);
-            //await CalcAsync(progress, Cancel).ConfigureAwait(false);
-
-            //using var pr = new SlowedProgress<(double?, string, string, bool?)>(d => { progress.Report(d); }, 300);
-            try
-            {
-                await CalcAsync(progress, progress.Cancel);
-                await CalcAsync(progress.GetSlowedProgress<(double, string)>(true, UpdateTimeOut: 1000), progress.Cancel);
-                await CalcAsync(progress.GetProgress<(double, string)>(true), progress.Cancel);
-                await CalcAsync(progress.GetProgress<(double, string, string)>(false), progress.Cancel);
-            }
-            catch (OperationCanceledException)
-            {
-                _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3));
-            }
-
-        }
-
         public Task CalcAsync(IProgress<(double?, string, string, bool?)> progress, CancellationToken cancel) =>
             Task.Run(
                 async () =>
@@ -401,7 +415,50 @@ namespace Notification.Wpf.Sample
                     }
                 }, cancel);
 
+        #region Color section
 
+
+        private void ColorSelect_Click(object Sender, RoutedEventArgs E)
+        {
+            if (!ColorPickerWindow.ShowDialog(out var color))
+                return;
+            if (Sender is not Button btn)
+                return;
+            btn.Background = new SolidColorBrush(color);
+        }
+
+        #region Icons : IEnumerabSvgAwesome> - Icons
+
+        /// <summary>Icons</summary>
+        public static readonly DependencyProperty IconsProperty =
+            DependencyProperty.Register(
+                nameof(Icons),
+                typeof(IEnumerable<SvgAwesome>),
+                typeof(MainWindow),
+                new PropertyMetadata(default(IEnumerable<SvgAwesome>)));
+
+        /// <summary>Icons</summary>
+        public IEnumerable<SvgAwesome> Icons { get => (IEnumerable<SvgAwesome>)GetValue(IconsProperty); set => SetValue(IconsProperty, value); }
+
+        private static IEnumerable<SvgAwesome> GetIcons() => Enum.GetValues<EFontAwesomeIcon>().Select(s => new SvgAwesome() { Icon = s, Height = 20});
+
+        #endregion
+
+        #region SelectedIcon : SvgAwesome - выбранная иконка
+
+        /// <summary>выбранная иконка</summary>
+        public static readonly DependencyProperty SelectedIconProperty =
+            DependencyProperty.Register(
+                nameof(SelectedIcon),
+                typeof(SvgAwesome),
+                typeof(MainWindow),
+                new PropertyMetadata(default(SvgAwesome)));
+
+        /// <summary>выбранная иконка</summary>
+        public SvgAwesome SelectedIcon { get => (SvgAwesome)GetValue(SelectedIconProperty); set => SetValue(SelectedIconProperty, value); }
+
+        #endregion
+        #endregion
 
     }
 }
