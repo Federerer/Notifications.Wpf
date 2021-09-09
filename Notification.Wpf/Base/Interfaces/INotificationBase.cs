@@ -1,4 +1,7 @@
-﻿namespace Notification.Wpf
+﻿using System;
+using System.Windows.Media;
+
+namespace Notification.Wpf
 {
     public interface INotificationBase
     {

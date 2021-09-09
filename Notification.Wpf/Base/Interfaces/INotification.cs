@@ -6,7 +6,7 @@ namespace Notification.Wpf
     public interface INotification: INotificationBase
     {
         /// <summary> Notification type (change color) </summary>
-        public NotificationType Type { get; set; }
+        NotificationType Type { get; set; }
 
         /// <summary> icon in left bar side </summary>
         public object Icon { get; set; }

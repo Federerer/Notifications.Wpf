@@ -1,7 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Notification.Wpf;
 using Notification.Wpf.Classes;
 using Notifications.Wpf.Command;
@@ -9,13 +11,51 @@ using Notifications.Wpf.ViewModels.Base;
 
 namespace Notifications.Wpf.ViewModels
 {
-    public class NotificationProgressViewModel : ViewModel
+    public class NotificationProgressViewModel : ViewModel, INotification
     {
         public CancellationTokenSource Cancel => NotifierProgress.CancelSource;
+
+        #region Base interface INotification
+
+        #region Type
+
+        private NotificationType _Type = NotificationType.Information;
+
+        /// <inheritdoc />
+        public NotificationType Type { get => _Type; set => Set(ref _Type, value); }
+
+        #endregion
+
+        #region Icon
+
+        private object _Icon;
+        /// <inheritdoc />
+        public object Icon { get => _Icon; set => Set(ref _Icon, value); }
+
+
+        #endregion
+
+        #region Background
+
+        private Brush _Background;
+        /// <inheritdoc />
+        public Brush Background { get => _Background; set => Set(ref _Background, value); }
+
+        #endregion
+
+        #region Foreground
+
+        private Brush _Foreground;
+
+        /// <inheritdoc />
+        public Brush Foreground { get => _Foreground; set => Set(ref _Foreground, value); }
+
+        #endregion
 
         #region Титул окна
 
         private string _Title;
+        /// <inheritdoc />
         public string Title { get => _Title; set => Set(ref _Title, value); }
 
         #endregion
@@ -25,8 +65,56 @@ namespace Notifications.Wpf.ViewModels
         /// <summary>Текст сообщения</summary>
         private string _Message;
 
-        /// <summary>Текст сообщения</summary>
+        /// <inheritdoc />
         public string Message { get => _Message; set => Set(ref _Message, value); }
+
+        #endregion
+
+        #region TrimType : NotificationTextTrimType - Обрезать сообщения за выходом размера
+
+        /// <summary>Обрезать сообщения за выходом размера</summary>
+        private NotificationTextTrimType _TrimType = NotificationTextTrimType.NoTrim;
+
+        /// <inheritdoc />
+        public NotificationTextTrimType TrimType { get => _TrimType; set => Set(ref _TrimType, value); }
+
+        #endregion
+
+        #region RowsCount : uint - Число строк текста
+
+        /// <summary>Число строк текста</summary>
+        private uint _RowsCount = 2U;
+
+        /// <inheritdoc />
+        public uint RowsCount { get => _RowsCount; set => Set(ref _RowsCount, value); }
+
+        #endregion
+
+
+        private object _LeftButtonContent;
+
+        /// <inheritdoc />
+        public object LeftButtonContent { get => _LeftButtonContent; set => Set(ref _LeftButtonContent, value); }
+
+        private Action _LeftButtonAction;
+
+        /// <inheritdoc />
+        public Action LeftButtonAction { get => _LeftButtonAction; set => Set(ref _LeftButtonAction, value); }
+
+        private object _RightButtonContent = "Cancel";
+
+        /// <inheritdoc />
+        public object RightButtonContent { get => _RightButtonContent; set => Set(ref _RightButtonContent, value); }
+
+        private Action _RightButtonAction;
+
+        /// <inheritdoc />
+        public Action RightButtonAction { get => _RightButtonAction; set => Set(ref _RightButtonAction, value); }
+
+        private bool _CloseOnClick;
+
+        /// <inheritdoc />
+        public bool CloseOnClick { get => _CloseOnClick; set => Set(ref _CloseOnClick, value); }
 
         #endregion
 
@@ -138,25 +226,6 @@ namespace Notifications.Wpf.ViewModels
 
         #endregion
 
-        #region TrimType : NotificationTextTrimType - Обрезать сообщения за выходом размера
-
-        /// <summary>Обрезать сообщения за выходом размера</summary>
-        private NotificationTextTrimType _TrimType = NotificationTextTrimType.NoTrim;
-
-        /// <summary>Обрезать сообщения за выходом размера</summary>
-        public NotificationTextTrimType TrimType { get => _TrimType; set => Set(ref _TrimType, value); }
-
-        #endregion
-
-        #region RowsCount : uint - Число строк текста
-
-        /// <summary>Число строк текста</summary>
-        private uint _RowsCount = 2U;
-
-        /// <summary>Число строк текста</summary>
-        public uint RowsCount { get => _RowsCount; set => Set(ref _RowsCount, value); }
-
-        #endregion
 
         #region WaitingTime : string - Время ожидания окончания операции
 
@@ -167,10 +236,7 @@ namespace Notifications.Wpf.ViewModels
         public string WaitingTime { get => _WaitingTime; set => Set(ref _WaitingTime, value); }
 
         #endregion
-        /// <summary>
-        /// Содержимое левой кнопки
-        /// </summary>
-        public object RightButtonContent { get; set; } = "Cancel";
+
 
         public NotificationProgressViewModel(bool showCancelButton, bool showProgress, bool trimText, uint DefaultRowsCount, string BaseWaitingMessage)
         {
@@ -188,7 +254,7 @@ namespace Notifications.Wpf.ViewModels
         private Stopwatch _Timer = new();
         void OnProgress((double? percent, string message, string title, bool? showCancel) ProgressInfo)
         {
-            if (_Timer.ElapsedMilliseconds < 100 && ProgressInfo.percent is not null && ProgressInfo.percent != 100 && ProgressInfo.percent != 0) 
+            if (_Timer.ElapsedMilliseconds < 100 && ProgressInfo.percent is not null && ProgressInfo.percent != 100 && ProgressInfo.percent != 0)
                 return;
             _Timer.Restart();
             if (ProgressInfo.percent is null)
@@ -217,11 +283,6 @@ namespace Notifications.Wpf.ViewModels
                 }
                 else
                     WaitingTime = NotifierProgress.WaitingTimer.BaseWaitingMessage;
-                //WaitingTime = NotifierProgress.WaitingTimer.BaseWaitingMessage is null 
-                //        ? null
-                //        : process > 10
-                //            ? NotifierProgress.WaitingTimer.GetStringTime((double)ProgressInfo.percent, 100) 
-                //            : NotifierProgress.WaitingTimer.BaseWaitingMessage;
             }
             if (ProgressInfo.message != null) Message = ProgressInfo.message;
             if (ProgressInfo.title != null) Title = ProgressInfo.title;
