@@ -251,7 +251,7 @@ namespace Notifications.Wpf.ViewModels
         #region TitleWhenCollapsed : bool - что показывать когда свёрнут прогресс
 
         /// <summary>что показывать когда свёрнут прогресс</summary>
-        private bool _TitleWhenCollapsed = false;
+        private bool _TitleWhenCollapsed = true;
 
         /// <summary>что показывать когда свёрнут прогресс</summary>
         public bool TitleWhenCollapsed { get => _TitleWhenCollapsed; set => Set(ref _TitleWhenCollapsed, value); } 
