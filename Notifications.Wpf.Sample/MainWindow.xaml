@@ -9,8 +9,9 @@
         xmlns:wpf="clr-namespace:Notification.Wpf;assembly=Notification.Wpf"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:wpf1="clr-namespace:Notification.Wpf"
+        xmlns:helpers1="clr-namespace:Notifications.Wpf.Sample.Helpers"
         mc:Ignorable="d"
-        Title="MainWindow" Width="800" MinWidth="800" Height="520" MinHeight="520"
+        Title="MainWindow" Width="800" MinWidth="900" Height="520" MinHeight="520"
         >
     <Grid>
 
@@ -51,6 +52,7 @@
                 RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                Minimum="1" Maximum="100" Height="25"/>
                 </GroupBox>
+
                 <GroupBox >
                     <GroupBox.HeaderTemplate>
                         <DataTemplate>
@@ -92,6 +94,20 @@
                     <TextBlock Text="{Binding CloseOnClick, RelativeSource={RelativeSource AncestorType={x:Type Window}},
                         UpdateSourceTrigger= PropertyChanged}"/>
                 </GroupBox>
+                <GroupBox>
+                    <GroupBox.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="In window"/>
+                                <CheckBox 
+                                IsChecked="{Binding ShowInWindow, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}" Margin="5,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupBox.HeaderTemplate>
+                        <TextBlock Text="{Binding ShowInWindow, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                        UpdateSourceTrigger= PropertyChanged}"/>
+                </GroupBox>
 
                 <Button Content="Test" Click="TestMessage" VerticalAlignment="Center" Width="100" Margin="10,0"/>
 
@@ -111,7 +127,7 @@
                         <Button x:Name="FrgButton" Content="Foreground" Click="ColorSelect_Click" />
                         <Button x:Name="IconFrgButton" Content="Icon color" Click="ColorSelect_Click" />
                             <fa5:SvgAwesome Icon="{Binding SelectedIcon, RelativeSource={RelativeSource AncestorType={x:Type Window}},
-                                Converter={wpf1:IconConverter}}" Height="20"
+                                Converter={helpers1:IconConverter}}" Height="20"
                                         Foreground="{Binding Background, ElementName=IconFrgButton}"/>
                     </StackPanel>
                     <ListView  x:Name="ListIcons" Height="220"
@@ -140,10 +156,41 @@
 
             </WrapPanel.Resources>
                     <Button Content="Timer" Click="Button_Timer"/>
-                    <Button Content="Show" Click="UpperPanel"/>
-                    <Button Content="Show in window" Click="InWindow" />
-                    <Button Content="Show Progress" Click="Progress_Click" />
+                    <!--<Button Content="Show" Click="UpperPanel"/>
+                    <Button Content="Show in window" Click="InWindow" />-->
                     <Button Content="Show content" Click="Show_Any_content" />
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Show Progress" Click="Progress_Click" />
+                        <StackPanel>
+                            <CheckBox Content="Collapsed progress bar" IsChecked="{Binding ProgressCollapsed, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}" Margin="5,0"/>
+                            <CheckBox Content="Title or Message when collapse" IsChecked="{Binding ProgressTitleOrMessage, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}" Margin="5,0" />
+                        </StackPanel>
+
+
+                    </StackPanel>
+                    <!--<GroupBox Width="300">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Collapsed"/>
+                                <CheckBox IsChecked="{Binding ProgressCollapsed, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}" Margin="5,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Title or Message when collapse"/>
+                                <CheckBox IsChecked="{Binding ProgressTitleOrMessage, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}" Margin="5,0" Visibility="{Binding ProgressCollapsed, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <Button Content="Show Progress" Click="Progress_Click" />
+                    </GroupBox>-->
+
             </WrapPanel>
 
     </Grid>

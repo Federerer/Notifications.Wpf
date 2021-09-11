@@ -140,6 +140,7 @@ namespace Notification.Wpf.Sample
         public uint RowCount { get => (uint) GetValue(RowCountProperty); set => SetValue(RowCountProperty, value); }
 
         #endregion
+
         #region NotifiTypes : NotificationType - Notyfi Type
 
         /// <summary>Message Type</summary>
@@ -170,6 +171,56 @@ namespace Notification.Wpf.Sample
 
         #endregion
 
+        #region ShowInWindow : bool - $summary$
+
+        /// <summary>ShowInWindow</summary>
+        public static readonly DependencyProperty ShowInWindowProperty =
+            DependencyProperty.Register(
+                nameof(ShowInWindow),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>ShowInWindow</summary>
+        public bool ShowInWindow { get => (bool)GetValue(ShowInWindowProperty); set => SetValue(ShowInWindowProperty, value); }
+
+        private string GetArea() => ShowInWindow ? "WindowArea" : "";
+        #endregion
+
+        #region ProgressCollapsed : bool - ProgressCollapsed
+
+        /// <summary>ProgressCollapsed</summary>
+        public static readonly DependencyProperty ProgressCollapsedProperty =
+            DependencyProperty.Register(
+                nameof(ProgressCollapsed),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>ProgressCollapsed</summary>
+        public bool ProgressCollapsed
+        {
+            get => (bool)GetValue(ProgressCollapsedProperty);
+            set => SetValue(ProgressCollapsedProperty, value);
+        }
+
+        #endregion
+
+        #region ProgressTitleOrMessage : bool - ProgressTitleOrMessage
+
+        /// <summary>ProgressTitleOrMessage</summary>
+        public static readonly DependencyProperty ProgressTitleOrMessageProperty =
+            DependencyProperty.Register(
+                nameof(ProgressTitleOrMessage),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>ProgressTitleOrMessage</summary>
+        public bool ProgressTitleOrMessage { get => (bool)GetValue(ProgressTitleOrMessageProperty); set => SetValue(ProgressTitleOrMessageProperty, value); }
+
+        #endregion
+
         private readonly NotificationManager _notificationManager = new();
 
         Action ButtonClick(string button) => () => _notificationManager.Show($"{button} button click");
@@ -184,7 +235,7 @@ namespace Notification.Wpf.Sample
             NotifiTypes = GetTypes();
 
             Timer = new Timer {Interval = 1000};
-            Timer.Elapsed += (_, _) => _notificationManager.Show("Pink string from another thread!");
+            Timer.Elapsed += (_, _) => Dispatcher.Invoke(() => _notificationManager.Show("Pink string from another thread!", areaName: GetArea()));
         }
 
         private readonly Timer Timer;
@@ -195,31 +246,19 @@ namespace Notification.Wpf.Sample
             else Timer.Stop();
         }
 
-        private async void UpperPanel(object sender, RoutedEventArgs e)
-        {
-            foreach (var type in NotifiTypes)
-            {
-                    var content = new NotificationContent
-                    {
-                        Title = "Sample notification",
-                        Message = ContentText,
-                        Type = type,
-                        LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
-                        RightButtonAction = ShowRightButton ? ButtonClick("Right") : null,
-                        LeftButtonContent = LeftButtonText,
-                        RightButtonContent = RightButtonText,
-                        RowsCount = RowCount,
-                        TrimType = SelectedTrimType,
-                        CloseOnClick = CloseOnClick
-                    };
-                    _notificationManager.Show(content, expirationTime: TimeSpan.FromSeconds(5));
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-            }
-        }
         private void TestMessage(object sender, RoutedEventArgs e)
         {
             var type = SelectedNotificationType;
             var isNone = type == NotificationType.None;
+
+            var clickContent = new NotificationContent
+            {
+                Title = "Clicked!",
+                Message = "Window notification was clicked!",
+                Type = NotificationType.Success,
+
+            };
+
             var content = new NotificationContent
             {
                 Title = "Sample notification",
@@ -242,44 +281,20 @@ namespace Notification.Wpf.Sample
                 }:
                     null
             };
-            _notificationManager.Show(content, expirationTime: TimeSpan.FromSeconds(5));
-        }
-
-        private void InWindow(object sender, RoutedEventArgs e)
-        {
-            var clickContent = new NotificationContent
-            {
-                Title = "Clicked!",
-                Message = "Window notification was clicked!",
-                Type = NotificationType.Success,
-
-            };
-            var rnd = new Random();
-            var content = new NotificationContent
-            {
-                Title = "Sample notification",
-                Message = ContentText,
-                Type = (NotificationType) rnd.Next(0, 6),
-                LeftButtonAction = ShowLeftButton ? ButtonClick("Left") : null,
-                RightButtonAction = ShowRightButton ? ButtonClick("Right") : null,
-                LeftButtonContent = LeftButtonText,
-                RightButtonContent = RightButtonText,
-                RowsCount = RowCount,
-                TrimType = SelectedTrimType
-
-            };
-            _notificationManager.Show(content, "WindowArea", expirationTime: TimeSpan.FromSeconds(5), onClick: () => _notificationManager.Show(clickContent));
-
+            _notificationManager.Show(content,
+                areaName: GetArea(),
+                expirationTime: TimeSpan.FromSeconds(5),
+                onClick: CloseOnClick? () => _notificationManager.Show(clickContent):null);
         }
 
         private async void Progress_Click(object sender, RoutedEventArgs e)
         {
             var title = "Прогресс бар";
 
-            using var progress = _notificationManager.ShowProgressBar(title, true, true, "WindowArea", true, 2u, IsCollapse:true, TitleWhenCollapsed:false);
+            using var progress = _notificationManager.ShowProgressBar(title, true, true, GetArea(), true, 2u, IsCollapse:ProgressCollapsed, TitleWhenCollapsed:ProgressTitleOrMessage);
             try
             {
-                //await CalcAsync(progress, Cancel).ConfigureAwait(false);
+                var message = ContentText;
 
                 await Task.Run(
                     async () =>
@@ -287,16 +302,8 @@ namespace Notification.Wpf.Sample
                         for (var i = 0; i <= 100; i++)
                         {
                             progress.Cancel.ThrowIfCancellationRequested();
-                            progress.Report(
-                                (i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                                    + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" + "Lorem ipsum dolor sit amet, consectetur\n adipiscing elit.", null, null));
-                            if (i > 30 && i < 70)
-                                progress.WaitingTimer.BaseWaitingMessage = null;
-                            else
-                            {
-                                progress.WaitingTimer.BaseWaitingMessage = "Calculation time";
-
-                            }
+                            progress.Report((i, message, null, null));
+                            progress.WaitingTimer.BaseWaitingMessage = i is > 30 and < 70 ? null : "Calculation time";
 
                             await Task.Delay(TimeSpan.FromSeconds(0.03), progress.Cancel);
                         }
@@ -305,7 +312,7 @@ namespace Notification.Wpf.Sample
                 for (var i = 0; i <= 100; i++)
                 {
                     progress.Cancel.ThrowIfCancellationRequested();
-                    progress.Report((i, $"Progress {i}", "Whith progress", true));
+                    progress.Report((i, $"Progress {i}", "With progress", true));
                     await Task.Delay(TimeSpan.FromSeconds(0.02), progress.Cancel).ConfigureAwait(false);
                 }
 
@@ -330,8 +337,7 @@ namespace Notification.Wpf.Sample
                 _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3));
             }
         }
-
-
+        
         private void Show_Any_content(object sender, RoutedEventArgs e)
         {
             var grid = new Grid();
@@ -369,6 +375,8 @@ namespace Notification.Wpf.Sample
 
         }
 
+        #region Progress async calc
+
         public Task CalcAsync(IProgress<(double?, string, string, bool?)> progress, CancellationToken cancel) =>
             Task.Run(
                 async () =>
@@ -402,7 +410,6 @@ namespace Notification.Wpf.Sample
                         await Task.Delay(TimeSpan.FromSeconds(0.03), cancel);
                     }
                 }, cancel);
-
         public Task CalcAsync(IProgress<double> progress, CancellationToken cancel) =>
             Task.Run(
                 async () =>
@@ -414,6 +421,8 @@ namespace Notification.Wpf.Sample
                         await Task.Delay(TimeSpan.FromSeconds(0.03), cancel);
                     }
                 }, cancel);
+
+        #endregion
 
         #region Color section
 
