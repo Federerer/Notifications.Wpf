@@ -90,6 +90,7 @@ namespace Notifications.Wpf.ViewModels
 
         #endregion
 
+        #region Left button
 
         private object _LeftButtonContent;
 
@@ -101,6 +102,10 @@ namespace Notifications.Wpf.ViewModels
         /// <inheritdoc />
         public Action LeftButtonAction { get => _LeftButtonAction; set => Set(ref _LeftButtonAction, value); }
 
+        #endregion
+
+        #region RightButton
+
         private object _RightButtonContent = "Cancel";
 
         /// <inheritdoc />
@@ -111,10 +116,16 @@ namespace Notifications.Wpf.ViewModels
         /// <inheritdoc />
         public Action RightButtonAction { get => _RightButtonAction; set => Set(ref _RightButtonAction, value); }
 
+        #endregion
+
+        #region CloseOnClick
+
         private bool _CloseOnClick;
 
         /// <inheritdoc />
         public bool CloseOnClick { get => _CloseOnClick; set => Set(ref _CloseOnClick, value); }
+
+        #endregion
 
         #endregion
 
@@ -237,9 +248,27 @@ namespace Notifications.Wpf.ViewModels
 
         #endregion
 
+        #region TitleWhenCollapsed : bool - что показывать когда свёрнут прогресс
 
-        public NotificationProgressViewModel(bool showCancelButton, bool showProgress, bool trimText, uint DefaultRowsCount, string BaseWaitingMessage)
+        /// <summary>что показывать когда свёрнут прогресс</summary>
+        private bool _TitleWhenCollapsed = false;
+
+        /// <summary>что показывать когда свёрнут прогресс</summary>
+        public bool TitleWhenCollapsed { get => _TitleWhenCollapsed; set => Set(ref _TitleWhenCollapsed, value); } 
+
+        #endregion
+
+        public NotificationProgressViewModel(
+            bool showCancelButton,
+            bool showProgress,
+            bool trimText,
+            uint DefaultRowsCount,
+            string BaseWaitingMessage,
+            bool IsCollapse = false,
+            bool TitleWhenCollapsed = true)
         {
+            this.TitleWhenCollapsed = TitleWhenCollapsed;
+            Collapse = IsCollapse;
             ShowProgress = showProgress;
             NotifierProgress = new NotifierProgress<(double? percent, string message, string title, bool? showCancel)>(OnProgress);
             ShowCancelButton = showCancelButton;
@@ -291,6 +320,11 @@ namespace Notifications.Wpf.ViewModels
         }
 
 
+        /// <summary>
+        /// Cancel task
+        /// </summary>
+        /// <param name="Sender"></param>
+        /// <param name="E"></param>
         public void CancelProgress(object Sender, RoutedEventArgs E) => Cancel.Cancel();
 
     }

@@ -276,7 +276,7 @@ namespace Notification.Wpf.Sample
         {
             var title = "Прогресс бар";
 
-            using var progress = _notificationManager.ShowProgressBar(title, true, true, "", true, 2u);
+            using var progress = _notificationManager.ShowProgressBar(title, true, true, "WindowArea", true, 2u, IsCollapse:true, TitleWhenCollapsed:false);
             try
             {
                 //await CalcAsync(progress, Cancel).ConfigureAwait(false);
@@ -288,8 +288,8 @@ namespace Notification.Wpf.Sample
                         {
                             progress.Cancel.ThrowIfCancellationRequested();
                             progress.Report(
-                                (i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n"
-                                    + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", null, null));
+                                (i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                                    + "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" + "Lorem ipsum dolor sit amet, consectetur\n adipiscing elit.", null, null));
                             if (i > 30 && i < 70)
                                 progress.WaitingTimer.BaseWaitingMessage = null;
                             else

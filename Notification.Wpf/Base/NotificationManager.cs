@@ -22,6 +22,7 @@ namespace Notification.Wpf
             _dispatcher = dispatcher;
         }
 
+        /// <inheritdoc />
         public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null, bool CloseOnClick = true)
         {
@@ -34,7 +35,7 @@ namespace Notification.Wpf
             }
             ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
         }
-
+        /// <inheritdoc />
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null,
             Action onClick = null, Action onClose = null, Action LeftButton = null, string LeftButtonText = null, Action RightButton = null, string RightButtonText = null,
             NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2, bool CloseOnClick = true)
@@ -61,30 +62,44 @@ namespace Notification.Wpf
             ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
         }
 
-
-        /// <summary>
-        /// Show ProgressBar
-        /// </summary>
-        /// <param name="Title">Title of window</param>
-        /// <param name="ShowProgress">Show or not progress status</param>
-        /// <param name="ShowCancelButton">Show Cancel button or not</param>
-        /// <param name="areaName">window are where show notification</param>
-        /// <param name="TrimText">Обрезать текст превышающий размеры</param>
-        /// <param name="DefaultRowsCount">Базовое число строк при обрезке</param>
-        /// <param name="BaseWaitingMessage">Сообщение при подсчете времени ожидания, установите null если не хотите видеть время в прогресс баре</param>
+        /// <inheritdoc />
         public NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(string Title = null,
-            bool ShowCancelButton = true, bool ShowProgress = true, string areaName = "", bool TrimText = false, uint DefaultRowsCount = 1U, string BaseWaitingMessage = "Calculation time")
+            bool ShowCancelButton = true,
+            bool ShowProgress = true,
+            string areaName = "",
+            bool TrimText = false,
+            uint DefaultRowsCount = 1U,
+            string BaseWaitingMessage = "Calculation time",
+            bool IsCollapse = false,
+            bool TitleWhenCollapsed = true)
         {
-            var model = new NotificationProgressViewModel(ShowCancelButton, ShowProgress, TrimText, DefaultRowsCount, BaseWaitingMessage);
+            var model = new NotificationProgressViewModel(
+                ShowCancelButton,
+                ShowProgress,
+                TrimText,
+                DefaultRowsCount,
+                BaseWaitingMessage,
+                IsCollapse,
+                TitleWhenCollapsed);
+
             if (Title != null) model.Title = Title;
 
             if (!_dispatcher.CheckAccess())
             {
                 return _dispatcher.Invoke(
-                    () => ShowProgressBar(Title, ShowCancelButton, ShowProgress, areaName, TrimText, DefaultRowsCount, BaseWaitingMessage));
+                    () => ShowProgressBar(
+                        Title,
+                        ShowCancelButton,
+                        ShowProgress,
+                        areaName,
+                        TrimText,
+                        DefaultRowsCount,
+                        BaseWaitingMessage,
+                        IsCollapse,
+                        TitleWhenCollapsed));
             }
 
-            ShowContent(model);
+            ShowContent(model, areaName: areaName);
             return model.NotifierProgress;
         }
 
