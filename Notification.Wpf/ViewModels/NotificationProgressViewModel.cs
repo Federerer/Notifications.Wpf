@@ -11,20 +11,14 @@ using Notifications.Wpf.ViewModels.Base;
 
 namespace Notifications.Wpf.ViewModels
 {
-    public class NotificationProgressViewModel : ViewModel, INotification
+    public class NotificationProgressViewModel : ViewModel, ICustomizedNotification
     {
+        public static SolidColorBrush BaseBackgroundColor = new SolidColorBrush(Colors.White);
+        public static SolidColorBrush BaseForegroundColor = (SolidColorBrush)new BrushConverter().ConvertFrom("#22FFFFFF");
+
         public CancellationTokenSource Cancel => NotifierProgress.CancelSource;
 
-        #region Base interface INotification
-
-        #region Type
-
-        private NotificationType _Type = NotificationType.Information;
-
-        /// <inheritdoc />
-        public NotificationType Type { get => _Type; set => Set(ref _Type, value); }
-
-        #endregion
+        #region Base interface ICustomizedNotification
 
         #region Icon
 
@@ -37,7 +31,7 @@ namespace Notifications.Wpf.ViewModels
 
         #region Background
 
-        private Brush _Background;
+        private Brush _Background = BaseBackgroundColor;
         /// <inheritdoc />
         public Brush Background { get => _Background; set => Set(ref _Background, value); }
 
@@ -45,7 +39,7 @@ namespace Notifications.Wpf.ViewModels
 
         #region Foreground
 
-        private Brush _Foreground;
+        private Brush _Foreground = BaseForegroundColor;
 
         /// <inheritdoc />
         public Brush Foreground { get => _Foreground; set => Set(ref _Foreground, value); }
@@ -87,43 +81,6 @@ namespace Notifications.Wpf.ViewModels
 
         /// <inheritdoc />
         public uint RowsCount { get => _RowsCount; set => Set(ref _RowsCount, value); }
-
-        #endregion
-
-        #region Left button
-
-        private object _LeftButtonContent;
-
-        /// <inheritdoc />
-        public object LeftButtonContent { get => _LeftButtonContent; set => Set(ref _LeftButtonContent, value); }
-
-        private Action _LeftButtonAction;
-
-        /// <inheritdoc />
-        public Action LeftButtonAction { get => _LeftButtonAction; set => Set(ref _LeftButtonAction, value); }
-
-        #endregion
-
-        #region RightButton
-
-        private object _RightButtonContent = "Cancel";
-
-        /// <inheritdoc />
-        public object RightButtonContent { get => _RightButtonContent; set => Set(ref _RightButtonContent, value); }
-
-        private Action _RightButtonAction;
-
-        /// <inheritdoc />
-        public Action RightButtonAction { get => _RightButtonAction; set => Set(ref _RightButtonAction, value); }
-
-        #endregion
-
-        #region CloseOnClick
-
-        private bool _CloseOnClick;
-
-        /// <inheritdoc />
-        public bool CloseOnClick { get => _CloseOnClick; set => Set(ref _CloseOnClick, value); }
 
         #endregion
 
@@ -237,7 +194,6 @@ namespace Notifications.Wpf.ViewModels
 
         #endregion
 
-
         #region WaitingTime : string - Время ожидания окончания операции
 
         /// <summary>Время ожидания окончания операции</summary>
@@ -254,9 +210,31 @@ namespace Notifications.Wpf.ViewModels
         private bool _TitleWhenCollapsed = true;
 
         /// <summary>что показывать когда свёрнут прогресс</summary>
-        public bool TitleWhenCollapsed { get => _TitleWhenCollapsed; set => Set(ref _TitleWhenCollapsed, value); } 
+        public bool TitleWhenCollapsed { get => _TitleWhenCollapsed; set => Set(ref _TitleWhenCollapsed, value); }
 
         #endregion
+
+        public NotificationProgressViewModel(
+            ICustomizedNotification notification,
+            bool showCancelButton,
+            bool showProgress,
+            string BaseWaitingMessage,
+            bool IsCollapse = false,
+            bool TitleWhenCollapsed = true)
+            : this(showCancelButton,
+                    showProgress,
+                    notification.TrimType == NotificationTextTrimType.Trim,
+                    notification.RowsCount,
+                    BaseWaitingMessage,
+                    IsCollapse,
+                    TitleWhenCollapsed)
+        {
+            Icon = notification.Icon;
+            Background = notification.Background;
+            Foreground = notification.Foreground;
+            Title = notification.Title;
+            Message = notification.Message;
+        }
 
         public NotificationProgressViewModel(
             bool showCancelButton,

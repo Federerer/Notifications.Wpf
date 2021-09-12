@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using FontAwesome5;
-using Notification.Wpf.Classes;
 using WPF.ColorPicker;
 using Timer = System.Timers.Timer;
 

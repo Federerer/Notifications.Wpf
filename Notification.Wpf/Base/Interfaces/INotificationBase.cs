@@ -3,6 +3,9 @@ using System.Windows.Media;
 
 namespace Notification.Wpf
 {
+    /// <summary>
+    /// Base notification
+    /// </summary>
     public interface INotificationBase
     {
         /// <summary> Top Title text </summary>

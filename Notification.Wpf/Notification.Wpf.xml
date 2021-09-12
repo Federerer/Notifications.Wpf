@@ -53,23 +53,36 @@
             <param name="IsCollapse">Start progress bar in collapsed form</param>
             <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
         </member>
+        <member name="T:Notification.Wpf.ICustomizedNotification">
+            <summary>
+            Customized notification
+            </summary>
+        </member>
+        <member name="P:Notification.Wpf.ICustomizedNotification.Icon">
+            <summary> icon in left bar side </summary>
+        </member>
+        <member name="P:Notification.Wpf.ICustomizedNotification.Background">
+            <summary> Notification background </summary>
+        </member>
+        <member name="P:Notification.Wpf.ICustomizedNotification.Foreground">
+            <summary> Text foreground </summary>
+        </member>
+        <member name="P:Notification.Wpf.ICustomizedNotification.TrimType">
+            <summary> Trimming long text if need </summary>
+        </member>
+        <member name="P:Notification.Wpf.ICustomizedNotification.RowsCount">
+            <summary> Set rows of message that will show if set Trim </summary>
+        </member>
+        <member name="T:Notification.Wpf.INotification">
+            <summary>
+            Notification template
+            </summary>
+        </member>
         <member name="P:Notification.Wpf.INotification.Type">
             <summary> Notification type (change color) </summary>
         </member>
-        <member name="P:Notification.Wpf.INotification.Icon">
-            <summary> icon in left bar side </summary>
-        </member>
-        <member name="P:Notification.Wpf.INotification.Background">
-            <summary> Notification background </summary>
-        </member>
-        <member name="P:Notification.Wpf.INotification.Foreground">
-            <summary> Text foreground </summary>
-        </member>
-        <member name="P:Notification.Wpf.INotification.TrimType">
-            <summary> Trimming long text if need </summary>
-        </member>
-        <member name="P:Notification.Wpf.INotification.RowsCount">
-            <summary> Set rows of message that will show if set Trim </summary>
+        <member name="P:Notification.Wpf.INotification.CloseOnClick">
+            <summary> close message when OnClick to message window </summary>
         </member>
         <member name="P:Notification.Wpf.INotification.LeftButtonContent">
             <summary>
@@ -91,8 +104,10 @@
             Right button action
             </summary>
         </member>
-        <member name="P:Notification.Wpf.INotification.CloseOnClick">
-            <summary> close message when OnClick to message window </summary>
+        <member name="T:Notification.Wpf.INotificationBase">
+            <summary>
+            Base notification
+            </summary>
         </member>
         <member name="P:Notification.Wpf.INotificationBase.Title">
             <summary> Top Title text </summary>
@@ -149,6 +164,15 @@
         </member>
         <member name="P:Notification.Wpf.NotificationContent.CloseOnClick">
             <summary> close message when OnClick to message window </summary>
+        </member>
+        <member name="T:Notification.Wpf.NotificationManager">
+            <inheritdoc />
+        </member>
+        <member name="M:Notification.Wpf.NotificationManager.#ctor(System.Windows.Threading.Dispatcher)">
+            <summary>
+            Initialize new notification manager
+            </summary>
+            <param name="dispatcher">dispatcher for manager (can be null)</param>
         </member>
         <member name="M:Notification.Wpf.NotificationManager.Show(System.Object,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Boolean)">
             <inheritdoc />
@@ -1081,9 +1105,6 @@
             marked with the <see cref="T:Notifications.Wpf.Annotations.XamlItemsControlAttribute"/> attribute.
             </remarks>
         </member>
-        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.Type">
-            <inheritdoc />
-        </member>
         <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.Icon">
             <inheritdoc />
         </member>
@@ -1112,21 +1133,6 @@
             <summary>Число строк текста</summary>
         </member>
         <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.RowsCount">
-            <inheritdoc />
-        </member>
-        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.LeftButtonContent">
-            <inheritdoc />
-        </member>
-        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.LeftButtonAction">
-            <inheritdoc />
-        </member>
-        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.RightButtonContent">
-            <inheritdoc />
-        </member>
-        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.RightButtonAction">
-            <inheritdoc />
-        </member>
-        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.CloseOnClick">
             <inheritdoc />
         </member>
         <member name="F:Notifications.Wpf.ViewModels.NotificationProgressViewModel._process">

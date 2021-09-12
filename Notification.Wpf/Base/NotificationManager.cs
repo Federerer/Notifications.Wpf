@@ -9,12 +9,16 @@ using Notifications.Wpf.ViewModels;
 
 namespace Notification.Wpf
 {
+    /// <inheritdoc />
     public class NotificationManager : INotificationManager
     {
         private readonly Dispatcher _dispatcher;
         private static readonly List<NotificationArea> Areas = new();
         private static NotificationsOverlayWindow _window;
-
+        /// <summary>
+        /// Initialize new notification manager
+        /// </summary>
+        /// <param name="dispatcher">dispatcher for manager (can be null)</param>
         public NotificationManager(Dispatcher dispatcher = null)
         {
             dispatcher ??= Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
@@ -128,7 +132,7 @@ namespace Notification.Wpf
                     Width = workArea.Width,
                     Height = workArea.Height
                 };
-                _window.Closed += (_,_) =>
+                _window.Closed += (_, _) =>
                 {
                     _window = null;
                 };
