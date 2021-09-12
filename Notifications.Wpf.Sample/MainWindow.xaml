@@ -20,7 +20,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <controls:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="3" CollapseProgressAuto="false" Panel.ZIndex="999"  Grid.Row="0" Grid.RowSpan="4"/>
+        <controls:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="{Binding MaxItems, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                   CollapseProgressAuto="{Binding CollapseProgressIfMoreRows, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                   Panel.ZIndex="999"  Grid.Row="0" Grid.RowSpan="4"/>
 
         <TextBox Grid.Row="0" Text="{Binding ContentText, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"
                  TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="100" VerticalAlignment="Top"/>

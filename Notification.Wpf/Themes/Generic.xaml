@@ -207,6 +207,10 @@
                         <Setter TargetName="Attach" Property="Visibility" Value="Collapsed"/>
                         <Setter TargetName="MessageBox" Property="TextTrimming" Value="None"/>
                     </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="Notification">
+                        <Setter TargetName="Icon" Property="Content" Value="{StaticResource InfoIcon}"/>
+                        <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.DefaultBackgroundColor}}"/>
+                    </DataTrigger>
                     <DataTrigger Binding="{Binding Type}" Value="Information">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource InfoIcon}"/>
                         <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.InformationBackgroundColor}}"/>
@@ -222,10 +226,6 @@
                     <DataTrigger Binding="{Binding Type}" Value="Error">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource ErrorIcon}"/>
                         <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.ErrorBackgroundColor}}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Type}" Value="Notification">
-                        <Setter TargetName="Icon" Property="Content" Value="{StaticResource InfoIcon}"/>
-                        <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.DefaultBackgroundColor}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Icon, Converter={wpf:IsNull}}" Value="false">
                         <Setter TargetName="Icon" Property="Content" Value="{Binding Icon}"/>

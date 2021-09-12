@@ -375,7 +375,6 @@ namespace Notification.Wpf.Sample
                 Title = "Clicked!",
                 Message = "Window notification was clicked!",
                 Type = NotificationType.Success,
-
             };
 
             var content = new NotificationContent

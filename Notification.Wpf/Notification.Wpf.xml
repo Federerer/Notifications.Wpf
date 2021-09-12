@@ -243,6 +243,18 @@
             Способ отображения текста в сообщении
             </summary>
         </member>
+        <member name="F:Notification.Wpf.NotificationTextTrimType.NoTrim">
+            <summary>No trim text </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationTextTrimType.Trim">
+            <summary>Always trim text </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationTextTrimType.Attach">
+            <summary>Attach long text and trim</summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationTextTrimType.AttachIfMoreRows">
+            <summary>Automatic attach if need trim</summary>
+        </member>
         <member name="T:Notification.Wpf.NotificationType">
             <summary>
             Тип сообщения

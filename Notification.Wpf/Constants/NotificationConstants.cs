@@ -9,7 +9,7 @@ namespace Notification.Wpf.Constants
     public class NotificationConstants
     {
         /// <summary> Overlay window maximum count </summary>
-        public static uint NotificationsOverlayWindowMaxCount = 9;
+        public static uint NotificationsOverlayWindowMaxCount = 999;
         /// <summary> If messages count in overlay window will be more that maximum - progress bar will start collapsed (progress bar never closing automatically) </summary>
         public static bool CollapseProgressIfMoreRows = true;
 
