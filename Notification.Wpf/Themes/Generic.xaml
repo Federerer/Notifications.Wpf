@@ -5,7 +5,8 @@
                     xmlns:wpf="clr-namespace:Notification.Wpf"
                     xmlns:p="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
                     xmlns:converters="clr-namespace:Notification.Wpf.Converters"
-                    xmlns:fa5="http://schemas.fontawesome.com/icons/">
+                    xmlns:fa5="http://schemas.fontawesome.com/icons/"
+                    xmlns:constants="clr-namespace:Notification.Wpf.Constants">
 
     <SolidColorBrush x:Key="BorderBrush" Color="#EEE" p:Freeze="True"/>
     <SolidColorBrush x:Key="TransparentBrush" Color="Transparent" p:Freeze="True"/>
@@ -208,23 +209,23 @@
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Type}" Value="Information">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource InfoIcon}"/>
-                        <Setter TargetName="Border" Property="Background" Value="CornflowerBlue"/>
+                        <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.InformationBackgroundColor}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Type}" Value="Success">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource SuccessIcon}"/>
-                        <Setter TargetName="Border" Property="Background" Value="LimeGreen"/>
+                        <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.SuccessBackgroundColor}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Type}" Value="Warning">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource WarningIcon}"/>
-                        <Setter TargetName="Border" Property="Background" Value="Orange"/>
+                        <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.WarningBackgroundColor}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Type}" Value="Error">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource ErrorIcon}"/>
-                        <Setter TargetName="Border" Property="Background" Value="OrangeRed"/>
+                        <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.ErrorBackgroundColor}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Type}" Value="Notification">
                         <Setter TargetName="Icon" Property="Content" Value="{StaticResource InfoIcon}"/>
-                        <Setter TargetName="Border" Property="Background" Value="#FF444444"/>
+                        <Setter TargetName="Border" Property="Background" Value="{Binding Source={x:Static constants:NotificationConstants.DefaultBackgroundColor}}"/>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Icon, Converter={wpf:IsNull}}" Value="false">
                         <Setter TargetName="Icon" Property="Content" Value="{Binding Icon}"/>

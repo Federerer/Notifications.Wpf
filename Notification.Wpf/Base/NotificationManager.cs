@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using Notification.Wpf.Classes;
+using Notification.Wpf.Constants;
 using Notification.Wpf.Controls;
 using Notifications.Wpf.ViewModels;
 
@@ -15,6 +17,7 @@ namespace Notification.Wpf
         private readonly Dispatcher _dispatcher;
         private static readonly List<NotificationArea> Areas = new();
         private static NotificationsOverlayWindow _window;
+
         /// <summary>
         /// Initialize new notification manager
         /// </summary>
@@ -75,16 +78,18 @@ namespace Notification.Wpf
             uint DefaultRowsCount = 1U,
             string BaseWaitingMessage = "Calculation time",
             bool IsCollapse = false,
-            bool TitleWhenCollapsed = true)
+            bool TitleWhenCollapsed = true,
+            Brush background = null,
+            Brush foreground = null,
+            Brush progressColor = null,
+            object icon = default)
         {
             var model = new NotificationProgressViewModel(
-                ShowCancelButton,
-                ShowProgress,
-                TrimText,
-                DefaultRowsCount,
+                ShowCancelButton, ShowProgress,
+                TrimText, DefaultRowsCount,
                 BaseWaitingMessage,
-                IsCollapse,
-                TitleWhenCollapsed);
+                IsCollapse, TitleWhenCollapsed,
+                background,foreground,progressColor,icon);
 
             if (Title != null) model.Title = Title;
 
@@ -93,14 +98,49 @@ namespace Notification.Wpf
                 return _dispatcher.Invoke(
                     () => ShowProgressBar(
                         Title,
+                        ShowCancelButton, ShowProgress,
+                        areaName,
+                        TrimText, DefaultRowsCount,
+                        BaseWaitingMessage,
+                        IsCollapse, TitleWhenCollapsed,
+                        background, foreground, progressColor, icon));
+            }
+
+            ShowContent(model, areaName: areaName);
+            return model.NotifierProgress;
+        }
+        /// <inheritdoc />
+        public NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(ICustomizedNotification content,
+            bool ShowCancelButton = true,
+            bool ShowProgress = true,
+            string areaName = "",
+            string BaseWaitingMessage = "Calculation time",
+            bool IsCollapse = false,
+            bool TitleWhenCollapsed = true,
+            Brush progressColor = null)
+        {
+            var model = new NotificationProgressViewModel(content,
+                ShowCancelButton,
+                ShowProgress,
+                BaseWaitingMessage,
+                IsCollapse,
+                TitleWhenCollapsed,
+                progressColor);
+
+            //if (content.Title != null) model.Title = content.Title;
+
+            if (!_dispatcher.CheckAccess())
+            {
+                return _dispatcher.Invoke(
+                    () => ShowProgressBar(
+                        content,
                         ShowCancelButton,
                         ShowProgress,
                         areaName,
-                        TrimText,
-                        DefaultRowsCount,
                         BaseWaitingMessage,
                         IsCollapse,
-                        TitleWhenCollapsed));
+                        TitleWhenCollapsed,
+                        progressColor));
             }
 
             ShowContent(model, areaName: areaName);
@@ -130,7 +170,9 @@ namespace Notification.Wpf
                     Left = workArea.Left,
                     Top = workArea.Top,
                     Width = workArea.Width,
-                    Height = workArea.Height
+                    Height = workArea.Height,
+                    CollapseProgressAutoIfMoreMessages = NotificationConstants.CollapseProgressIfMoreRows,
+                    MaxWindowItems = NotificationConstants.NotificationsOverlayWindowMaxCount
                 };
                 _window.Closed += (_, _) =>
                 {

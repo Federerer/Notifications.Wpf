@@ -8,21 +8,89 @@ using Notification.Wpf;
 using Notification.Wpf.Classes;
 using Notifications.Wpf.Command;
 using Notifications.Wpf.ViewModels.Base;
+using Notification.Wpf.Constants;
 
 namespace Notifications.Wpf.ViewModels
 {
     public class NotificationProgressViewModel : ViewModel, ICustomizedNotification
     {
-        public static SolidColorBrush BaseBackgroundColor = new SolidColorBrush(Colors.White);
-        public static SolidColorBrush BaseForegroundColor = (SolidColorBrush)new BrushConverter().ConvertFrom("#22FFFFFF");
+        #region Конструкторы
+        public NotificationProgressViewModel(
+            ICustomizedNotification notification,
+            bool showCancelButton,
+            bool showProgress,
+            string BaseWaitingMessage,
+            bool IsCollapse = false,
+            bool TitleWhenCollapsed = true,
+            Brush progressColor = null)
+            : this(showCancelButton,
+                    showProgress,
+                    notification.TrimType == NotificationTextTrimType.Trim,
+                    notification.RowsCount,
+                    BaseWaitingMessage,
+                    IsCollapse,
+                    TitleWhenCollapsed, notification.Background, notification.Foreground, progressColor, notification.Icon)
+        {
+            Title = notification.Title;
+            Message = notification.Message;
+            OnProgress((null, Message, Title, showCancelButton));
+        }
 
-        public CancellationTokenSource Cancel => NotifierProgress.CancelSource;
+        public NotificationProgressViewModel(
+            bool showCancelButton,
+            bool showProgress,
+            bool trimText,
+            uint DefaultRowsCount,
+            string BaseWaitingMessage,
+            bool IsCollapse = false,
+            bool TitleWhenCollapsed = true,
+            Brush background = null,
+            Brush foreground = null,
+            Brush progressColor = null,
+            object icon = default)
+        {
+            this.TitleWhenCollapsed = TitleWhenCollapsed;
+            Collapse = IsCollapse;
+            ShowProgress = showProgress;
+            NotifierProgress = new NotifierProgress<(double? percent, string message, string title, bool? showCancel)>(OnProgress);
+            ShowCancelButton = showCancelButton;
+            CollapseWindowCommand = new LamdaCommand(CollapseWindow);
+
+            if (trimText)
+                TrimType = NotificationTextTrimType.Trim;
+            if (icon is not null)
+                Icon = icon;
+            if (background is not null)
+                Background = background;
+            if (foreground is not null)
+                Foreground = foreground;
+            if (progressColor is not null)
+                ProgressForeground = progressColor;
+
+            RowsCount = DefaultRowsCount;
+            if (BaseWaitingMessage != null) NotifierProgress.WaitingTimer.BaseWaitingMessage = BaseWaitingMessage;
+            _Timer.Start();
+        }
+
+        #endregion
+
+        #region Свойства
+
+        #region ProgressForeground : Brush - progress line color
+
+        /// <summary>progress line color</summary>
+        private Brush _ProgressForeground = NotificationConstants.DefaultProgressColor;
+
+        /// <summary>progress line color</summary>
+        public Brush ProgressForeground { get => _ProgressForeground; set => Set(ref _ProgressForeground, value); }
+
+        #endregion
 
         #region Base interface ICustomizedNotification
 
         #region Icon
 
-        private object _Icon;
+        private object _Icon = NotificationConstants.DefaultProgressIcon;
         /// <inheritdoc />
         public object Icon { get => _Icon; set => Set(ref _Icon, value); }
 
@@ -31,7 +99,7 @@ namespace Notifications.Wpf.ViewModels
 
         #region Background
 
-        private Brush _Background = BaseBackgroundColor;
+        private Brush _Background = NotificationConstants.DefaultBackgroundColor;
         /// <inheritdoc />
         public Brush Background { get => _Background; set => Set(ref _Background, value); }
 
@@ -39,7 +107,7 @@ namespace Notifications.Wpf.ViewModels
 
         #region Foreground
 
-        private Brush _Foreground = BaseForegroundColor;
+        private Brush _Foreground = NotificationConstants.DefaultForegroundColor;
 
         /// <inheritdoc />
         public Brush Foreground { get => _Foreground; set => Set(ref _Foreground, value); }
@@ -77,7 +145,7 @@ namespace Notifications.Wpf.ViewModels
         #region RowsCount : uint - Число строк текста
 
         /// <summary>Число строк текста</summary>
-        private uint _RowsCount = 2U;
+        private uint _RowsCount = NotificationConstants.DefaultRowCounts;
 
         /// <inheritdoc />
         public uint RowsCount { get => _RowsCount; set => Set(ref _RowsCount, value); }
@@ -142,8 +210,8 @@ namespace Notifications.Wpf.ViewModels
             set
             {
                 Set(ref _Collapse, value);
-                GeneralPadding = value ? new Thickness(1) : new Thickness(12);
-                BarMargin = value ? new Thickness(1) : new Thickness(5);
+                GeneralPadding = value ? new (1) : new (12);
+                BarMargin = value ? new (1) : new (5);
                 BarHeight = value ? 32 : 20;
             }
         }
@@ -151,7 +219,7 @@ namespace Notifications.Wpf.ViewModels
         #region GeneralPadding : int - Отступ элементов от внешней рамки
 
         /// <summary>Отступ элементов от внешней рамки</summary>
-        private Thickness _GeneralPadding = new Thickness(12);
+        private Thickness _GeneralPadding = new (12);
 
         /// <summary>Отступ элементов от внешней рамки</summary>
         public Thickness GeneralPadding { get => _GeneralPadding; set => Set(ref _GeneralPadding, value); }
@@ -161,7 +229,7 @@ namespace Notifications.Wpf.ViewModels
         #region BarMargin : Thickness - отступ прогресс бара от рамки строки
 
         /// <summary>Отступ прогресс бара от рамки строки</summary>
-        private Thickness _BarMargin = new Thickness(5);
+        private Thickness _BarMargin = new (5);
 
         /// <summary>Отступ прогресс бара от рамки строки</summary>
         public Thickness BarMargin { get => _BarMargin; set => Set(ref _BarMargin, value); }
@@ -213,52 +281,23 @@ namespace Notifications.Wpf.ViewModels
         public bool TitleWhenCollapsed { get => _TitleWhenCollapsed; set => Set(ref _TitleWhenCollapsed, value); }
 
         #endregion
+        /// <summary> Cancel button content </summary>
+        public object RightButtonContent { get; set; } = NotificationConstants.DefaultProgressButtonContent;
 
-        public NotificationProgressViewModel(
-            ICustomizedNotification notification,
-            bool showCancelButton,
-            bool showProgress,
-            string BaseWaitingMessage,
-            bool IsCollapse = false,
-            bool TitleWhenCollapsed = true)
-            : this(showCancelButton,
-                    showProgress,
-                    notification.TrimType == NotificationTextTrimType.Trim,
-                    notification.RowsCount,
-                    BaseWaitingMessage,
-                    IsCollapse,
-                    TitleWhenCollapsed)
-        {
-            Icon = notification.Icon;
-            Background = notification.Background;
-            Foreground = notification.Foreground;
-            Title = notification.Title;
-            Message = notification.Message;
-        }
 
-        public NotificationProgressViewModel(
-            bool showCancelButton,
-            bool showProgress,
-            bool trimText,
-            uint DefaultRowsCount,
-            string BaseWaitingMessage,
-            bool IsCollapse = false,
-            bool TitleWhenCollapsed = true)
-        {
-            this.TitleWhenCollapsed = TitleWhenCollapsed;
-            Collapse = IsCollapse;
-            ShowProgress = showProgress;
-            NotifierProgress = new NotifierProgress<(double? percent, string message, string title, bool? showCancel)>(OnProgress);
-            ShowCancelButton = showCancelButton;
-            CollapseWindowCommand = new LamdaCommand(CollapseWindow);
-            if (trimText)
-                TrimType = NotificationTextTrimType.Trim;
-            RowsCount = DefaultRowsCount;
-            if (BaseWaitingMessage != null) NotifierProgress.WaitingTimer.BaseWaitingMessage = BaseWaitingMessage;
-            _Timer.Start();
-        }
+        #endregion
 
-        private Stopwatch _Timer = new();
+        #region Поля
+
+        /// <summary> Cancel token source </summary>
+        public CancellationTokenSource Cancel => NotifierProgress.CancelSource;
+
+        private readonly Stopwatch _Timer = new();
+
+        #endregion
+
+        #region Методы
+
         void OnProgress((double? percent, string message, string title, bool? showCancel) ProgressInfo)
         {
             if (_Timer.ElapsedMilliseconds < 100 && ProgressInfo.percent is not null && ProgressInfo.percent != 100 && ProgressInfo.percent != 0)
@@ -304,6 +343,9 @@ namespace Notifications.Wpf.ViewModels
         /// <param name="Sender"></param>
         /// <param name="E"></param>
         public void CancelProgress(object Sender, RoutedEventArgs E) => Cancel.Cancel();
+
+
+        #endregion
 
     }
 }

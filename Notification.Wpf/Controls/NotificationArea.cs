@@ -12,6 +12,20 @@ namespace Notification.Wpf.Controls
 {
     public class NotificationArea : Control
     {
+        #region CollapseProgressAuto : bool - Progress bar will automatically collapsed if items count more that max items
+
+        /// <summary>Progress bar will automatically collapsed if items count more that max items</summary>
+        public static readonly DependencyProperty CollapseProgressAutoProperty =
+            DependencyProperty.Register(
+                nameof(CollapseProgressAuto),
+                typeof(bool),
+                typeof(NotificationArea),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>Progress bar will automatically collapsed if items count more that max items</summary>
+        public bool CollapseProgressAuto { get => (bool)GetValue(CollapseProgressAutoProperty); set => SetValue(CollapseProgressAutoProperty, value); }
+
+        #endregion
 
         public NotificationPosition Position
         {
@@ -29,7 +43,7 @@ namespace Notification.Wpf.Controls
             get => (int)GetValue(MaxItemsProperty);
             set => SetValue(MaxItemsProperty, value);
         }
-        
+
         public static readonly DependencyProperty MaxItemsProperty =
             DependencyProperty.Register("MaxItems", typeof(int), typeof(NotificationArea), new PropertyMetadata(int.MaxValue));
 
@@ -63,15 +77,15 @@ namespace Notification.Wpf.Controls
             {
                 Content = content,
             };
-            
+
             notification.MouseLeftButtonDown += (sender, _) =>
             {
-                if(content is NotificationContent message)
+                if (content is NotificationContent message)
                     CloseOnClick = message.CloseOnClick;
 
                 if (CloseOnClick)
                     (sender as Notification)?.Close();
-                
+
                 if (onClick == null) return;
                 onClick.Invoke();
                 (sender as Notification)?.Close();
@@ -91,7 +105,7 @@ namespace Notification.Wpf.Controls
         /// <param name="model">модель прогресс бара</param>
         public async void Show(object model)
         {
-            var progress = (NotificationProgressViewModel) model;
+            var progress = (NotificationProgressViewModel)model;
             var content = new NotificationProgress { DataContext = progress };
             content.Cancel.Click += progress.CancelProgress;
             var notification = new Notification
@@ -114,7 +128,7 @@ namespace Notification.Wpf.Controls
             }
             catch (OperationCanceledException)
             { }
-            if(!notification.IsClosing)
+            if (!notification.IsClosing)
                 notification.Close();
         }
 
@@ -140,7 +154,21 @@ namespace Notification.Wpf.Controls
 
                 if (_items.OfType<Notification>().Count(i => !i.IsClosing) > MaxItems)
                 {
-                    _items.OfType<Notification>().First(i => !i.IsClosing).Close();
+                    if (_items.OfType<Notification>().Where(i => i.Content is not NotificationProgress).Count(i => !i.IsClosing) > MaxItems)
+                        _items.OfType<Notification>().Where(i => i.Content is not NotificationProgress).FirstOrDefault(i => !i.IsClosing)?.Close();
+                    if (CollapseProgressAuto)
+                        foreach (var progress in _items.OfType<Notification>()
+                           .Where(i => i.Content is NotificationProgress { DataContext: NotificationProgressViewModel { Collapse: false } }))
+                        {
+                            var content = (NotificationProgress)progress.Content;
+                            if (content is not null)
+                            {
+                                var model = (NotificationProgressViewModel)content.DataContext;
+                                model.Collapse = true;
+                            }
+                        }
+
+                    //_items.OfType<Notification>().Where(i=>i.DataContext is not NotificationProgress).First(i => !i.IsClosing).Close();
                 }
             }
 

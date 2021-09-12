@@ -4,6 +4,30 @@
         <name>Notification.Wpf</name>
     </assembly>
     <members>
+        <member name="T:Notification.Wpf.BaseNotificationContent">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.Title">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.Message">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.Icon">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.Background">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.Foreground">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.TrimType">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.RowsCount">
+            <inheritdoc />
+        </member>
         <member name="T:Notification.Wpf.INotificationManager">
             <summary>
             Notification manager for popup messages
@@ -39,10 +63,8 @@
             <param name="RowsCountWhenTrim">Base number of rows when trims</param>
             <param name="CloseOnClick">close window after clicking</param>
         </member>
-        <member name="M:Notification.Wpf.INotificationManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean)">
-            <summary>
-            Show ProgressBar
-            </summary>
+        <member name="M:Notification.Wpf.INotificationManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Object)">
+            <summary> Show ProgressBar </summary>
             <param name="Title">Title of window</param>
             <param name="ShowProgress">Show or not progress status</param>
             <param name="ShowCancelButton">Show Cancel button or not</param>
@@ -52,6 +74,21 @@
             <param name="BaseWaitingMessage">Timeout message, set null if you do not want to see time in bar progress</param>
             <param name="IsCollapse">Start progress bar in collapsed form</param>
             <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
+            <param name="background">popup window background</param>
+            <param name="foreground">popup window foreground</param>
+            <param name="progressColor">progress foreground</param>
+            <param name="icon">progress icon</param>
+        </member>
+        <member name="M:Notification.Wpf.INotificationManager.ShowProgressBar(Notification.Wpf.ICustomizedNotification,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush)">
+            <summary> Show ProgressBar </summary>
+            <param name="content">Base content settings</param>
+            <param name="ShowProgress">Show or not progress status</param>
+            <param name="ShowCancelButton">Show Cancel button or not</param>
+            <param name="areaName">window are where show notification</param>
+            <param name="BaseWaitingMessage">Timeout message, set null if you do not want to see time in bar progress</param>
+            <param name="IsCollapse">Start progress bar in collapsed form</param>
+            <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
+            <param name="progressColor">progress line color</param>
         </member>
         <member name="T:Notification.Wpf.ICustomizedNotification">
             <summary>
@@ -121,27 +158,6 @@
         <member name="P:Notification.Wpf.NotificationContent.Type">
             <summary> Notification type (change color) </summary>
         </member>
-        <member name="P:Notification.Wpf.NotificationContent.Title">
-            <summary> Top Title text </summary>
-        </member>
-        <member name="P:Notification.Wpf.NotificationContent.Message">
-            <summary> Body message text </summary>
-        </member>
-        <member name="P:Notification.Wpf.NotificationContent.Icon">
-            <summary> icon in left bar side </summary>
-        </member>
-        <member name="P:Notification.Wpf.NotificationContent.Background">
-            <summary> Notification background </summary>
-        </member>
-        <member name="P:Notification.Wpf.NotificationContent.Foreground">
-            <summary> Text foreground </summary>
-        </member>
-        <member name="P:Notification.Wpf.NotificationContent.TrimType">
-            <summary> Trimming long text if need </summary>
-        </member>
-        <member name="P:Notification.Wpf.NotificationContent.RowsCount">
-            <summary> Set rows of message that will show if set Trim </summary>
-        </member>
         <member name="P:Notification.Wpf.NotificationContent.LeftButtonContent">
             <summary>
             left button content
@@ -180,7 +196,10 @@
         <member name="M:Notification.Wpf.NotificationManager.Show(System.String,System.String,Notification.Wpf.NotificationType,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Action,System.String,System.Action,System.String,Notification.Wpf.NotificationTextTrimType,System.UInt32,System.Boolean)">
             <inheritdoc />
         </member>
-        <member name="M:Notification.Wpf.NotificationManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean)">
+        <member name="M:Notification.Wpf.NotificationManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Notification.Wpf.NotificationManager.ShowProgressBar(Notification.Wpf.ICustomizedNotification,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush)">
             <inheritdoc />
         </member>
         <member name="M:Notification.Wpf.NotificationManager.ShowContent(System.Object,System.Nullable{System.TimeSpan},System.String,System.Action,System.Action,System.Boolean)">
@@ -196,11 +215,23 @@
         </member>
         <member name="T:Notification.Wpf.NotificationsOverlayWindow">
             <summary>
-            Interaction logic for ToastWindow.xaml
+            Interaction logic for ToastWindow
             </summary>
             <summary>
             NotificationsOverlayWindow
             </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationsOverlayWindow.MaxWindowItemsProperty">
+            <summary>Maximum Window Items</summary>
+        </member>
+        <member name="P:Notification.Wpf.NotificationsOverlayWindow.MaxWindowItems">
+            <summary>Maximum Window Items</summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationsOverlayWindow.CollapseProgressAutoIfMoreMessagesProperty">
+            <summary>Need collapse notification if count more that maximum</summary>
+        </member>
+        <member name="P:Notification.Wpf.NotificationsOverlayWindow.CollapseProgressAutoIfMoreMessages">
+            <summary>Need collapse notification if count more that maximum</summary>
         </member>
         <member name="M:Notification.Wpf.NotificationsOverlayWindow.InitializeComponent">
             <summary>
@@ -216,6 +247,24 @@
             <summary>
             Тип сообщения
             </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationType.None">
+            <summary> Default style type </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationType.Information">
+            <summary> Information style type </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationType.Success">
+            <summary> Success style type </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationType.Warning">
+            <summary> Warning style type </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationType.Error">
+            <summary> Error style type </summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationType.Notification">
+            <summary> Notification style type </summary>
         </member>
         <member name="P:Notification.Wpf.Classes.NotifierProgress`1.IsFinished">
             <summary>progress was finished</summary>
@@ -269,6 +318,57 @@
         </member>
         <member name="F:Notification.Wpf.Classes.SlowedProgress`1._UpdateTimeOut">
             <summary> Время задержки обновления данных в прогрессе </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.NotificationsOverlayWindowMaxCount">
+            <summary> Overlay window maximum count </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.CollapseProgressIfMoreRows">
+            <summary> If messages count in overlay window will be more that maximum - progress bar will start collapsed (progress bar never closing automatically) </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.SuccessBackgroundColor">
+            <summary> base background color </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.WarningBackgroundColor">
+            <summary> base background color </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.ErrorBackgroundColor">
+            <summary> base background color </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.InformationBackgroundColor">
+            <summary> base background color </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultBackgroundColor">
+            <summary> base background color </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultForegroundColor">
+            <summary> base foreground color </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultRowCounts">
+            <summary> visible rows count in message by default</summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultLeftButtonContent">
+            <summary>default Notification left button content </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultRightButtonContent">
+            <summary>default Notification right button content </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaulTextTrimType">
+            <summary>default Notification text trim type </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultProgressColor">
+            <summary> default progress line foreground </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultProgressIcon">
+            <summary> base progress icon </summary>
+        </member>
+        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultProgressButtonContent">
+            <summary> Cancel button content </summary>
+        </member>
+        <member name="F:Notification.Wpf.Controls.NotificationArea.CollapseProgressAutoProperty">
+            <summary>Progress bar will automatically collapsed if items count more that max items</summary>
+        </member>
+        <member name="P:Notification.Wpf.Controls.NotificationArea.CollapseProgressAuto">
+            <summary>Progress bar will automatically collapsed if items count more that max items</summary>
         </member>
         <member name="M:Notification.Wpf.Controls.NotificationArea.Show(System.Object)">
             <summary>
@@ -1105,6 +1205,12 @@
             marked with the <see cref="T:Notifications.Wpf.Annotations.XamlItemsControlAttribute"/> attribute.
             </remarks>
         </member>
+        <member name="F:Notifications.Wpf.ViewModels.NotificationProgressViewModel._ProgressForeground">
+            <summary>progress line color</summary>
+        </member>
+        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.ProgressForeground">
+            <summary>progress line color</summary>
+        </member>
         <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.Icon">
             <inheritdoc />
         </member>
@@ -1200,6 +1306,12 @@
         </member>
         <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.TitleWhenCollapsed">
             <summary>что показывать когда свёрнут прогресс</summary>
+        </member>
+        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.RightButtonContent">
+            <summary> Cancel button content </summary>
+        </member>
+        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.Cancel">
+            <summary> Cancel token source </summary>
         </member>
         <member name="M:Notifications.Wpf.ViewModels.NotificationProgressViewModel.CancelProgress(System.Object,System.Windows.RoutedEventArgs)">
             <summary>

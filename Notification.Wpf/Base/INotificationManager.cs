@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Media;
 using Notification.Wpf.Classes;
 
 namespace Notification.Wpf
@@ -39,9 +40,7 @@ namespace Notification.Wpf
             Action onClose = null, Action LeftButton = null, string LeftButtonText = null, Action RightButton = null, string RightButtonText = null,
             NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2, bool CloseOnClick = true);
 
-        /// <summary>
-        /// Show ProgressBar
-        /// </summary>
+        /// <summary> Show ProgressBar </summary>
         /// <param name="Title">Title of window</param>
         /// <param name="ShowProgress">Show or not progress status</param>
         /// <param name="ShowCancelButton">Show Cancel button or not</param>
@@ -51,7 +50,12 @@ namespace Notification.Wpf
         /// <param name="BaseWaitingMessage">Timeout message, set null if you do not want to see time in bar progress</param>
         /// <param name="IsCollapse">Start progress bar in collapsed form</param>
         /// <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
-        NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(string Title = null,
+        /// <param name="background">popup window background</param>
+        /// <param name="foreground">popup window foreground</param>
+        /// <param name="progressColor">progress foreground</param>
+        /// <param name="icon">progress icon</param>
+        NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(
+            string Title = null,
             bool ShowCancelButton = true,
             bool ShowProgress = true,
             string areaName = "",
@@ -59,6 +63,30 @@ namespace Notification.Wpf
             uint DefaultRowsCount = 1U,
             string BaseWaitingMessage = "Calculation time",
             bool IsCollapse = false,
-            bool TitleWhenCollapsed = true);
+            bool TitleWhenCollapsed = true,
+            Brush background = null,
+            Brush foreground = null,
+            Brush progressColor = null,
+            object icon = default);
+
+        /// <summary> Show ProgressBar </summary>
+        /// <param name="content">Base content settings</param>
+        /// <param name="ShowProgress">Show or not progress status</param>
+        /// <param name="ShowCancelButton">Show Cancel button or not</param>
+        /// <param name="areaName">window are where show notification</param>
+        /// <param name="BaseWaitingMessage">Timeout message, set null if you do not want to see time in bar progress</param>
+        /// <param name="IsCollapse">Start progress bar in collapsed form</param>
+        /// <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
+        /// <param name="progressColor">progress line color</param>
+        NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(
+            ICustomizedNotification content,
+            bool ShowCancelButton = true,
+            bool ShowProgress = true,
+            string areaName = "",
+            string BaseWaitingMessage = "Calculation time",
+            bool IsCollapse = false,
+            bool TitleWhenCollapsed = true,
+            Brush progressColor = null);
+
     }
 }

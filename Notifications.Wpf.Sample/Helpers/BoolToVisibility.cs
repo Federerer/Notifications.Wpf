@@ -5,7 +5,7 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using Notification.Wpf.Converters;
 
-namespace Notifications.Wpf.Sample.Helpers
+namespace Notification.Wpf.Sample.Helpers
 {
     [MarkupExtensionReturnType(typeof(BoolToVisibility)), ValueConversion(typeof(bool), typeof(Visibility))]
     internal class BoolToVisibility : ValueConverter
