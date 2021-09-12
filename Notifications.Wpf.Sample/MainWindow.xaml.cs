@@ -409,21 +409,9 @@ namespace Notification.Wpf.Sample
         {
             var iconN = SelectedIcon is null? 0: (int)SelectedIcon.Icon;
             var title = "Прогресс бар";
-            var content = new BaseNotificationContent()
-            {
-                Title = title,
-                Message = "Test message",
-                Background = ContentBackground,
-                Foreground = ContentForeground,
-                TrimType = SelectedTrimType,
-                Icon = iconN ==0?null: new SvgAwesome()
-                {
-                    Icon = (EFontAwesomeIcon)iconN,
-                    Height = 25,
-                    Foreground = IconForeground
-                },
-                RowsCount = RowCount
-            };
+
+            #region First sample
+
             using var progress = _notificationManager.ShowProgressBar(
                 title,
                 true,
@@ -441,6 +429,27 @@ namespace Notification.Wpf.Sample
                     Height = 25,
                     Foreground = IconForeground
                 });
+
+            #endregion
+
+            #region Second sample
+
+            //var content = new BaseNotificationContent()
+            //{
+            //    Title = title,
+            //    Message = "Test message",
+            //    Background = ContentBackground,
+            //    Foreground = ContentForeground,
+            //    TrimType = SelectedTrimType,
+            //    Icon = iconN == 0 ? null : new SvgAwesome()
+            //    {
+            //        Icon = (EFontAwesomeIcon)iconN,
+            //        Height = 25,
+            //        Foreground = IconForeground
+            //    },
+            //    RowsCount = RowCount
+            //};
+
             //using var progress = _notificationManager.ShowProgressBar(
             //    content,
             //    true,
@@ -448,6 +457,8 @@ namespace Notification.Wpf.Sample
             //    GetArea(),
             //    IsCollapse: ProgressCollapsed,
             //    TitleWhenCollapsed: ProgressTitleOrMessage, progressColor:ProgressColor);
+
+            #endregion
             try
             {
                 var message = ContentText;
