@@ -1,36 +1,17 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Media;
+using Notification.Wpf.Constants;
 
 namespace Notification.Wpf
 {
-    /// <summary>
-    /// Message
-    /// </summary>
-    public class NotificationContent
+    /// <summary> Message </summary>
+    public class NotificationContent : BaseNotificationContent, INotification
     {
         /// <summary> Notification type (change color) </summary>
         public NotificationType Type { get; set; }
 
-        /// <summary> Top Title text </summary>
-        public string Title { get; set; }
-        /// <summary> Body message text </summary>
-        public string Message { get; set; }
-        /// <summary> icon in left bar side </summary>
-        public object Icon { get; set; }
-        /// <summary> Notification background </summary>
-        public Brush Background { get; set; }
-        /// <summary> Text foreground </summary>
-        public Brush Foreground { get; set; }
-
-        /// <summary> Trimming long text if need </summary>
-        public NotificationTextTrimType TrimType { get; set; } = NotificationTextTrimType.NoTrim;
-        /// <summary> Set rows of message that will show if set Trim </summary>
-        public uint RowsCount { get; set; } = 2;
-
         #region Left button
 
-        private object _LeftButtonContent = "Ok";
+        private object _LeftButtonContent = NotificationConstants.DefaultLeftButtonContent;
 
         /// <summary>
         /// left button content
@@ -44,9 +25,10 @@ namespace Notification.Wpf
                 {
                     case string button_name when string.IsNullOrWhiteSpace(button_name):
                     case null:
-                        _LeftButtonContent = "Ok";
+                        _LeftButtonContent = NotificationConstants.DefaultLeftButtonContent;
                         break;
-                    default: _LeftButtonContent = value;
+                    default:
+                        _LeftButtonContent = value;
                         break;
                 }
             }
@@ -61,7 +43,7 @@ namespace Notification.Wpf
 
         #region RightButton
 
-        private object _RightButtonContent = "Cancel";
+        private object _RightButtonContent = NotificationConstants.DefaultRightButtonContent;
 
         /// <summary>
         /// Right button content
@@ -75,9 +57,10 @@ namespace Notification.Wpf
                 {
                     case string button_name when string.IsNullOrWhiteSpace(button_name):
                     case null:
-                        _RightButtonContent = "Cancel";
+                        _RightButtonContent = NotificationConstants.DefaultRightButtonContent;
                         break;
-                    default: _RightButtonContent = value;
+                    default:
+                        _RightButtonContent = value;
                         break;
                 }
             }

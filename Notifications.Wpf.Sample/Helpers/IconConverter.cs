@@ -5,7 +5,7 @@ using System.Windows.Markup;
 using FontAwesome5;
 using Notification.Wpf.Converters;
 
-namespace Notification.Wpf
+namespace Notification.Wpf.Sample.Helpers
 {
     [ValueConversion(typeof(object), typeof(object)), MarkupExtensionReturnType(typeof(IconConverter))]
     internal class IconConverter : ValueConverter

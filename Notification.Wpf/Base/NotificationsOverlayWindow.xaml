@@ -15,5 +15,8 @@
         WindowStartupLocation ="CenterScreen"
         d:DesignWidth="900"
         d:DesignHeight="600">
-    <controls1:NotificationArea Position="BottomRight" Margin="8"/>
+    <controls1:NotificationArea Position="BottomRight"
+                                CollapseProgressAuto="{Binding CollapseProgressAutoIfMoreMessages, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                                MaxItems="{Binding MaxWindowItems, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                Margin="8"/>
 </Window>

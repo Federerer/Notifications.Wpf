@@ -19,29 +19,29 @@
                 <ResourceDictionary Source="../Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-        <Style TargetType="Button">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#22FFFFFF"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Label Content="{TemplateBinding Content}"
+            <Style TargetType="Button">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="#22FFFFFF"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Label Content="{TemplateBinding Content}"
                            Foreground="{TemplateBinding Foreground}"
                            Background="{TemplateBinding Background}"
                            HorizontalContentAlignment="Center"
                            MinWidth="80"/>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#11FFFFFF"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="#11000000"/>
-                                <Setter Property="Foreground" Value="#FFAAAAAA"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#11FFFFFF"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#11000000"/>
+                                    <Setter Property="Foreground" Value="#FFAAAAAA"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -49,14 +49,14 @@
         <MouseBinding Gesture="LeftClick"  Command="{Binding CollapseWindowCommand}"/>
     </UserControl.InputBindings>
 
-    <Border Padding="{Binding BarMargin}" Background="#FF444444" MinHeight="20">
+    <Border Padding="{Binding BarMargin}" Background="{Binding Background, UpdateSourceTrigger=PropertyChanged}" MinHeight="20">
         <Grid>
             <Grid.ColumnDefinitions>
                 <extensions:ColumnDefinitionCollapsable Width="Auto" Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                 <extensions:ColumnDefinitionCollapsable Width="*"/>
             </Grid.ColumnDefinitions>
             <ContentControl Margin="0,0,12,0" Width="25" Height="25" VerticalAlignment="Top" Opacity="0.8">
-                <ContentControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{StaticResource LoadIcon}"/>
+                <ContentControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{Binding Icon}"/>
             </ContentControl>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -65,38 +65,64 @@
                     <extensions:RowDefinitionCollapsable Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                     <extensions:RowDefinitionCollapsable Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Margin="{Binding BarMargin}" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Row="0" Margin="{Binding BarMargin}" 
+                           Foreground="{Binding Foreground, UpdateSourceTrigger=PropertyChanged}" 
+                           Text="{Binding Title}"
+                           FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
                 <Grid Grid.Row="1" Background="Transparent" >
                     <ProgressBar  Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
                                   Value="{Binding process}" IsIndeterminate="{Binding ShowProgress, Converter={wpf:BoolInverse}}" Panel.ZIndex="900"
                                   BorderThickness="0"                
-                                  Background="{StaticResource TransparentBrush}">
+                                  Background="{StaticResource TransparentBrush}"
+                                  Foreground="{Binding ProgressForeground}">
                         <b:Interaction.Behaviors>
                             <controls:ProgresBarAnimateBehavior />
                         </b:Interaction.Behaviors>
                     </ProgressBar>
                     <ProgressBar
-                                 Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
-                                  IsIndeterminate="{Binding ShowProgress}"      
-                                 Opacity="0.4" BorderThickness="0" />
-                    <TextBlock Grid.Row="0" Margin="5" Text="{Binding Title}" 
+                                 Margin="{Binding BarMargin}" Height="{Binding BarHeight}" 
+                                 HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
+                                 IsIndeterminate="{Binding ShowProgress}"      
+                                 Opacity="0.4" BorderThickness="0"
+                                 Foreground="{Binding ProgressForeground}"
+                                 />
+                    <TextBlock Grid.Row="0" Margin="5"
                                Panel.ZIndex="901" 
+                               HorizontalAlignment="Left"
                                FontWeight="Medium" 
-                               TextTrimming="CharacterEllipsis" 
-                               Foreground="{StaticResource WhiteSmokeBrush}" VerticalAlignment="Center"
-                               Visibility="{Binding Collapse, Converter={converters:BoolToVisibility Collapse=True}}"/>
+                               TextWrapping="NoWrap"
+                               TextTrimming="CharacterEllipsis"
+                               MaxHeight="20"
+                               MaxWidth="300"
+                               Foreground="{Binding Foreground, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"
+                               Visibility="{Binding Collapse, Converter={converters:BoolToVisibility Collapse=True}}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding TitleWhenCollapsed}" Value="true">
+                                        <Setter Property="Text" Value="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding TitleWhenCollapsed}" Value="false">
+                                        <Setter Property="Text" Value="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Grid>
-                <TextBlock x:Name="MessageBox" Grid.Row="2"  Text="{Binding Message}" Margin="{Binding BarMargin}" TextWrapping="Wrap" Opacity=".8" MinHeight="20" >
+                <TextBlock x:Name="MessageBox" Grid.Row="2"  Text="{Binding Message}" Foreground="{Binding Foreground, UpdateSourceTrigger=PropertyChanged}" 
+                           Margin="{Binding BarMargin}"
+                           TextWrapping="Wrap" Opacity=".8" MinHeight="20" >
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
-                                    <DataTrigger Binding="{Binding TrimType}" Value="Trim">
-                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-                                        <Setter  Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=20}}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding TrimType}" Value="NoTrim">
-                                        <Setter Property="TextTrimming" Value="None"/>
-                                    </DataTrigger>
+                                <DataTrigger Binding="{Binding TrimType}" Value="Trim">
+                                    <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    <Setter  Property="Height" Value="{Binding RowsCount, Converter={wpf:MessageRowsCountConverter BaseSize=20}}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding TrimType}" Value="NoTrim">
+                                    <Setter Property="TextTrimming" Value="None"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </TextBlock.Style>
@@ -104,12 +130,16 @@
                 <DockPanel Grid.Row="3">
                     <TextBlock Text="{Binding WaitingTime}" DockPanel.Dock="Left" Width="190" 
                                HorizontalAlignment="Left" VerticalAlignment="Center"
+                               Foreground="{Binding Foreground, UpdateSourceTrigger=PropertyChanged}" 
                                TextWrapping="NoWrap" 
                                TextTrimming="CharacterEllipsis"
                                FontSize="14"
                                Opacity=".8" Margin="5,0,0,0"/>
-                    <Button x:Name="Cancel" Width="100" HorizontalAlignment="Right" Content="{Binding RightButtonContent}"
-                            DockPanel.Dock="Right" Margin="0,0,5,0" controls:Notification.CloseOnClick="True"
+                    <Button x:Name="Cancel" Width="100" HorizontalAlignment="Right"
+                            Content="{Binding RightButtonContent}"
+                            DockPanel.Dock="Right" Margin="0,0,5,0"
+                            Foreground="{Binding Foreground}" 
+                            controls:Notification.CloseOnClick="True"
                             Visibility="{Binding ShowCancelButton, Converter={converters:BoolToVisibility Collapse=True}}"/>
 
                 </DockPanel>
