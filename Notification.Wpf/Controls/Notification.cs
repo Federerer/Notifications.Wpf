@@ -56,7 +56,7 @@ namespace Notification.Wpf.Controls
 
         private static void CloseOnClickChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            if (!(dependencyObject is Button button))
+            if (dependencyObject is not Button button)
             {
                 return;
             }
@@ -90,7 +90,7 @@ namespace Notification.Wpf.Controls
 
         private void OnCloseButtonOnClick(object sender, RoutedEventArgs args)
         {
-            if (!(sender is Button button)) return;
+            if (sender is not Button button) return;
 
             button.Click -= OnCloseButtonOnClick;
 
@@ -162,7 +162,7 @@ namespace Notification.Wpf.Controls
 
         private static void AttachOnClickChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            if (!(dependencyObject is Button button))
+            if (dependencyObject is not Button button)
             {
                 return;
             }
@@ -204,7 +204,7 @@ namespace Notification.Wpf.Controls
 
         private void OnAttachButtonOnClick(object sender, RoutedEventArgs args)
         {
-            if (!(sender is Button button)) return;
+            if (sender is not Button button) return;
 
             button.Click -= OnAttachButtonOnClick;
             Attach();

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notification.Wpf", "Notification.Wpf\Notification.Wpf.csproj", "{5C9A4F46-263D-4C23-B361-F09E14BB109E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notifications.Wpf.Sample", "Notifications.Wpf.Sample\Notifications.Wpf.Sample.csproj", "{A5C53F98-245C-4385-8950-42C4545C9CCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notification.Wpf.Sample", "Notifications.Wpf.Sample\Notification.Wpf.Sample.csproj", "{A5C53F98-245C-4385-8950-42C4545C9CCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
