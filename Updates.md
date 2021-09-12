@@ -12,12 +12,12 @@
 
 Just change it befor first using
 
-`v5.2.0'
+`v5.2.0`
 * Color and Icons in settings
 
 `v5.1.0`
 * Add Slowed progress bar
 * Add Waiting timer for progress bar
 
-`v5.0.0
+`v5.0.0`
 * Platform support
