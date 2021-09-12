@@ -1,8 +1,9 @@
 # Notification.Wpf
 WPF toast notifications. (Messages and progress bars)
 
+## [Last Updates](https://github.com/Platonenkov/Notification.Wpf/blob/dev/Updates.md)
 ### Installation:
-Install-Package Notification.WPF -Version 5.2.0
+Install-Package Notification.WPF -Version 5.3.0
 
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/progress.gif)
@@ -102,15 +103,20 @@ var content = new NotificationContent
 using next type IProgress<(int? progress, string message, string title, bool? showCancel)>
     
 ```C#
-ShowProgressBar(out ProgressFinaly<ValueTuple<int?, string, string, bool?>> progress,
-                out CancellationToken Cancel,
-                string Title = null,
-                bool ShowCancelButton = true,
-                bool ShowProgress = true,
-                string areaName = "", 
-                bool TrimText = false,
-                uint DefaultRowsCount = 1,
-                string BaseWaitingMessage = "Calculation time")
+public NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(
+            string Title = null,
+            bool ShowCancelButton = true,
+            bool ShowProgress = true,
+            string areaName = "",
+            bool TrimText = false,
+            uint DefaultRowsCount = 1U,
+            string BaseWaitingMessage = "Calculation time",
+            bool IsCollapse = false,
+            bool TitleWhenCollapsed = true,
+            Brush background = null,
+            Brush foreground = null,
+            Brush progressColor = null,
+            object icon = default)
       
       
 using var progress = notificationManager.ShowProgressBar(title, true, false, true, 2U, "Wait");
