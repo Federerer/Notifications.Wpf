@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,10 +8,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using FontAwesome5;
+using Microsoft.Win32;
 using Notification.Wpf.Constants;
 using Notification.Wpf.Sample.Elements;
 using WPF.ColorPicker;
 using Timer = System.Timers.Timer;
+using System.Drawing.Imaging;
+using System.Windows.Media.Imaging;
+using Notification.Wpf.Classes;
+using Notification.Wpf.Utils;
 
 namespace Notification.Wpf.Sample
 {
@@ -207,8 +213,8 @@ namespace Notification.Wpf.Sample
 
         /// <summary>количество строк в сообщении</summary>
         public uint RowCount
-        { 
-            get => (uint)GetValue(RowCountProperty); 
+        {
+            get => (uint)GetValue(RowCountProperty);
             set => SetValue(RowCountProperty, value);
         }
 
@@ -379,7 +385,7 @@ namespace Notification.Wpf.Sample
 
             var content = new NotificationContent
             {
-                Title = "Sample notification",
+                Title = "Sample notification notificationnotificationnotificationnotification",
                 Message = ContentText,
                 Background = isNone ? ContentBackground : null,
                 Foreground = isNone ? ContentForeground : null,
@@ -397,7 +403,8 @@ namespace Notification.Wpf.Sample
                     Height = 25,
                     Foreground = IconForeground
                 } :
-                    null
+                    null,
+                Image = new NotificationImage(){Source = Image,Position = SelectedImgPosition }
             };
             _notificationManager.Show(content,
                 areaName: GetArea(),
@@ -407,7 +414,7 @@ namespace Notification.Wpf.Sample
 
         private async void Progress_Click(object sender, RoutedEventArgs e)
         {
-            var iconN = SelectedIcon is null? 0: (int)SelectedIcon.Icon;
+            var iconN = SelectedIcon is null ? 0 : (int)SelectedIcon.Icon;
             var title = "Прогресс бар";
 
             #region First sample
@@ -422,8 +429,8 @@ namespace Notification.Wpf.Sample
                 IsCollapse: ProgressCollapsed,
                 TitleWhenCollapsed: ProgressTitleOrMessage,
                 progressColor: ProgressColor,
-                background:ContentBackground,
-                foreground:ContentForeground, icon: iconN == 0 ? null : new SvgAwesome()
+                background: ContentBackground,
+                foreground: ContentForeground, icon: iconN == 0 ? null : new SvgAwesome()
                 {
                     Icon = (EFontAwesomeIcon)iconN,
                     Height = 25,
@@ -665,10 +672,87 @@ namespace Notification.Wpf.Sample
 
         private void NumericUpDownControl_OnValueChanged(object Sender, RoutedEventArgs E)
         {
-            if(Sender is not NumericUpDownControl num)
+            if (Sender is not NumericUpDownControl num)
                 return;
             var value = num.Value;
             NotificationConstants.NotificationsOverlayWindowMaxCount = (uint)value;
         }
+
+        private void OpenImage_Click(object Sender, RoutedEventArgs E)
+        {
+            ImageSource fileContent = null;
+            var filePath = string.Empty;
+
+            var openFileDialog = new OpenFileDialog();
+            //openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            //openFileDialog.FilterIndex = 2;
+            //openFileDialog.RestoreDirectory = true;
+
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            string sep = string.Empty;
+
+            foreach (var c in codecs)
+            {
+                string codecName = c.CodecName.Substring(8).Replace("Codec", "Files").Trim();
+                openFileDialog.Filter = string.Format("{0}{1}{2} ({3})|{3}", openFileDialog.Filter, sep, codecName, c.FilenameExtension);
+                sep = "|";
+            }
+
+            openFileDialog.Filter = string.Format("{0}{1}{2} ({3})|{3}", openFileDialog.Filter, sep, "All Files", "*.*");
+
+            openFileDialog.DefaultExt = ".png"; // Default file extension 
+            try
+            {
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+                    fileContent = new BitmapImage(new Uri(filePath));
+                    ////Read the contents of the file into a stream
+                    //using var fileStream = openFileDialog.OpenFile();
+                    //{
+                    //    using MemoryStream reader = new MemoryStream();
+                    //    fileStream.CopyTo(reader);
+                    //    fileContent = ImageUtils.ImageFromClipboardDib(reader);
+                    //}
+                }
+            }
+            catch (Exception e)
+            {
+                _notificationManager.Show("Error", e.Message,type:NotificationType.Error);
+            }
+
+            Image = fileContent;
+        }
+
+        #region Image : ImageSource - Image
+
+        /// <summary>Image</summary>
+        public static readonly DependencyProperty ImageProperty =
+            DependencyProperty.Register(
+                nameof(Image),
+                typeof(ImageSource),
+                typeof(MainWindow),
+                new PropertyMetadata(new BitmapImage(new Uri(Path.Combine(Application.Current.StartupUri, "Resources\\Test image.png")))));
+
+        /// <summary>Image</summary>
+        public ImageSource Image { get => (ImageSource)GetValue(ImageProperty); set => SetValue(ImageProperty, value); }
+
+        #endregion
+
+        #region SelectedImgPosition : ImagePosition - Image position
+
+        /// <summary>Image position</summary>
+        public static readonly DependencyProperty SelectedImgPositionProperty =
+            DependencyProperty.Register(
+                nameof(SelectedImgPosition),
+                typeof(ImagePosition),
+                typeof(MainWindow),
+                new PropertyMetadata(default));
+
+        /// <summary>Image position</summary>
+        public ImagePosition SelectedImgPosition { get => (ImagePosition)GetValue(SelectedImgPositionProperty); set => SetValue(SelectedImgPositionProperty, value); }
+
+        #endregion
     }
 }

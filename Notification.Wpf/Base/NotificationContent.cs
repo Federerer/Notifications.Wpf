@@ -1,4 +1,5 @@
 ﻿using System;
+using Notification.Wpf.Classes;
 using Notification.Wpf.Constants;
 
 namespace Notification.Wpf
@@ -6,16 +7,17 @@ namespace Notification.Wpf
     /// <summary> Message </summary>
     public class NotificationContent : BaseNotificationContent, INotification
     {
-        /// <summary> Notification type (change color) </summary>
+        ///<inheritdoc/>
+        public NotificationImage Image { get; set; }
+
+        ///<inheritdoc/>
         public NotificationType Type { get; set; }
 
         #region Left button
 
         private object _LeftButtonContent = NotificationConstants.DefaultLeftButtonContent;
 
-        /// <summary>
-        /// left button content
-        /// </summary>
+        ///<inheritdoc/>
         public object LeftButtonContent
         {
             get => _LeftButtonContent;
@@ -34,9 +36,7 @@ namespace Notification.Wpf
             }
         }
 
-        /// <summary>
-        /// Left button action
-        /// </summary>
+        ///<inheritdoc/>
         public Action LeftButtonAction { get; set; }
 
         #endregion
@@ -45,9 +45,7 @@ namespace Notification.Wpf
 
         private object _RightButtonContent = NotificationConstants.DefaultRightButtonContent;
 
-        /// <summary>
-        /// Right button content
-        /// </summary>
+        ///<inheritdoc/>
         public object RightButtonContent
         {
             get => _RightButtonContent;
@@ -66,14 +64,12 @@ namespace Notification.Wpf
             }
         }
 
-        /// <summary>
-        /// Right button action
-        /// </summary>
+        ///<inheritdoc/>
         public Action RightButtonAction { get; set; }
 
         #endregion
 
-        /// <summary> close message when OnClick to message window </summary>
+        ///<inheritdoc/>
         public bool CloseOnClick { get; set; } = true;
 
     }

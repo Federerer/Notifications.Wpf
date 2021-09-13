@@ -11,12 +11,19 @@
     <PackageReference Include="FontAwesome5" Version="2.1.4" />
     <PackageReference Include="MathCore" Version="0.0.55" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="WPF.ColorPicker" Version="5.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Notification.Wpf\Notification.Wpf.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Test image.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
