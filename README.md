@@ -9,9 +9,9 @@ Install-Package Notification.WPF -Version 5.3.0
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/progress.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/info_button.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/content.gif)
-![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/sample_attach.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/all_styles.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/Colored.gif)
+![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/Image.gif)
 ### Known issue
 
 If you have problem with close notification window after closing you app, use this row: 
@@ -71,6 +71,8 @@ if you need to show all long text - use TrimTipe - NoTrim
 if you need to show small message window - use TrimTipe - Trim,
 if you need All text, but you dont need big window - use TrimTipe - Attach, it will trim text and show small button that open other window to operate with full text;
 if you need All text, but you dont need big window and you want defined window size - use TrimTipe - AttachIfMoreRows, it will trim text and show small button if count of rows in message will be more that that you set.
+
+### Full content sample
 ```C#
 var content = new NotificationContent
     {
@@ -87,12 +89,19 @@ var content = new NotificationContent
         
         Background = new SolidColorBrush(Colors.White),
         Foreground = new SolidColorBrush(Colors.DarkRed),
-        Icon = new SvgAwesome()
-                {
-                    Icon = EFontAwesomeIcon.Regular_Star,
-                    Height = 25,
-                    Foreground = new SolidColorBrush(Colors.Yellow)
-                }
+        
+		Icon = new SvgAwesome()
+            {
+                Icon = EFontAwesomeIcon.Regular_Star,
+                Height = 25,
+                Foreground = new SolidColorBrush(Colors.Yellow)
+            },
+		
+		Image = new NotificationImage()
+			{
+				Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Test image.png")));,
+				Position = ImagePosition.Top
+			}
 
     };
     _notificationManager.Show(content);

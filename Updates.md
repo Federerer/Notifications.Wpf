@@ -1,5 +1,9 @@
 ### Update list
 
+`v5.4.0`
+* Added section for image
+* if icon is null - left column will collapse
+
 `v5.3.0`
 * access to basic message settings
 * setting the number of messages in the window

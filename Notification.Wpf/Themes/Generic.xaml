@@ -157,23 +157,44 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <ContentControl Margin="0,0,12,0" Width="25" VerticalAlignment="Stretch">
-                            <DockPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="{Binding Image.Position , Converter={converters:ImagePositionGridRowConverter}}"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               Visibility="{Binding Image.Position ,
+                                Converter={wpf:Combine First={converters:ImagePositionConverter Position=None},
+                                Then={converters:BoolToVisibility Collapse=True, Inverse=True}}}"
+                               Source="{Binding Image.Source}"
+                               Margin="{Binding Image.Position , Converter={converters:ImagePositionMarginConverter}}"/>
+
+                        <ContentControl Grid.Row="1" Grid.Column="0" Margin="0,0,12,0" Width="25" VerticalAlignment="Stretch"
+                                        Visibility="{Binding ElementName=LeftPanel,
+                            Converter={wpf:Combine
+                            First={wpf:HasVisibleContent},
+                            Then={converters:BoolToVisibility Collapse=True}}}">
+                            <DockPanel x:Name="LeftPanel">
                                 <ContentControl DockPanel.Dock="Top" x:Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                                 <Button x:Name="Attach" DockPanel.Dock="Bottom"
-                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                            Style="{StaticResource OverButton}"
-                             Visibility="Visible"
-                            controls:Notification.CloseOnClick="True"
-                            controls:Notification.AttachOnClick="{Binding}">
+                                        HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                                        Style="{StaticResource OverButton}"
+                                         Visibility="Visible"
+                                        controls:Notification.CloseOnClick="True"
+                                        controls:Notification.AttachOnClick="{Binding}">
                                     <ContentControl x:Name="AttachIcon" DockPanel.Dock="Bottom" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{StaticResource AttachIcon}"/>
                                 </Button>
-
                             </DockPanel>
                         </ContentControl>
 
-                        <DockPanel Grid.Column="1">
-                            <TextBlock x:Name="TitleTxt" DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis" />
+                        <DockPanel Grid.Column="1" Grid.Row="1">
+                            <TextBlock x:Name="TitleTxt" DockPanel.Dock="Top"
+                                       Text="{Binding Title}"
+                                       FontWeight="Medium" TextTrimming="CharacterEllipsis"
+                                       Margin="0,0,12,0"/>
+
                             <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="0,8,0,0">
                                 <Button x:Name="RightButton" Style="{StaticResource NotifyButton}" Command="{Binding RightButtonAction, Converter={wpf:ActionToCommandConverter}}"
                                         Content="{Binding RightButtonContent}" DockPanel.Dock="Right" controls:Notification.CloseOnClick="True"
@@ -182,8 +203,10 @@
                                         Content="{Binding LeftButtonContent}" DockPanel.Dock="Right" Margin="0,0,8,0" controls:Notification.CloseOnClick="True"
                                         Visibility="{Binding LeftButtonAction, Converter={wpf:Combine First={wpf:IsNull}, Then={converters:BoolToVisibility Collapse=True, Inverse=True}}}"/>
                             </DockPanel>
+
                             <TextBlock x:Name="MessageBox" Text="{Binding Message}"
                                        TextWrapping="Wrap" Opacity=".8" Margin="0,0,12,0"/>
+
                         </DockPanel>
                     </Grid>
                 </Border>
