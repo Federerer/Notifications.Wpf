@@ -16,7 +16,6 @@ using Timer = System.Timers.Timer;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using Notification.Wpf.Classes;
-using Notification.Wpf.Utils;
 
 namespace Notification.Wpf.Sample
 {
@@ -359,7 +358,7 @@ namespace Notification.Wpf.Sample
             InitializeComponent();
             Icons = GetIcons();
             NotifiTypes = GetTypes();
-
+            Image = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\Test image.png")));
             Timer = new Timer { Interval = 1000 };
             Timer.Elapsed += (_, _) => Dispatcher.Invoke(() => _notificationManager.Show("Pink string from another thread!", areaName: GetArea()));
         }
@@ -385,7 +384,7 @@ namespace Notification.Wpf.Sample
 
             var content = new NotificationContent
             {
-                Title = "Sample notification notificationnotificationnotificationnotification",
+                Title = "Sample notification",
                 Message = ContentText,
                 Background = isNone ? ContentBackground : null,
                 Foreground = isNone ? ContentForeground : null,
@@ -680,13 +679,7 @@ namespace Notification.Wpf.Sample
 
         private void OpenImage_Click(object Sender, RoutedEventArgs E)
         {
-            ImageSource fileContent = null;
-            var filePath = string.Empty;
-
             var openFileDialog = new OpenFileDialog();
-            //openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            //openFileDialog.FilterIndex = 2;
-            //openFileDialog.RestoreDirectory = true;
 
             ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
             string sep = string.Empty;
@@ -705,24 +698,13 @@ namespace Notification.Wpf.Sample
             {
                 if (openFileDialog.ShowDialog() == true)
                 {
-                    //Get the path of specified file
-                    filePath = openFileDialog.FileName;
-                    fileContent = new BitmapImage(new Uri(filePath));
-                    ////Read the contents of the file into a stream
-                    //using var fileStream = openFileDialog.OpenFile();
-                    //{
-                    //    using MemoryStream reader = new MemoryStream();
-                    //    fileStream.CopyTo(reader);
-                    //    fileContent = ImageUtils.ImageFromClipboardDib(reader);
-                    //}
+                    Image = new BitmapImage(new Uri(openFileDialog.FileName));
                 }
             }
             catch (Exception e)
             {
                 _notificationManager.Show("Error", e.Message,type:NotificationType.Error);
             }
-
-            Image = fileContent;
         }
 
         #region Image : ImageSource - Image
@@ -733,7 +715,7 @@ namespace Notification.Wpf.Sample
                 nameof(Image),
                 typeof(ImageSource),
                 typeof(MainWindow),
-                new PropertyMetadata(new BitmapImage(new Uri(Path.Combine(Application.Current.StartupUri, "Resources\\Test image.png")))));
+                new PropertyMetadata(default));
 
         /// <summary>Image</summary>
         public ImageSource Image { get => (ImageSource)GetValue(ImageProperty); set => SetValue(ImageProperty, value); }
