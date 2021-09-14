@@ -1,4 +1,5 @@
 ﻿using System;
+using Notification.Wpf.Classes;
 
 namespace Notification.Wpf
 {
@@ -7,6 +8,8 @@ namespace Notification.Wpf
     /// </summary>
     public interface INotification: ICustomizedNotification
     {
+        /// <summary> Image </summary>
+        public NotificationImage Image { get; set; }
         /// <summary> Notification type (change color) </summary>
         NotificationType Type { get; set; }
 

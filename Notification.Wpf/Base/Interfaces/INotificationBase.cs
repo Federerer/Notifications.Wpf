@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Media;
-
-namespace Notification.Wpf
+﻿namespace Notification.Wpf
 {
     /// <summary>
     /// Base notification

@@ -115,6 +115,9 @@
             Notification template
             </summary>
         </member>
+        <member name="P:Notification.Wpf.INotification.Image">
+            <summary> Image </summary>
+        </member>
         <member name="P:Notification.Wpf.INotification.Type">
             <summary> Notification type (change color) </summary>
         </member>
@@ -155,31 +158,26 @@
         <member name="T:Notification.Wpf.NotificationContent">
             <summary> Message </summary>
         </member>
+        <member name="P:Notification.Wpf.NotificationContent.Image">
+            <inheritdoc/>
+        </member>
         <member name="P:Notification.Wpf.NotificationContent.Type">
-            <summary> Notification type (change color) </summary>
+            <inheritdoc/>
         </member>
         <member name="P:Notification.Wpf.NotificationContent.LeftButtonContent">
-            <summary>
-            left button content
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:Notification.Wpf.NotificationContent.LeftButtonAction">
-            <summary>
-            Left button action
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:Notification.Wpf.NotificationContent.RightButtonContent">
-            <summary>
-            Right button content
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:Notification.Wpf.NotificationContent.RightButtonAction">
-            <summary>
-            Right button action
-            </summary>
+            <inheritdoc/>
         </member>
         <member name="P:Notification.Wpf.NotificationContent.CloseOnClick">
-            <summary> close message when OnClick to message window </summary>
+            <inheritdoc/>
         </member>
         <member name="T:Notification.Wpf.NotificationManager">
             <inheritdoc />
@@ -238,6 +236,20 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:Notification.Wpf.ImagePosition">
+            <summary> Image position in notification </summary>
+        </member>
+        <member name="F:Notification.Wpf.ImagePosition.None">
+            <summary>
+            Visibility collapsed
+            </summary>
+        </member>
+        <member name="F:Notification.Wpf.ImagePosition.Top">
+            <summary> Upper panel </summary>
+        </member>
+        <member name="F:Notification.Wpf.ImagePosition.Bottom">
+            <summary> Under panel </summary>
+        </member>
         <member name="T:Notification.Wpf.NotificationTextTrimType">
             <summary>
             Способ отображения текста в сообщении
@@ -277,6 +289,15 @@
         </member>
         <member name="F:Notification.Wpf.NotificationType.Notification">
             <summary> Notification style type </summary>
+        </member>
+        <member name="T:Notification.Wpf.Classes.NotificationImage">
+            <summary> Image for notification message </summary>
+        </member>
+        <member name="P:Notification.Wpf.Classes.NotificationImage.Source">
+            <summary> Image source </summary>
+        </member>
+        <member name="P:Notification.Wpf.Classes.NotificationImage.Position">
+            <summary> Image position in view </summary>
         </member>
         <member name="P:Notification.Wpf.Classes.NotifierProgress`1.IsFinished">
             <summary>progress was finished</summary>
@@ -405,8 +426,67 @@
         <member name="P:Notification.Wpf.Combine.Then">
             <summary>Второй применяемый конвертер</summary>
         </member>
+        <member name="M:Notification.Wpf.DoubleValueConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc />
+        </member>
+        <member name="M:Notification.Wpf.DoubleValueConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc />
+        </member>
         <member name="M:Notification.Wpf.StringIsNullOrWhiteSpace.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
             <inheritdoc />
+        </member>
+        <member name="T:Notification.Wpf.Utils.ImageUtils">
+            <summary>
+            Helper class to provide common Wpf image operations.
+            </summary>
+        </member>
+        <member name="M:Notification.Wpf.Utils.ImageUtils.BitmapSourceToBytes(System.Windows.Media.Imaging.BitmapSource)">
+            <summary>
+            Converts a <see cref="T:System.Windows.Media.Imaging.BitmapSource"/> to encoded raw image bytes.
+            </summary>
+            <param name="image">The source image.</param>
+            <returns>A png encoded array of raw bytes.</returns>
+        </member>
+        <member name="M:Notification.Wpf.Utils.ImageUtils.BytesToImageSource(System.Byte[])">
+            <summary>
+            Converts raw image data into an <see cref="T:System.Windows.Media.ImageSource"/>.
+            </summary>
+            <param name="image">The raw image data.</param>
+            <returns>A Wpf <see cref="T:System.Windows.Media.ImageSource"/>.</returns>
+        </member>
+        <member name="M:Notification.Wpf.Utils.ImageUtils.BytesToImageSource(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Converts raw image data into an <see cref="T:System.Windows.Media.ImageSource"/>.
+            </summary>
+            <param name="image">The raw image data.</param>
+            <param name="maxWidth">The maximum image width.</param>
+            <param name="maxHeight">The maximum image height.</param>
+            <returns>A Wpf <see cref="T:System.Windows.Media.ImageSource"/>.</returns>
+        </member>
+        <member name="M:Notification.Wpf.Utils.ImageUtils.ImageFromClipboardDib(System.IO.MemoryStream)">
+            <summary>
+            Converts a DeviceIndependentBitmap <see cref="T:System.IO.MemoryStream"/> from the Clipboard to an <see cref="T:System.Windows.Media.ImageSource"/>.
+            </summary>
+            <param name="ms">The DIB <see cref="T:System.IO.MemoryStream"/> to convert.</param>
+            <returns>A <see cref="T:System.Windows.Media.ImageSource"/> containing the DIB image.</returns>
+            <remarks>
+            Adapted from https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/.
+            </remarks>
+        </member>
+        <member name="T:Notification.Wpf.Utils.ImageUtils.BITMAPFILEHEADER">
+            <remarks>
+            Adapted from https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/.
+            </remarks>
+        </member>
+        <member name="T:Notification.Wpf.Utils.ImageUtils.BITMAPINFOHEADER">
+            <remarks>
+            Adapted from https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/.
+            </remarks>
+        </member>
+        <member name="T:Notification.Wpf.Utils.ImageUtils.BinaryStructConverter">
+            <remarks>
+            Adapted from https://thomaslevesque.com/2009/02/05/wpf-paste-an-image-from-the-clipboard/.
+            </remarks>
         </member>
         <member name="T:Notification.Wpf.View.NotificationProgress">
             <summary>
@@ -1343,36 +1423,6 @@
         <member name="M:Notifications.Wpf.View.TextContentView.InitializeComponent">
             <summary>
             InitializeComponent
-            </summary>
-        </member>
-        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
-            <summary>
-            GeneratedInternalTypeHelper
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
-            <summary>
-            CreateInstance
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            GetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            SetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
-            <summary>
-            CreateDelegate
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
-            <summary>
-            AddEventHandler
             </summary>
         </member>
     </members>
