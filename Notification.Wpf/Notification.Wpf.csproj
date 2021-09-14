@@ -4,7 +4,7 @@
     <TargetFrameworks>net5.0-windows;netcoreapp3.1-windows;net4.6-windows;net4.6.1-windows;net4.7-windows;net4.8-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
-    <Version>5.3.0</Version>
+    <Version>5.4.0</Version>
     <Description>This project will help you take notification window like in windows</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Platonenkov/Notification.Wpf</PackageProjectUrl>
@@ -14,7 +14,7 @@
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Platonenkov/Notification.Wpf</RepositoryUrl>
     <PackageTags>Toast Notifications WPF</PackageTags>
-    <PackageReleaseNotes>settings was opened for users Colors and Icons from static properties, Overlay window message count, progress settings</PackageReleaseNotes>
+    <PackageReleaseNotes>Added section for image, if icon is null - left column will collapse</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Notifications.Wpf.snk</AssemblyOriginatorKeyFile>
