@@ -1,7 +1,6 @@
 ﻿using System.Windows.Media;
-using System.Windows.Shapes;
 using FontAwesome5;
-using Notifications.Wpf.ViewModels.Base;
+
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 
 namespace Notification.Wpf.Constants

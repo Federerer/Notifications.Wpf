@@ -236,6 +236,20 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="T:Notification.Wpf.ImagePosition">
+            <summary> Image position in notification </summary>
+        </member>
+        <member name="F:Notification.Wpf.ImagePosition.None">
+            <summary>
+            Visibility collapsed
+            </summary>
+        </member>
+        <member name="F:Notification.Wpf.ImagePosition.Top">
+            <summary> Upper panel </summary>
+        </member>
+        <member name="F:Notification.Wpf.ImagePosition.Bottom">
+            <summary> Under panel </summary>
+        </member>
         <member name="T:Notification.Wpf.NotificationTextTrimType">
             <summary>
             Способ отображения текста в сообщении
@@ -276,13 +290,14 @@
         <member name="F:Notification.Wpf.NotificationType.Notification">
             <summary> Notification style type </summary>
         </member>
-        <member name="T:Notification.Wpf.Classes.ImagePosition">
-            <summary> Image position in notification </summary>
-        </member>
         <member name="T:Notification.Wpf.Classes.NotificationImage">
-            <summary>
-            Image for notification message
-            </summary>
+            <summary> Image for notification message </summary>
+        </member>
+        <member name="P:Notification.Wpf.Classes.NotificationImage.Source">
+            <summary> Image source </summary>
+        </member>
+        <member name="P:Notification.Wpf.Classes.NotificationImage.Position">
+            <summary> Image position in view </summary>
         </member>
         <member name="P:Notification.Wpf.Classes.NotifierProgress`1.IsFinished">
             <summary>progress was finished</summary>
@@ -1408,36 +1423,6 @@
         <member name="M:Notifications.Wpf.View.TextContentView.InitializeComponent">
             <summary>
             InitializeComponent
-            </summary>
-        </member>
-        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
-            <summary>
-            GeneratedInternalTypeHelper
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
-            <summary>
-            CreateInstance
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            GetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            SetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
-            <summary>
-            CreateDelegate
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
-            <summary>
-            AddEventHandler
             </summary>
         </member>
     </members>

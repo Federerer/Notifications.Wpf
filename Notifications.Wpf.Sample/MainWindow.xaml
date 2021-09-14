@@ -86,7 +86,7 @@
                                        VerticalAlignment="Center"
                                        Source="{Binding Image,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                                 <GroupBox Header="Image position" >
-                                    <ComboBox ItemsSource="{helpers:EnumValues {x:Type classes:ImagePosition}}"
+                                    <ComboBox ItemsSource="{helpers:EnumValues {x:Type wpf:ImagePosition}}"
                                               SelectedItem="{Binding SelectedImgPosition, RelativeSource={RelativeSource AncestorType={x:Type Window}}, UpdateSourceTrigger= PropertyChanged}"
                                               Width="100" VerticalAlignment="Center"/>
                                 </GroupBox>

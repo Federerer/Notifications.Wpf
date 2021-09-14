@@ -2,9 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
-using Notification.Wpf.Constants;
 using Notification.Wpf.Converters;
-using Notification.Wpf.Utils;
 
 namespace Notification.Wpf
 {
