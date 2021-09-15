@@ -67,10 +67,16 @@ xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notificati
 notificationManager.Show(title, Message, type, "WindowArea", onClick: () => SomeAction();
 ```
 -  Attach a long text to view window, without changing a size of notification message
-if you need to show all long text - use TrimTipe - NoTrim
-if you need to show small message window - use TrimTipe - Trim,
-if you need All text, but you dont need big window - use TrimTipe - Attach, it will trim text and show small button that open other window to operate with full text;
-if you need All text, but you dont need big window and you want defined window size - use TrimTipe - AttachIfMoreRows, it will trim text and show small button if count of rows in message will be more that that you set.
+-  
+if you need to show all long text - use TrimTipe - NoTrim;
+
+if you need to show small message window - use TrimTipe - Trim;
+
+if you need All text, but you dont need big window - use TrimTipe - Attach,
+it will trim text and show small button that open other window to operate with full text;
+
+if you need All text, but you dont need big window and you want defined window size - use TrimTipe - AttachIfMoreRows,
+it will trim text and show small button if count of rows in message will be more that that you set.
 
 ### Full content sample
 ```C#
