@@ -86,7 +86,7 @@ var content = new NotificationContent
         Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         Type = NotificationType.Error,
         TrimType = NotificationTextTrimType.Attach, // will show attach button on message
-        RowsCont = 3, //Will show 3 rows and trim after
+        RowsCount = 3, //Will show 3 rows and trim after
         LeftButtonAction = () => SomeAction(), //Action on left button click, button will not show if it null 
         RightButtonAction = () => SomeAction(), //Action on right button click,  button will not show if it null
         LeftButtonContent, // Left button content (string or what u want
