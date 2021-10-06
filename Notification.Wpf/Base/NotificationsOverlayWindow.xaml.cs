@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Notification.Wpf.Constants;
+using Notification.Wpf.Controls;
 
 namespace Notification.Wpf
 {
@@ -20,6 +21,21 @@ namespace Notification.Wpf
 
         /// <summary>Maximum Window Items</summary>
         public uint MaxWindowItems { get => (uint)GetValue(MaxWindowItemsProperty); set => SetValue(MaxWindowItemsProperty, value); }
+
+        #endregion
+
+        #region MessagePosition : NotificationPosition - Позиция сообщений в окне
+
+        /// <summary>Позиция сообщений в окне</summary>
+        public static readonly DependencyProperty MessagePositionProperty =
+            DependencyProperty.Register(
+                nameof(MessagePosition),
+                typeof(NotificationPosition),
+                typeof(NotificationsOverlayWindow),
+                new PropertyMetadata(NotificationConstants.MessagePosition));
+
+        /// <summary>Позиция сообщений в окне</summary>
+        public NotificationPosition MessagePosition { get => (NotificationPosition)GetValue(MessagePositionProperty); set => SetValue(MessagePositionProperty, value); }
 
         #endregion
 

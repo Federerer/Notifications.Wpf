@@ -28,68 +28,6 @@
         <member name="P:Notification.Wpf.BaseNotificationContent.RowsCount">
             <inheritdoc />
         </member>
-        <member name="T:Notification.Wpf.INotificationManager">
-            <summary>
-            Notification manager for popup messages
-            </summary>
-        </member>
-        <member name="M:Notification.Wpf.INotificationManager.Show(System.Object,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Boolean)">
-            <summary>
-            
-            </summary>
-            <param name="content">window content</param>
-            <param name="areaName">window are where show notification</param>
-            <param name="expirationTime">time after which the window will disappear</param>
-            <param name="onClick">what should happen when clicking on the window</param>
-            <param name="onClose">what should happen when window closing</param>
-            <param name="CloseOnClick">close window after clicking</param>
-        </member>
-        <member name="M:Notification.Wpf.INotificationManager.Show(System.String,System.String,Notification.Wpf.NotificationType,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Action,System.String,System.Action,System.String,Notification.Wpf.NotificationTextTrimType,System.UInt32,System.Boolean)">
-            <summary>
-            Show message
-            </summary>
-            <param name="title">window title</param>
-            <param name="message">Message in window</param>
-            <param name="type">Window type</param>
-            <param name="areaName">window are where show notification</param>
-            <param name="expirationTime">time after which the window will disappear</param>
-            <param name="onClick">what should happen when clicking on the window</param>
-            <param name="onClose">what should happen when window closing</param>
-            <param name="LeftButton">what should happen when clicking on the left button (if null - button not visible)</param>
-            <param name="LeftButtonText">what should be written on the left button</param>
-            <param name="RightButton">what should happen when clicking on the right button (if null - button not visible)</param>
-            <param name="RightButtonText">what should be written on the right button</param>
-            <param name="trim">trim text if it is longer than the number of visible lines</param>
-            <param name="RowsCountWhenTrim">Base number of rows when trims</param>
-            <param name="CloseOnClick">close window after clicking</param>
-        </member>
-        <member name="M:Notification.Wpf.INotificationManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Object)">
-            <summary> Show ProgressBar </summary>
-            <param name="Title">Title of window</param>
-            <param name="ShowProgress">Show or not progress status</param>
-            <param name="ShowCancelButton">Show Cancel button or not</param>
-            <param name="areaName">window are where show notification</param>
-            <param name="TrimText">trim text if it is longer than the number of visible lines</param>
-            <param name="DefaultRowsCount">Base number of rows when trims</param>
-            <param name="BaseWaitingMessage">Timeout message, set null if you do not want to see time in bar progress</param>
-            <param name="IsCollapse">Start progress bar in collapsed form</param>
-            <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
-            <param name="background">popup window background</param>
-            <param name="foreground">popup window foreground</param>
-            <param name="progressColor">progress foreground</param>
-            <param name="icon">progress icon</param>
-        </member>
-        <member name="M:Notification.Wpf.INotificationManager.ShowProgressBar(Notification.Wpf.ICustomizedNotification,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush)">
-            <summary> Show ProgressBar </summary>
-            <param name="content">Base content settings</param>
-            <param name="ShowProgress">Show or not progress status</param>
-            <param name="ShowCancelButton">Show Cancel button or not</param>
-            <param name="areaName">window are where show notification</param>
-            <param name="BaseWaitingMessage">Timeout message, set null if you do not want to see time in bar progress</param>
-            <param name="IsCollapse">Start progress bar in collapsed form</param>
-            <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
-            <param name="progressColor">progress line color</param>
-        </member>
         <member name="T:Notification.Wpf.ICustomizedNotification">
             <summary>
             Customized notification
@@ -154,6 +92,68 @@
         </member>
         <member name="P:Notification.Wpf.INotificationBase.Message">
             <summary> Body message text </summary>
+        </member>
+        <member name="T:Notification.Wpf.INotificationManager">
+            <summary>
+            Notification manager for popup messages
+            </summary>
+        </member>
+        <member name="M:Notification.Wpf.INotificationManager.Show(System.Object,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="content">window content</param>
+            <param name="areaName">window are where show notification</param>
+            <param name="expirationTime">time after which the window will disappear</param>
+            <param name="onClick">what should happen when clicking on the window</param>
+            <param name="onClose">what should happen when window closing</param>
+            <param name="CloseOnClick">close window after clicking</param>
+        </member>
+        <member name="M:Notification.Wpf.INotificationManager.Show(System.String,System.String,Notification.Wpf.NotificationType,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Action,System.String,System.Action,System.String,Notification.Wpf.NotificationTextTrimType,System.UInt32,System.Boolean)">
+            <summary>
+            Show message
+            </summary>
+            <param name="title">window title</param>
+            <param name="message">Message in window</param>
+            <param name="type">Window type</param>
+            <param name="areaName">window are where show notification</param>
+            <param name="expirationTime">time after which the window will disappear</param>
+            <param name="onClick">what should happen when clicking on the window</param>
+            <param name="onClose">what should happen when window closing</param>
+            <param name="LeftButton">what should happen when clicking on the left button (if null - button not visible)</param>
+            <param name="LeftButtonText">what should be written on the left button</param>
+            <param name="RightButton">what should happen when clicking on the right button (if null - button not visible)</param>
+            <param name="RightButtonText">what should be written on the right button</param>
+            <param name="trim">trim text if it is longer than the number of visible lines</param>
+            <param name="RowsCountWhenTrim">Base number of rows when trims</param>
+            <param name="CloseOnClick">close window after clicking</param>
+        </member>
+        <member name="M:Notification.Wpf.INotificationManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Object)">
+            <summary> Show ProgressBar </summary>
+            <param name="Title">Title of window</param>
+            <param name="ShowProgress">Show or not progress status</param>
+            <param name="ShowCancelButton">Show Cancel button or not</param>
+            <param name="areaName">window are where show notification</param>
+            <param name="TrimText">trim text if it is longer than the number of visible lines</param>
+            <param name="DefaultRowsCount">Base number of rows when trims</param>
+            <param name="BaseWaitingMessage">Timeout message, set null if you do not want to see time in bar progress</param>
+            <param name="IsCollapse">Start progress bar in collapsed form</param>
+            <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
+            <param name="background">popup window background</param>
+            <param name="foreground">popup window foreground</param>
+            <param name="progressColor">progress foreground</param>
+            <param name="icon">progress icon</param>
+        </member>
+        <member name="M:Notification.Wpf.INotificationManager.ShowProgressBar(Notification.Wpf.ICustomizedNotification,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush)">
+            <summary> Show ProgressBar </summary>
+            <param name="content">Base content settings</param>
+            <param name="ShowProgress">Show or not progress status</param>
+            <param name="ShowCancelButton">Show Cancel button or not</param>
+            <param name="areaName">window are where show notification</param>
+            <param name="BaseWaitingMessage">Timeout message, set null if you do not want to see time in bar progress</param>
+            <param name="IsCollapse">Start progress bar in collapsed form</param>
+            <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
+            <param name="progressColor">progress line color</param>
         </member>
         <member name="T:Notification.Wpf.NotificationContent">
             <summary> Message </summary>
@@ -224,6 +224,12 @@
         </member>
         <member name="P:Notification.Wpf.NotificationsOverlayWindow.MaxWindowItems">
             <summary>Maximum Window Items</summary>
+        </member>
+        <member name="F:Notification.Wpf.NotificationsOverlayWindow.MessagePositionProperty">
+            <summary>Позиция сообщений в окне</summary>
+        </member>
+        <member name="P:Notification.Wpf.NotificationsOverlayWindow.MessagePosition">
+            <summary>Позиция сообщений в окне</summary>
         </member>
         <member name="F:Notification.Wpf.NotificationsOverlayWindow.CollapseProgressAutoIfMoreMessagesProperty">
             <summary>Need collapse notification if count more that maximum</summary>
@@ -352,49 +358,52 @@
         <member name="F:Notification.Wpf.Classes.SlowedProgress`1._UpdateTimeOut">
             <summary> Время задержки обновления данных в прогрессе </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.NotificationsOverlayWindowMaxCount">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.NotificationsOverlayWindowMaxCount">
             <summary> Overlay window maximum count </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.CollapseProgressIfMoreRows">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.CollapseProgressIfMoreRows">
             <summary> If messages count in overlay window will be more that maximum - progress bar will start collapsed (progress bar never closing automatically) </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.SuccessBackgroundColor">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.MessagePosition">
+            <summary> Overlay message position </summary>
+        </member>
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.SuccessBackgroundColor">
             <summary> base background color </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.WarningBackgroundColor">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.WarningBackgroundColor">
             <summary> base background color </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.ErrorBackgroundColor">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.ErrorBackgroundColor">
             <summary> base background color </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.InformationBackgroundColor">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.InformationBackgroundColor">
             <summary> base background color </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultBackgroundColor">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultBackgroundColor">
             <summary> base background color </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultForegroundColor">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultForegroundColor">
             <summary> base foreground color </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultRowCounts">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultRowCounts">
             <summary> visible rows count in message by default</summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultLeftButtonContent">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultLeftButtonContent">
             <summary>default Notification left button content </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultRightButtonContent">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultRightButtonContent">
             <summary>default Notification right button content </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaulTextTrimType">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaulTextTrimType">
             <summary>default Notification text trim type </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultProgressColor">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultProgressColor">
             <summary> default progress line foreground </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultProgressIcon">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultProgressIcon">
             <summary> base progress icon </summary>
         </member>
-        <member name="F:Notification.Wpf.Constants.NotificationConstants.DefaultProgressButtonContent">
+        <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultProgressButtonContent">
             <summary> Cancel button content </summary>
         </member>
         <member name="F:Notification.Wpf.Controls.NotificationArea.CollapseProgressAutoProperty">
@@ -1423,6 +1432,36 @@
         <member name="M:Notifications.Wpf.View.TextContentView.InitializeComponent">
             <summary>
             InitializeComponent
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>

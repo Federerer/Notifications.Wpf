@@ -16,6 +16,7 @@ using Timer = System.Timers.Timer;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using Notification.Wpf.Classes;
+using Notification.Wpf.Controls;
 
 namespace Notification.Wpf.Sample
 {
@@ -734,6 +735,32 @@ namespace Notification.Wpf.Sample
 
         /// <summary>Image position</summary>
         public ImagePosition SelectedImgPosition { get => (ImagePosition)GetValue(SelectedImgPositionProperty); set => SetValue(SelectedImgPositionProperty, value); }
+
+        #endregion
+
+        #region MessagePosition : NotificationPosition - Message position in window
+
+        /// <summary>Message position in window</summary>
+        public static readonly DependencyProperty MessagePositionProperty =
+            DependencyProperty.Register(
+                nameof(MessagePosition),
+                typeof(NotificationPosition),
+                typeof(MainWindow),
+                new PropertyMetadata(NotificationConstants.MessagePosition, (O, Args) =>
+                {
+                    NotificationConstants.MessagePosition = (NotificationPosition)Args.NewValue;
+                }));
+
+        /// <summary>Message position in window</summary>
+        public NotificationPosition MessagePosition
+        {
+            get => (NotificationPosition)GetValue(MessagePositionProperty);
+            set
+            {
+                SetValue(MessagePositionProperty, value);
+                //NotificationConstants.MessagePosition = value;
+            }
+        }
 
         #endregion
     }
