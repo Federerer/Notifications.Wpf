@@ -15,7 +15,9 @@ using WPF.ColorPicker;
 using Timer = System.Timers.Timer;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
+using Notification.Wpf.Base;
 using Notification.Wpf.Classes;
+using Notification.Wpf.Controls;
 
 namespace Notification.Wpf.Sample
 {
@@ -251,6 +253,36 @@ namespace Notification.Wpf.Sample
         private string GetArea() => ShowInWindow ? "WindowArea" : "";
         #endregion
 
+        #region UseTitleSettings : bool - Использовать настройки для Title
+
+        /// <summary>Использовать настройки для Title</summary>
+        public static readonly DependencyProperty UseTitleSettingsProperty =
+            DependencyProperty.Register(
+                nameof(UseTitleSettings),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>Использовать настройки для Title</summary>
+        public bool UseTitleSettings { get => (bool)GetValue(UseTitleSettingsProperty); set => SetValue(UseTitleSettingsProperty, value); }
+
+        #endregion
+
+        #region UseMessageSettings : bool - Использовать настройки для Message
+
+        /// <summary>Использовать настройки для Message</summary>
+        public static readonly DependencyProperty UseMessageSettingsProperty =
+            DependencyProperty.Register(
+                nameof(UseMessageSettings),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>Использовать настройки для Message</summary>
+        public bool UseMessageSettings { get => (bool)GetValue(UseMessageSettingsProperty); set => SetValue(UseMessageSettingsProperty, value); }
+
+        #endregion
+
         #region ProgressCollapsed : bool - ProgressCollapsed
 
         /// <summary>ProgressCollapsed</summary>
@@ -380,6 +412,28 @@ namespace Notification.Wpf.Sample
                 Title = "Clicked!",
                 Message = "Window notification was clicked!",
                 Type = NotificationType.Success,
+                TitleTextSettings = !UseTitleSettings ? null :
+                    new TextContentSettings()
+                    {
+                        FontStyle = TitleSettings.FontStyle,
+                        FontFamily = TitleSettings.FontFamily,
+                        FontSize = TitleSettings.FontSize,
+                        FontWeight = TitleSettings.FontWeight,
+                        TextAlignment = TitleSettings.TextAlign,
+                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
+                        VerticalTextAlignment = TitleSettings.VerticalAlignment
+                    },
+                MessageTextSettings = !UseMessageSettings ? null :
+                    new TextContentSettings()
+                    {
+                        FontStyle = MessageSettings.FontStyle,
+                        FontFamily = MessageSettings.FontFamily,
+                        FontSize = MessageSettings.FontSize,
+                        FontWeight = MessageSettings.FontWeight,
+                        TextAlignment = MessageSettings.TextAlign,
+                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
+                        VerticalTextAlignment = MessageSettings.VerticalAlignment
+                    },
             };
 
             var content = new NotificationContent
@@ -403,7 +457,29 @@ namespace Notification.Wpf.Sample
                     Foreground = IconForeground
                 } :
                     null,
-                Image = new NotificationImage(){Source = Image,Position = SelectedImgPosition }
+                Image = new NotificationImage() { Source = Image, Position = SelectedImgPosition },
+                TitleTextSettings = !UseTitleSettings ? null :
+                    new TextContentSettings()
+                    {
+                        FontStyle = TitleSettings.FontStyle,
+                        FontFamily = TitleSettings.FontFamily,
+                        FontSize = TitleSettings.FontSize,
+                        FontWeight = TitleSettings.FontWeight,
+                        TextAlignment = TitleSettings.TextAlign,
+                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
+                        VerticalTextAlignment = TitleSettings.VerticalAlignment
+                    },
+                MessageTextSettings = !UseMessageSettings ? null :
+                    new TextContentSettings()
+                    {
+                        FontStyle = MessageSettings.FontStyle,
+                        FontFamily = MessageSettings.FontFamily,
+                        FontSize = MessageSettings.FontSize,
+                        FontWeight = MessageSettings.FontWeight,
+                        TextAlignment = MessageSettings.TextAlign,
+                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
+                        VerticalTextAlignment = MessageSettings.VerticalAlignment
+                    },
             };
             _notificationManager.Show(content,
                 areaName: GetArea(),
@@ -416,53 +492,74 @@ namespace Notification.Wpf.Sample
             var iconN = SelectedIcon is null ? 0 : (int)SelectedIcon.Icon;
             var title = "Прогресс бар";
 
-            #region First sample
+            //#region First sample
 
-            using var progress = _notificationManager.ShowProgressBar(
-                title,
-                true,
-                true,
-                GetArea(),
-                SelectedTrimType == NotificationTextTrimType.Trim,
-                2u,
-                IsCollapse: ProgressCollapsed,
-                TitleWhenCollapsed: ProgressTitleOrMessage,
-                progressColor: ProgressColor,
-                background: ContentBackground,
-                foreground: ContentForeground, icon: iconN == 0 ? null : new SvgAwesome()
-                {
-                    Icon = (EFontAwesomeIcon)iconN,
-                    Height = 25,
-                    Foreground = IconForeground
-                });
-
-            #endregion
-
-            #region Second sample
-
-            //var content = new BaseNotificationContent()
-            //{
-            //    Title = title,
-            //    Message = "Test message",
-            //    Background = ContentBackground,
-            //    Foreground = ContentForeground,
-            //    TrimType = SelectedTrimType,
-            //    Icon = iconN == 0 ? null : new SvgAwesome()
+            //using var progress = _notificationManager.ShowProgressBar(
+            //    title,
+            //    true,
+            //    true,
+            //    GetArea(),
+            //    SelectedTrimType == NotificationTextTrimType.Trim,
+            //    2u,
+            //    IsCollapse: ProgressCollapsed,
+            //    TitleWhenCollapsed: ProgressTitleOrMessage,
+            //    progressColor: ProgressColor,
+            //    background: ContentBackground,
+            //    foreground: ContentForeground, icon: iconN == 0 ? null : new SvgAwesome()
             //    {
             //        Icon = (EFontAwesomeIcon)iconN,
             //        Height = 25,
             //        Foreground = IconForeground
-            //    },
-            //    RowsCount = RowCount
-            //};
+            //    });
 
-            //using var progress = _notificationManager.ShowProgressBar(
-            //    content,
-            //    true,
-            //    true,
-            //    GetArea(),
-            //    IsCollapse: ProgressCollapsed,
-            //    TitleWhenCollapsed: ProgressTitleOrMessage, progressColor:ProgressColor);
+            //#endregion
+            #region Second sample
+
+            var content = new BaseNotificationContent()
+            {
+                Title = title,
+                Message = "Test message",
+                Background = ContentBackground,
+                Foreground = ContentForeground,
+                TrimType = SelectedTrimType,
+                Icon = iconN == 0 ? null : new SvgAwesome()
+                {
+                    Icon = (EFontAwesomeIcon)iconN,
+                    Height = 25,
+                    Foreground = IconForeground
+                },
+                RowsCount = RowCount,
+                TitleTextSettings = !UseTitleSettings ? null :
+                    new TextContentSettings()
+                    {
+                        FontStyle = TitleSettings.FontStyle,
+                        FontFamily = TitleSettings.FontFamily,
+                        FontSize = TitleSettings.FontSize,
+                        FontWeight = TitleSettings.FontWeight,
+                        TextAlignment = TitleSettings.TextAlign,
+                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
+                        VerticalTextAlignment = TitleSettings.VerticalAlignment
+                    },
+                MessageTextSettings = !UseMessageSettings ? null :
+                    new TextContentSettings()
+                    {
+                        FontStyle = MessageSettings.FontStyle,
+                        FontFamily = MessageSettings.FontFamily,
+                        FontSize = MessageSettings.FontSize,
+                        FontWeight = MessageSettings.FontWeight,
+                        TextAlignment = MessageSettings.TextAlign,
+                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
+                        VerticalTextAlignment = MessageSettings.VerticalAlignment
+                    },
+            };
+
+            using var progress = _notificationManager.ShowProgressBar(
+                content,
+                true,
+                true,
+                GetArea(),
+                IsCollapse: ProgressCollapsed,
+                TitleWhenCollapsed: ProgressTitleOrMessage, progressColor: ProgressColor);
 
             #endregion
             try
@@ -703,7 +800,7 @@ namespace Notification.Wpf.Sample
             }
             catch (Exception e)
             {
-                _notificationManager.Show("Error", e.Message,type:NotificationType.Error);
+                _notificationManager.Show("Error", e.Message, type: NotificationType.Error);
             }
         }
 
@@ -734,6 +831,32 @@ namespace Notification.Wpf.Sample
 
         /// <summary>Image position</summary>
         public ImagePosition SelectedImgPosition { get => (ImagePosition)GetValue(SelectedImgPositionProperty); set => SetValue(SelectedImgPositionProperty, value); }
+
+        #endregion
+
+        #region MessagePosition : NotificationPosition - Message position in window
+
+        /// <summary>Message position in window</summary>
+        public static readonly DependencyProperty MessagePositionProperty =
+            DependencyProperty.Register(
+                nameof(MessagePosition),
+                typeof(NotificationPosition),
+                typeof(MainWindow),
+                new PropertyMetadata(NotificationConstants.MessagePosition, (O, Args) =>
+                {
+                    NotificationConstants.MessagePosition = (NotificationPosition)Args.NewValue;
+                }));
+
+        /// <summary>Message position in window</summary>
+        public NotificationPosition MessagePosition
+        {
+            get => (NotificationPosition)GetValue(MessagePositionProperty);
+            set
+            {
+                SetValue(MessagePositionProperty, value);
+                //NotificationConstants.MessagePosition = value;
+            }
+        }
 
         #endregion
     }

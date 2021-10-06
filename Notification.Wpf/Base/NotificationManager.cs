@@ -172,7 +172,8 @@ namespace Notification.Wpf
                     Width = workArea.Width,
                     Height = workArea.Height,
                     CollapseProgressAutoIfMoreMessages = NotificationConstants.CollapseProgressIfMoreRows,
-                    MaxWindowItems = NotificationConstants.NotificationsOverlayWindowMaxCount
+                    MaxWindowItems = NotificationConstants.NotificationsOverlayWindowMaxCount,
+                    MessagePosition = NotificationConstants.MessagePosition
                 };
                 _window.Closed += (_, _) =>
                 {

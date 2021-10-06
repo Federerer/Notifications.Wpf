@@ -3,7 +3,7 @@ WPF toast notifications. (Messages and progress bars)
 
 ## [Last Updates](https://github.com/Platonenkov/Notification.Wpf/blob/dev/Updates.md)
 ### Installation:
-Install-Package Notification.WPF -Version 5.3.0
+Install-Package Notification.WPF -Version 5.4.0
 
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/notification.gif)
 ![Demo](https://github.com/Platonenkov/Notifications.Wpf/blob/dev/Files/progress.gif)
@@ -67,10 +67,16 @@ xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notificati
 notificationManager.Show(title, Message, type, "WindowArea", onClick: () => SomeAction();
 ```
 -  Attach a long text to view window, without changing a size of notification message
-if you need to show all long text - use TrimTipe - NoTrim
-if you need to show small message window - use TrimTipe - Trim,
-if you need All text, but you dont need big window - use TrimTipe - Attach, it will trim text and show small button that open other window to operate with full text;
-if you need All text, but you dont need big window and you want defined window size - use TrimTipe - AttachIfMoreRows, it will trim text and show small button if count of rows in message will be more that that you set.
+-  
+if you need to show all long text - use TrimTipe - NoTrim;
+
+if you need to show small message window - use TrimTipe - Trim;
+
+if you need All text, but you dont need big window - use TrimTipe - Attach,
+it will trim text and show small button that open other window to operate with full text;
+
+if you need All text, but you dont need big window and you want defined window size - use TrimTipe - AttachIfMoreRows,
+it will trim text and show small button if count of rows in message will be more that that you set.
 
 ### Full content sample
 ```C#
@@ -80,7 +86,7 @@ var content = new NotificationContent
         Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         Type = NotificationType.Error,
         TrimType = NotificationTextTrimType.Attach, // will show attach button on message
-        RowsCont = 3, //Will show 3 rows and trim after
+        RowsCount = 3, //Will show 3 rows and trim after
         LeftButtonAction = () => SomeAction(), //Action on left button click, button will not show if it null 
         RightButtonAction = () => SomeAction(), //Action on right button click,  button will not show if it null
         LeftButtonContent, // Left button content (string or what u want
