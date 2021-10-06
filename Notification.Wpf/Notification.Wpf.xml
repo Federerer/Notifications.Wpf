@@ -28,6 +28,12 @@
         <member name="P:Notification.Wpf.BaseNotificationContent.RowsCount">
             <inheritdoc />
         </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.TitleTextSettings">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.BaseNotificationContent.MessageTextSettings">
+            <inheritdoc />
+        </member>
         <member name="T:Notification.Wpf.ICustomizedNotification">
             <summary>
             Customized notification
@@ -47,6 +53,12 @@
         </member>
         <member name="P:Notification.Wpf.ICustomizedNotification.RowsCount">
             <summary> Set rows of message that will show if set Trim </summary>
+        </member>
+        <member name="P:Notification.Wpf.ICustomizedNotification.TitleTextSettings">
+            <summary> Title text style settings </summary>
+        </member>
+        <member name="P:Notification.Wpf.ICustomizedNotification.MessageTextSettings">
+            <summary> Message text style settings </summary>
         </member>
         <member name="T:Notification.Wpf.INotification">
             <summary>
@@ -154,6 +166,48 @@
             <param name="IsCollapse">Start progress bar in collapsed form</param>
             <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
             <param name="progressColor">progress line color</param>
+        </member>
+        <member name="T:Notification.Wpf.Base.Interfaces.ITextContentSettings">
+            <summary> Text content settings </summary>
+        </member>
+        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.FontFamily">
+            <summary> Message font </summary>
+        </member>
+        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.FontSize">
+            <summary> Message font size </summary>
+        </member>
+        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.HorizontalTextAlignment">
+            <summary> Message horizontal text alignment </summary>
+        </member>
+        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.VerticalTextAlignment">
+            <summary> Message vertical text alignment </summary>
+        </member>
+        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.FontStyle">
+            <summary> Font style </summary>
+        </member>
+        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.FontWeight">
+            <summary> Font Weight </summary>
+        </member>
+        <member name="T:Notification.Wpf.Base.TextContentSettings">
+            <summary> Text content settings </summary>
+        </member>
+        <member name="P:Notification.Wpf.Base.TextContentSettings.FontFamily">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.Base.TextContentSettings.FontSize">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.Base.TextContentSettings.HorizontalTextAlignment">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.Base.TextContentSettings.VerticalTextAlignment">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.Base.TextContentSettings.FontStyle">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.Base.TextContentSettings.FontWeight">
+            <inheritdoc />
         </member>
         <member name="T:Notification.Wpf.NotificationContent">
             <summary> Message </summary>
@@ -1340,6 +1394,12 @@
             <summary>Число строк текста</summary>
         </member>
         <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.RowsCount">
+            <inheritdoc />
+        </member>
+        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.TitleTextSettings">
+            <inheritdoc />
+        </member>
+        <member name="P:Notifications.Wpf.ViewModels.NotificationProgressViewModel.MessageTextSettings">
             <inheritdoc />
         </member>
         <member name="F:Notifications.Wpf.ViewModels.NotificationProgressViewModel._process">

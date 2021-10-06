@@ -1,4 +1,7 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Automation.Text;
+using System.Windows.Media;
+using Notification.Wpf.Base;
 using Notification.Wpf.Constants;
 
 namespace Notification.Wpf
@@ -22,5 +25,10 @@ namespace Notification.Wpf
         public NotificationTextTrimType TrimType { get; set; } = NotificationConstants.DefaulTextTrimType;
         /// <inheritdoc />
         public uint RowsCount { get; set; } = NotificationConstants.DefaultRowCounts;
+
+        /// <inheritdoc />
+        public TextContentSettings TitleTextSettings { get; set; }
+        /// <inheritdoc />
+        public TextContentSettings MessageTextSettings { get; set; }
     }
 }

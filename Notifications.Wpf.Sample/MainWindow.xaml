@@ -11,7 +11,7 @@
         xmlns:constants="clr-namespace:Notification.Wpf.Constants;assembly=Notification.Wpf"
         xmlns:classes="clr-namespace:Notification.Wpf.Classes;assembly=Notification.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Width="800" MinWidth="900" Height="600" MinHeight="600"
+        Title="MainWindow" Width="800" MinWidth="900" MinHeight="750"
         >
     <Grid>
         <Grid.RowDefinitions>
@@ -21,11 +21,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.Resources>
-            <!--<Style TargetType="Button">
-                <Setter Property="Width" Value="100"/>
-                <Setter Property="Margin" Value="5"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-            </Style>-->
 
         </Grid.Resources>
 
@@ -207,6 +202,41 @@
                     </GroupBox>
 
                     <Button Content="Test" Click="TestMessage" VerticalAlignment="Center" Height="20" Width="100" Margin="5,0"/>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <GroupBox>
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Use title settings" />
+                                    <CheckBox
+                                        IsChecked="{Binding UseTitleSettings, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}"
+                                        Margin="5,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <elements:TextSettings x:Name="TitleSettings"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox>
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Use Message settings" />
+                                    <CheckBox
+                                        IsChecked="{Binding UseMessageSettings, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}"
+                                        Margin="5,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <elements:TextSettings x:Name="MessageSettings"/>
+                        </StackPanel>
+                    </GroupBox>
 
                 </StackPanel>
                 <GroupBox Header="Color section">

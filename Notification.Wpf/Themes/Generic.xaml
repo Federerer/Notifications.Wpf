@@ -200,9 +200,10 @@
 
                         <DockPanel Grid.Column="1" Grid.Row="1">
                             <TextBlock x:Name="TitleTxt" DockPanel.Dock="Top"
+
                                        Text="{Binding Title}"
-                                       FontWeight="Medium" TextTrimming="CharacterEllipsis"
-                                       Margin="0,0,12,0"/>
+                                       TextTrimming="CharacterEllipsis"
+                                       Margin="0,0,14,0"/>
 
                             <DockPanel LastChildFill="False" DockPanel.Dock="Bottom" Margin="0,8,0,0">
                                 <Button x:Name="RightButton" Style="{StaticResource NotifyButton}" Command="{Binding RightButtonAction, Converter={wpf:ActionToCommandConverter}}"
@@ -213,8 +214,11 @@
                                         Visibility="{Binding LeftButtonAction, Converter={wpf:Combine First={wpf:IsNull}, Then={converters:BoolToVisibility Collapse=True, Inverse=True}}}"/>
                             </DockPanel>
 
-                            <TextBlock x:Name="MessageBox" Text="{Binding Message}"
-                                       TextWrapping="Wrap" Opacity=".8" Margin="0,0,12,0"/>
+                            <TextBlock x:Name="MessageBox" 
+                                       Text="{Binding Message}"
+                                       TextWrapping="Wrap"
+                                       Opacity=".8"
+                                       Margin="0,0,12,0"/>
 
                         </DockPanel>
                     </Grid>
@@ -271,6 +275,23 @@
                         <Setter TargetName="LeftButton" Property="Foreground" Value="{Binding Foreground}"/>
                         <Setter TargetName="RightButton" Property="Foreground" Value="{Binding Foreground}"/>
                     </DataTrigger>
+                    <DataTrigger Binding="{Binding TitleTextSettings, Converter={wpf:IsNull}}" Value="false">
+                        <Setter TargetName="TitleTxt" Property="FontFamily" Value="{Binding TitleTextSettings.FontFamily}"/>
+                        <Setter TargetName="TitleTxt" Property="FontSize" Value="{Binding TitleTextSettings.FontSize}"/>
+                        <Setter TargetName="TitleTxt" Property="HorizontalAlignment" Value="{Binding TitleTextSettings.HorizontalTextAlignment}"/>
+                        <Setter TargetName="TitleTxt" Property="VerticalAlignment" Value="{Binding TitleTextSettings.VerticalTextAlignment}"/>
+                        <Setter TargetName="TitleTxt" Property="FontStyle" Value="{Binding TitleTextSettings.FontStyle}"/>
+                        <Setter TargetName="TitleTxt" Property="FontWeight" Value="{Binding TitleTextSettings.FontWeight}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding MessageTextSettings, Converter={wpf:IsNull}}" Value="false">
+                        <Setter TargetName="MessageBox" Property="FontFamily" Value="{Binding MessageTextSettings.FontFamily}"/>
+                        <Setter TargetName="MessageBox" Property="FontSize" Value="{Binding MessageTextSettings.FontSize}"/>
+                        <Setter TargetName="MessageBox" Property="HorizontalAlignment" Value="{Binding MessageTextSettings.HorizontalTextAlignment}"/>
+                        <Setter TargetName="MessageBox" Property="VerticalAlignment" Value="{Binding MessageTextSettings.VerticalTextAlignment}"/>
+                        <Setter TargetName="MessageBox" Property="FontStyle" Value="{Binding MessageTextSettings.FontStyle}"/>
+                        <Setter TargetName="MessageBox" Property="FontWeight" Value="{Binding MessageTextSettings.FontWeight}"/>
+                    </DataTrigger>
+
 
                 </DataTemplate.Triggers>
             </DataTemplate>
