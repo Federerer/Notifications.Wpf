@@ -1,5 +1,6 @@
 ﻿using System.Windows.Media;
 using FontAwesome5;
+using Notification.Wpf.Controls;
 
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 
@@ -8,24 +9,27 @@ namespace Notification.Wpf.Constants
     public class NotificationConstants
     {
         /// <summary> Overlay window maximum count </summary>
-        public static uint NotificationsOverlayWindowMaxCount = 999;
+        public static uint NotificationsOverlayWindowMaxCount { get; set; } = 999;
         /// <summary> If messages count in overlay window will be more that maximum - progress bar will start collapsed (progress bar never closing automatically) </summary>
-        public static bool CollapseProgressIfMoreRows = true;
+        public static bool CollapseProgressIfMoreRows { get; set; } = true;
+
+        /// <summary> Overlay message position </summary>
+        public static NotificationPosition MessagePosition { get; set; } = NotificationPosition.BottomRight;
 
         #region Notification
         /// <summary> base background color </summary>
 
         #region Default colors
 
-        public static Brush SuccessBackgroundColor = new SolidColorBrush(Colors.LimeGreen);
+        public static Brush SuccessBackgroundColor { get; set; } = new SolidColorBrush(Colors.LimeGreen);
         /// <summary> base background color </summary>
-        public static Brush WarningBackgroundColor = new SolidColorBrush(Colors.Orange);
+        public static Brush WarningBackgroundColor { get; set; } = new SolidColorBrush(Colors.Orange);
         /// <summary> base background color </summary>
-        public static Brush ErrorBackgroundColor = new SolidColorBrush(Colors.OrangeRed);
+        public static Brush ErrorBackgroundColor { get; set; } = new SolidColorBrush(Colors.OrangeRed);
         /// <summary> base background color </summary>
-        public static Brush InformationBackgroundColor = new SolidColorBrush(Colors.CornflowerBlue);
+        public static Brush InformationBackgroundColor { get; set; } = new SolidColorBrush(Colors.CornflowerBlue);
         /// <summary> base background color </summary>
-        public static Brush DefaultBackgroundColor = (Brush)new BrushConverter().ConvertFrom("#FF444444");
+        public static Brush DefaultBackgroundColor { get; set; } = (Brush)new BrushConverter().ConvertFrom("#FF444444");
 
         #endregion
 
@@ -54,24 +58,24 @@ namespace Notification.Wpf.Constants
         #endregion
 
         /// <summary> base foreground color </summary>
-        public static Brush DefaultForegroundColor = new SolidColorBrush(Colors.WhiteSmoke);
+        public static Brush DefaultForegroundColor { get; set; } = new SolidColorBrush(Colors.WhiteSmoke);
         /// <summary> visible rows count in message by default</summary>
-        public static uint DefaultRowCounts = 2U;
+        public static uint DefaultRowCounts { get; set; } = 2U;
         /// <summary>default Notification left button content </summary>
-        public static object DefaultLeftButtonContent = "Ok";
+        public static object DefaultLeftButtonContent { get; set; } = "Ok";
         /// <summary>default Notification right button content </summary>
-        public static object DefaultRightButtonContent = "Cancel";
+        public static object DefaultRightButtonContent { get; set; } = "Cancel";
         /// <summary>default Notification text trim type </summary>
-        public static NotificationTextTrimType DefaulTextTrimType = NotificationTextTrimType.NoTrim;
+        public static NotificationTextTrimType DefaulTextTrimType { get; set; } = NotificationTextTrimType.NoTrim;
         
         #endregion
 
         #region Progress
         /// <summary> default progress line foreground </summary>
-        public static Brush DefaultProgressColor = (Brush)new BrushConverter().ConvertFrom("#FF01D328");
+        public static Brush DefaultProgressColor { get; set; } = (Brush)new BrushConverter().ConvertFrom("#FF01D328");
 
         /// <summary> base progress icon </summary>
-        public static SvgAwesome DefaultProgressIcon = new()
+        public static SvgAwesome DefaultProgressIcon { get; set; } = new()
         {
             Icon = EFontAwesomeIcon.Solid_Spinner,
             Height = 20,
@@ -80,7 +84,7 @@ namespace Notification.Wpf.Constants
             Foreground = DefaultForegroundColor
         };
         /// <summary> Cancel button content </summary>
-        public static object DefaultProgressButtonContent = "Cancel";
+        public static object DefaultProgressButtonContent { get; set; } = "Cancel";
 
         #endregion
     }

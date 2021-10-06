@@ -68,7 +68,22 @@
                 <TextBlock Grid.Row="0" Margin="{Binding BarMargin}" 
                            Foreground="{Binding Foreground, UpdateSourceTrigger=PropertyChanged}" 
                            Text="{Binding Title}"
-                           FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+                           FontWeight="Medium" TextTrimming="CharacterEllipsis">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding TitleTextSettings, Converter={wpf:IsNull}}" Value="false">
+                                    <Setter Property="FontFamily" Value="{Binding TitleTextSettings.FontFamily}"/>
+                                    <Setter Property="FontSize" Value="{Binding TitleTextSettings.FontSize}"/>
+                                    <Setter Property="HorizontalAlignment" Value="{Binding TitleTextSettings.HorizontalTextAlignment}"/>
+                                    <Setter Property="VerticalAlignment" Value="{Binding TitleTextSettings.VerticalTextAlignment}"/>
+                                    <Setter Property="FontStyle" Value="{Binding TitleTextSettings.FontStyle}"/>
+                                    <Setter Property="FontWeight" Value="{Binding TitleTextSettings.FontWeight}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <Grid Grid.Row="1" Background="Transparent" >
                     <ProgressBar  Margin="{Binding BarMargin}" Height="{Binding BarHeight}" HorizontalAlignment="Stretch" Minimum="0" Maximum="100"
                                   Value="{Binding process}" IsIndeterminate="{Binding ShowProgress, Converter={wpf:BoolInverse}}" Panel.ZIndex="900"
@@ -102,9 +117,34 @@
                                     <DataTrigger Binding="{Binding TitleWhenCollapsed}" Value="true">
                                         <Setter Property="Text" Value="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding TitleWhenCollapsed}" Value="true"/>
+                                            <Condition Binding="{Binding TitleTextSettings, Converter={wpf:IsNull}}" Value="false"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="FontFamily" Value="{Binding TitleTextSettings.FontFamily}"/>
+                                        <Setter Property="FontSize" Value="{Binding TitleTextSettings.FontSize}"/>
+                                        <Setter Property="HorizontalAlignment" Value="{Binding TitleTextSettings.HorizontalTextAlignment}"/>
+                                        <Setter Property="VerticalAlignment" Value="{Binding TitleTextSettings.VerticalTextAlignment}"/>
+                                        <Setter Property="FontStyle" Value="{Binding TitleTextSettings.FontStyle}"/>
+                                        <Setter Property="FontWeight" Value="{Binding TitleTextSettings.FontWeight}"/>
+                                    </MultiDataTrigger>
                                     <DataTrigger Binding="{Binding TitleWhenCollapsed}" Value="false">
                                         <Setter Property="Text" Value="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                                     </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding TitleWhenCollapsed}" Value="false"/>
+                                            <Condition Binding="{Binding MessageTextSettings, Converter={wpf:IsNull}}" Value="false"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="FontFamily" Value="{Binding MessageTextSettings.FontFamily}"/>
+                                        <Setter Property="FontSize" Value="{Binding MessageTextSettings.FontSize}"/>
+                                        <Setter Property="HorizontalAlignment" Value="{Binding MessageTextSettings.HorizontalTextAlignment}"/>
+                                        <Setter Property="VerticalAlignment" Value="{Binding MessageTextSettings.VerticalTextAlignment}"/>
+                                        <Setter Property="FontStyle" Value="{Binding MessageTextSettings.FontStyle}"/>
+                                        <Setter Property="FontWeight" Value="{Binding MessageTextSettings.FontWeight}"/>
+                                    </MultiDataTrigger>
+
                                 </Style.Triggers>
                             </Style>
                         </TextBlock.Style>
@@ -123,6 +163,14 @@
                                 <DataTrigger Binding="{Binding TrimType}" Value="NoTrim">
                                     <Setter Property="TextTrimming" Value="None"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding MessageTextSettings, Converter={wpf:IsNull}}" Value="false">
+                                    <Setter Property="FontFamily" Value="{Binding MessageTextSettings.FontFamily}"/>
+                                    <Setter Property="FontSize" Value="{Binding MessageTextSettings.FontSize}"/>
+                                    <Setter Property="HorizontalAlignment" Value="{Binding MessageTextSettings.HorizontalTextAlignment}"/>
+                                    <Setter Property="VerticalAlignment" Value="{Binding MessageTextSettings.VerticalTextAlignment}"/>
+                                    <Setter Property="FontStyle" Value="{Binding MessageTextSettings.FontStyle}"/>
+                                    <Setter Property="FontWeight" Value="{Binding MessageTextSettings.FontWeight}"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </TextBlock.Style>
@@ -134,7 +182,22 @@
                                TextWrapping="NoWrap" 
                                TextTrimming="CharacterEllipsis"
                                FontSize="14"
-                               Opacity=".8" Margin="5,0,0,0"/>
+                               Opacity=".8" Margin="5,0,0,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MessageTextSettings, Converter={wpf:IsNull}}" Value="false">
+                                        <Setter Property="FontFamily" Value="{Binding MessageTextSettings.FontFamily}"/>
+                                        <Setter Property="FontSize" Value="{Binding MessageTextSettings.FontSize}"/>
+                                        <Setter Property="HorizontalAlignment" Value="{Binding MessageTextSettings.HorizontalTextAlignment}"/>
+                                        <Setter Property="VerticalAlignment" Value="{Binding MessageTextSettings.VerticalTextAlignment}"/>
+                                        <Setter Property="FontStyle" Value="{Binding MessageTextSettings.FontStyle}"/>
+                                        <Setter Property="FontWeight" Value="{Binding MessageTextSettings.FontWeight}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                     <Button x:Name="Cancel" Width="100" HorizontalAlignment="Right"
                             Content="{Binding RightButtonContent}"
                             DockPanel.Dock="Right" Margin="0,0,5,0"

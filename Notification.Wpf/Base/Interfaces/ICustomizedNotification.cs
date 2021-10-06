@@ -1,4 +1,7 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Automation.Text;
+using System.Windows.Media;
+using Notification.Wpf.Base;
 
 namespace Notification.Wpf
 {
@@ -17,6 +20,15 @@ namespace Notification.Wpf
         public NotificationTextTrimType TrimType { get; set; }
         /// <summary> Set rows of message that will show if set Trim </summary>
         public uint RowsCount { get; set; }
+
+        #region Text settings
+        /// <summary> Title text style settings </summary>
+        public TextContentSettings TitleTextSettings { get; set; }
+        /// <summary> Message text style settings </summary>
+        public TextContentSettings MessageTextSettings { get; set; }
+
+
+        #endregion
 
     }
 }

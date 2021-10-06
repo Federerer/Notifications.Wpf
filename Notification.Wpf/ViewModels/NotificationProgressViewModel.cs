@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Notification.Wpf;
+using Notification.Wpf.Base;
 using Notification.Wpf.Classes;
 using Notifications.Wpf.Command;
 using Notifications.Wpf.ViewModels.Base;
@@ -28,7 +29,8 @@ namespace Notifications.Wpf.ViewModels
                     notification.RowsCount,
                     BaseWaitingMessage,
                     IsCollapse,
-                    TitleWhenCollapsed, notification.Background, notification.Foreground, progressColor, notification.Icon)
+                    TitleWhenCollapsed,
+                    notification.Background, notification.Foreground, progressColor, notification.Icon, notification.TitleTextSettings, notification.MessageTextSettings)
         {
             Title = notification.Title;
             Message = notification.Message;
@@ -46,7 +48,9 @@ namespace Notifications.Wpf.ViewModels
             Brush background = null,
             Brush foreground = null,
             Brush progressColor = null,
-            object icon = default)
+            object icon = default,
+            TextContentSettings titleTextSettings = null,
+            TextContentSettings messageTextSettings = null)
         {
             this.TitleWhenCollapsed = TitleWhenCollapsed;
             Collapse = IsCollapse;
@@ -67,7 +71,12 @@ namespace Notifications.Wpf.ViewModels
                 ProgressForeground = progressColor;
 
             RowsCount = DefaultRowsCount;
-            if (BaseWaitingMessage != null) NotifierProgress.WaitingTimer.BaseWaitingMessage = BaseWaitingMessage;
+
+            TitleTextSettings = titleTextSettings;
+            MessageTextSettings = messageTextSettings;
+
+            if (BaseWaitingMessage != null)
+                NotifierProgress.WaitingTimer.BaseWaitingMessage = BaseWaitingMessage;
             _Timer.Start();
         }
 
@@ -151,6 +160,11 @@ namespace Notifications.Wpf.ViewModels
 
         #endregion
 
+        /// <inheritdoc />
+        public TextContentSettings TitleTextSettings { get; set; }
+        /// <inheritdoc />
+        public TextContentSettings MessageTextSettings { get; set; }
+
         #endregion
 
         #region process : double - Прогресс задачи
@@ -228,7 +242,7 @@ namespace Notifications.Wpf.ViewModels
         #region BarMargin : Thickness - отступ прогресс бара от рамки строки
 
         /// <summary>Отступ прогресс бара от рамки строки</summary>
-        private Thickness _BarMargin = new (5);
+        private Thickness _BarMargin = new (1,1,10,1);
 
         /// <summary>Отступ прогресс бара от рамки строки</summary>
         public Thickness BarMargin { get => _BarMargin; set => Set(ref _BarMargin, value); }
