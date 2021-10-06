@@ -28,7 +28,7 @@
             <local:NumericUpDownControl  Grid.Row="1" Grid.Column="1"   HorizontalAlignment="Left" Width="100" 
                                          Value="{Binding FontSize,
                             RelativeSource={RelativeSource AncestorType={x:Type UserControl}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                         Minimum="0" Maximum="30" Height="25" />
+                                         Minimum="10" Maximum="30" Height="25" />
 
             <!--<TextBlock Grid.Row="1" Grid.Column="1"  Text="{Binding FontSize, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>-->
             <TextBlock Grid.Row="2" Grid.Column="0"  Text="FontStyle"/>
