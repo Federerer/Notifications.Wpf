@@ -45,5 +45,20 @@ namespace Notification.Wpf.Sample.Elements
                 FontWeights.UltraLight
             };
         }
+
+        #region TextAlign : TextAlignment - Выравнивание текста
+
+        /// <summary>Выравнивание текста</summary>
+        public static readonly DependencyProperty TextAlignProperty =
+            DependencyProperty.Register(
+                nameof(TextAlign),
+                typeof(TextAlignment),
+                typeof(TextSettings),
+                new PropertyMetadata(default(TextAlignment)));
+
+        /// <summary>Выравнивание текста</summary>
+        public TextAlignment TextAlign { get => (TextAlignment)GetValue(TextAlignProperty); set => SetValue(TextAlignProperty, value); }
+
+        #endregion
     }
 }

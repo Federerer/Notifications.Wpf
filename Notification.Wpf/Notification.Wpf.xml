@@ -171,16 +171,19 @@
             <summary> Text content settings </summary>
         </member>
         <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.FontFamily">
-            <summary> Message font </summary>
+            <summary> font </summary>
         </member>
         <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.FontSize">
-            <summary> Message font size </summary>
+            <summary> font size </summary>
         </member>
-        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.HorizontalTextAlignment">
-            <summary> Message horizontal text alignment </summary>
+        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.TextAlignment">
+            <summary> horizontal text alignment </summary>
+        </member>
+        <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.HorizontalAlignment">
+            <summary> horizontal alignment </summary>
         </member>
         <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.VerticalTextAlignment">
-            <summary> Message vertical text alignment </summary>
+            <summary> vertical text alignment </summary>
         </member>
         <member name="P:Notification.Wpf.Base.Interfaces.ITextContentSettings.FontStyle">
             <summary> Font style </summary>
@@ -197,7 +200,10 @@
         <member name="P:Notification.Wpf.Base.TextContentSettings.FontSize">
             <inheritdoc />
         </member>
-        <member name="P:Notification.Wpf.Base.TextContentSettings.HorizontalTextAlignment">
+        <member name="P:Notification.Wpf.Base.TextContentSettings.TextAlignment">
+            <inheritdoc />
+        </member>
+        <member name="P:Notification.Wpf.Base.TextContentSettings.HorizontalAlignment">
             <inheritdoc />
         </member>
         <member name="P:Notification.Wpf.Base.TextContentSettings.VerticalTextAlignment">

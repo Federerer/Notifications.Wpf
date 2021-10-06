@@ -21,6 +21,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="FontFamily"/>
             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FontFamily, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
@@ -41,13 +42,17 @@
                       Width="100" VerticalAlignment="Center"/>
 
                 <!--<TextBlock Text="{Binding FontWeight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>-->
-            <TextBlock Grid.Row="4" Grid.Column="0"  Text="HorizontalAlignment"/>
-            <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{helpers:EnumValues {x:Type HorizontalAlignment}}"
+            <TextBlock Grid.Row="4" Grid.Column="0"  Text="TextAlignment"/>
+            <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{helpers:EnumValues {x:Type TextAlignment}}"
+                      SelectedItem="{Binding TextAlign, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger= PropertyChanged}"
+                      Width="100" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="5" Grid.Column="0"  Text="HorizontalAlignment"/>
+            <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{helpers:EnumValues {x:Type HorizontalAlignment}}"
                       SelectedItem="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger= PropertyChanged}"
                       Width="100" VerticalAlignment="Center"/>
                 <!--<TextBlock Text="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>-->
-            <TextBlock Grid.Row="5" Grid.Column="0"  Text="VerticalAlignment"/>
-            <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{helpers:EnumValues {x:Type VerticalAlignment}}"
+            <TextBlock Grid.Row="6" Grid.Column="0"  Text="VerticalAlignment"/>
+            <ComboBox Grid.Row="6" Grid.Column="1" ItemsSource="{helpers:EnumValues {x:Type VerticalAlignment}}"
                       SelectedItem="{Binding VerticalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger= PropertyChanged}"
                       Width="100" VerticalAlignment="Center"/>
             <!--<TextBlock Text="{Binding VerticalAlignment, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>-->

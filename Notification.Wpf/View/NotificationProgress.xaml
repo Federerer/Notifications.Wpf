@@ -75,7 +75,8 @@
                                 <DataTrigger Binding="{Binding TitleTextSettings, Converter={wpf:IsNull}}" Value="false">
                                     <Setter Property="FontFamily" Value="{Binding TitleTextSettings.FontFamily}"/>
                                     <Setter Property="FontSize" Value="{Binding TitleTextSettings.FontSize}"/>
-                                    <Setter Property="HorizontalAlignment" Value="{Binding TitleTextSettings.HorizontalTextAlignment}"/>
+                                    <Setter Property="TextAlignment" Value="{Binding TitleTextSettings.TextAlignment}"/>
+                                    <Setter Property="HorizontalAlignment" Value="{Binding TitleTextSettings.HorizontalAlignment}"/>
                                     <Setter Property="VerticalAlignment" Value="{Binding TitleTextSettings.VerticalTextAlignment}"/>
                                     <Setter Property="FontStyle" Value="{Binding TitleTextSettings.FontStyle}"/>
                                     <Setter Property="FontWeight" Value="{Binding TitleTextSettings.FontWeight}"/>
@@ -124,7 +125,8 @@
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="FontFamily" Value="{Binding TitleTextSettings.FontFamily}"/>
                                         <Setter Property="FontSize" Value="{Binding TitleTextSettings.FontSize}"/>
-                                        <Setter Property="HorizontalAlignment" Value="{Binding TitleTextSettings.HorizontalTextAlignment}"/>
+                                        <Setter Property="TextAlignment" Value="{Binding TitleTextSettings.TextAlignment}"/>
+                                        <Setter Property="HorizontalAlignment" Value="{Binding TitleTextSettings.HorizontalAlignment}"/>
                                         <Setter Property="VerticalAlignment" Value="{Binding TitleTextSettings.VerticalTextAlignment}"/>
                                         <Setter Property="FontStyle" Value="{Binding TitleTextSettings.FontStyle}"/>
                                         <Setter Property="FontWeight" Value="{Binding TitleTextSettings.FontWeight}"/>
@@ -139,7 +141,8 @@
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="FontFamily" Value="{Binding MessageTextSettings.FontFamily}"/>
                                         <Setter Property="FontSize" Value="{Binding MessageTextSettings.FontSize}"/>
-                                        <Setter Property="HorizontalAlignment" Value="{Binding MessageTextSettings.HorizontalTextAlignment}"/>
+                                        <Setter Property="TextAlignment" Value="{Binding MessageTextSettings.TextAlignment}"/>
+                                        <Setter Property="HorizontalAlignment" Value="{Binding MessageTextSettings.HorizontalAlignment}"/>
                                         <Setter Property="VerticalAlignment" Value="{Binding MessageTextSettings.VerticalTextAlignment}"/>
                                         <Setter Property="FontStyle" Value="{Binding MessageTextSettings.FontStyle}"/>
                                         <Setter Property="FontWeight" Value="{Binding MessageTextSettings.FontWeight}"/>
@@ -166,7 +169,8 @@
                                 <DataTrigger Binding="{Binding MessageTextSettings, Converter={wpf:IsNull}}" Value="false">
                                     <Setter Property="FontFamily" Value="{Binding MessageTextSettings.FontFamily}"/>
                                     <Setter Property="FontSize" Value="{Binding MessageTextSettings.FontSize}"/>
-                                    <Setter Property="HorizontalAlignment" Value="{Binding MessageTextSettings.HorizontalTextAlignment}"/>
+                                    <Setter Property="TextAlignment" Value="{Binding MessageTextSettings.TextAlignment}"/>
+                                    <Setter Property="HorizontalAlignment" Value="{Binding MessageTextSettings.HorizontalAlignment}"/>
                                     <Setter Property="VerticalAlignment" Value="{Binding MessageTextSettings.VerticalTextAlignment}"/>
                                     <Setter Property="FontStyle" Value="{Binding MessageTextSettings.FontStyle}"/>
                                     <Setter Property="FontWeight" Value="{Binding MessageTextSettings.FontWeight}"/>

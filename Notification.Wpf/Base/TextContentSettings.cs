@@ -17,10 +17,12 @@ namespace Notification.Wpf.Base
         public double FontSize { get; set; } = 14;
 
         /// <inheritdoc />
-        public HorizontalAlignment HorizontalTextAlignment { get; set; } = HorizontalAlignment.Left;
+        public TextAlignment TextAlignment { get; set; } = TextAlignment.Left;
+        /// <inheritdoc />
+        public HorizontalAlignment HorizontalAlignment { get; set; } = HorizontalAlignment.Stretch;
 
         /// <inheritdoc />
-        public VerticalAlignment VerticalTextAlignment { get; set; } = VerticalAlignment.Center;
+        public VerticalAlignment VerticalTextAlignment { get; set; } = VerticalAlignment.Stretch;
 
         /// <inheritdoc />
         public FontStyle FontStyle { get; set; } = FontStyles.Normal;

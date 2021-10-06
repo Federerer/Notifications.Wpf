@@ -7,13 +7,15 @@ namespace Notification.Wpf.Base.Interfaces
     /// <summary> Text content settings </summary>
     public interface ITextContentSettings
     {
-        /// <summary> Message font </summary>
+        /// <summary> font </summary>
         public FontFamily FontFamily { get; set; }
-        /// <summary> Message font size </summary>
+        /// <summary> font size </summary>
         public double FontSize { get; set; }
-        /// <summary> Message horizontal text alignment </summary>
-        public HorizontalAlignment HorizontalTextAlignment { get; set; }
-        /// <summary> Message vertical text alignment </summary>
+        /// <summary> horizontal text alignment </summary>
+        public TextAlignment TextAlignment { get; set; } 
+        /// <summary> horizontal alignment </summary>
+        public HorizontalAlignment HorizontalAlignment { get; set; }
+        /// <summary> vertical text alignment </summary>
         public VerticalAlignment VerticalTextAlignment { get; set; }
 
         /// <summary> Font style </summary>

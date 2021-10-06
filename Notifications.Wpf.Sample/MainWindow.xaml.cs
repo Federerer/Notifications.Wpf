@@ -419,7 +419,8 @@ namespace Notification.Wpf.Sample
                         FontFamily = TitleSettings.FontFamily,
                         FontSize = TitleSettings.FontSize,
                         FontWeight = TitleSettings.FontWeight,
-                        HorizontalTextAlignment = TitleSettings.HorizontalAlignment,
+                        TextAlignment = TitleSettings.TextAlign,
+                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
                         VerticalTextAlignment = TitleSettings.VerticalAlignment
                     },
                 MessageTextSettings = !UseMessageSettings ? null :
@@ -429,7 +430,8 @@ namespace Notification.Wpf.Sample
                         FontFamily = MessageSettings.FontFamily,
                         FontSize = MessageSettings.FontSize,
                         FontWeight = MessageSettings.FontWeight,
-                        HorizontalTextAlignment = MessageSettings.HorizontalAlignment,
+                        TextAlignment = MessageSettings.TextAlign,
+                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
                         VerticalTextAlignment = MessageSettings.VerticalAlignment
                     },
             };
@@ -463,7 +465,8 @@ namespace Notification.Wpf.Sample
                         FontFamily = TitleSettings.FontFamily,
                         FontSize = TitleSettings.FontSize,
                         FontWeight = TitleSettings.FontWeight,
-                        HorizontalTextAlignment = TitleSettings.HorizontalAlignment,
+                        TextAlignment = TitleSettings.TextAlign,
+                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
                         VerticalTextAlignment = TitleSettings.VerticalAlignment
                     },
                 MessageTextSettings = !UseMessageSettings ? null :
@@ -473,7 +476,8 @@ namespace Notification.Wpf.Sample
                         FontFamily = MessageSettings.FontFamily,
                         FontSize = MessageSettings.FontSize,
                         FontWeight = MessageSettings.FontWeight,
-                        HorizontalTextAlignment = MessageSettings.HorizontalAlignment,
+                        TextAlignment = MessageSettings.TextAlign,
+                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
                         VerticalTextAlignment = MessageSettings.VerticalAlignment
                     },
             };
@@ -509,7 +513,6 @@ namespace Notification.Wpf.Sample
             //    });
 
             //#endregion
-
             #region Second sample
 
             var content = new BaseNotificationContent()
@@ -533,7 +536,8 @@ namespace Notification.Wpf.Sample
                         FontFamily = TitleSettings.FontFamily,
                         FontSize = TitleSettings.FontSize,
                         FontWeight = TitleSettings.FontWeight,
-                        HorizontalTextAlignment = TitleSettings.HorizontalAlignment,
+                        TextAlignment = TitleSettings.TextAlign,
+                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
                         VerticalTextAlignment = TitleSettings.VerticalAlignment
                     },
                 MessageTextSettings = !UseMessageSettings ? null :
@@ -543,7 +547,8 @@ namespace Notification.Wpf.Sample
                         FontFamily = MessageSettings.FontFamily,
                         FontSize = MessageSettings.FontSize,
                         FontWeight = MessageSettings.FontWeight,
-                        HorizontalTextAlignment = MessageSettings.HorizontalAlignment,
+                        TextAlignment = MessageSettings.TextAlign,
+                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
                         VerticalTextAlignment = MessageSettings.VerticalAlignment
                     },
             };
