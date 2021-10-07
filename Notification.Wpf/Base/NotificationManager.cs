@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Notification.Wpf.Base;
 using Notification.Wpf.Classes;
 using Notification.Wpf.Constants;
 using Notification.Wpf.Controls;
@@ -42,10 +43,17 @@ namespace Notification.Wpf
             }
             ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
         }
+
         /// <inheritdoc />
         public void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null,
-            Action onClick = null, Action onClose = null, Action LeftButton = null, string LeftButtonText = null, Action RightButton = null, string RightButtonText = null,
-            NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2, bool CloseOnClick = true)
+            Action onClick = null,
+            Action onClose = null,
+            Action LeftButton = null,
+            string LeftButtonText = null,
+            Action RightButton = null,
+            string RightButtonText = null,
+            NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2, bool CloseOnClick = true,
+            TextContentSettings TitleSettings  = null, TextContentSettings MessageSettings = null)
         {
             var content = new NotificationContent
             {
@@ -58,38 +66,57 @@ namespace Notification.Wpf
                 RightButtonContent = RightButtonText,
                 Message = message,
                 Title = title,
-                CloseOnClick = CloseOnClick
+                CloseOnClick = CloseOnClick,
+                MessageTextSettings = MessageSettings,
+                TitleTextSettings = TitleSettings
             };
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(title, message, type, areaName, expirationTime, onClick, onClose, LeftButton, LeftButtonText, RightButton, RightButtonText, trim, RowsCountWhenTrim, CloseOnClick)));
+                    new Action(
+                        () => Show(
+                            title,
+                            message,
+                            type,
+                            areaName,
+                            expirationTime,
+                            onClick,
+                            onClose,
+                            LeftButton,
+                            LeftButtonText,
+                            RightButton,
+                            RightButtonText,
+                            trim,
+                            RowsCountWhenTrim,
+                            CloseOnClick,
+                            MessageSettings,
+                            TitleSettings)));
                 return;
             }
             ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
         }
+
+        #region Progress
+
 
         /// <inheritdoc />
         public NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(string Title = null,
             bool ShowCancelButton = true,
             bool ShowProgress = true,
             string areaName = "",
-            bool TrimText = false,
-            uint DefaultRowsCount = 1U,
+            bool TrimText = false, uint DefaultRowsCount = 1U,
             string BaseWaitingMessage = "Calculation time",
-            bool IsCollapse = false,
-            bool TitleWhenCollapsed = true,
-            Brush background = null,
-            Brush foreground = null,
-            Brush progressColor = null,
-            object icon = default)
+            bool IsCollapse = false, bool TitleWhenCollapsed = true,
+            Brush background = null, Brush foreground = null, Brush progressColor = null,
+            object icon = default,
+            TextContentSettings TitleSettings = null, TextContentSettings  MessageSettings= null)
         {
             var model = new NotificationProgressViewModel(
                 ShowCancelButton, ShowProgress,
                 TrimText, DefaultRowsCount,
                 BaseWaitingMessage,
                 IsCollapse, TitleWhenCollapsed,
-                background,foreground,progressColor,icon);
+                background,foreground,progressColor,icon,TitleSettings,MessageSettings);
 
             if (Title != null) model.Title = Title;
 
@@ -103,7 +130,7 @@ namespace Notification.Wpf
                         TrimText, DefaultRowsCount,
                         BaseWaitingMessage,
                         IsCollapse, TitleWhenCollapsed,
-                        background, foreground, progressColor, icon));
+                        background, foreground, progressColor, icon,TitleSettings,MessageSettings));
             }
 
             ShowContent(model, areaName: areaName);
@@ -146,6 +173,8 @@ namespace Notification.Wpf
             ShowContent(model, areaName: areaName);
             return model.NotifierProgress;
         }
+
+        #endregion
 
         /// <summary>
         /// Запуск отображения в зависимости от типа контента

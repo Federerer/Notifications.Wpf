@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using FontAwesome5;
 using Notification.Wpf.Controls;
 
@@ -6,6 +7,7 @@ using Notification.Wpf.Controls;
 
 namespace Notification.Wpf.Constants
 {
+    /// <summary> Notification static settings </summary>
     public class NotificationConstants
     {
         /// <summary> Overlay window maximum count </summary>
@@ -56,6 +58,8 @@ namespace Notification.Wpf.Constants
         //public static object NotificationIcon = InformationIcon;
 
         #endregion
+        /// <summary> Default text size </summary>
+        public static double BaseTextSize { get; set; } = 14D;
 
         /// <summary> base foreground color </summary>
         public static Brush DefaultForegroundColor { get; set; } = new SolidColorBrush(Colors.WhiteSmoke);
@@ -67,7 +71,16 @@ namespace Notification.Wpf.Constants
         public static object DefaultRightButtonContent { get; set; } = "Cancel";
         /// <summary>default Notification text trim type </summary>
         public static NotificationTextTrimType DefaulTextTrimType { get; set; } = NotificationTextTrimType.NoTrim;
-        
+        /// <summary> Default Title text size </summary>
+        public static double TitleSize { get; set; } = BaseTextSize;
+        /// <summary> Default Message text size </summary>
+        public static double MessageSize { get; set; } = BaseTextSize;
+        /// <summary> Default FontName </summary>
+        public static string FontName { get; set; } = "Tahoma";
+        /// <summary> Default Title text alignment </summary>
+        public static TextAlignment TitleTextAlignment { get; set; } = TextAlignment.Left;
+        /// <summary> Default Message text alignment </summary>
+        public static TextAlignment MessageTextAlignment { get; set; } = TextAlignment.Left;
         #endregion
 
         #region Progress

@@ -2,6 +2,7 @@
 using System.Windows.Automation.Text;
 using System.Windows.Media;
 using Notification.Wpf.Base.Interfaces;
+using Notification.Wpf.Constants;
 
 namespace Notification.Wpf.Base
 {
@@ -11,10 +12,10 @@ namespace Notification.Wpf.Base
         #region Implementation of ITextSettings
 
         /// <inheritdoc />
-        public FontFamily FontFamily { get; set; } = new FontFamily("Tahoma");
+        public FontFamily FontFamily { get; set; } = new (NotificationConstants.FontName);
 
         /// <inheritdoc />
-        public double FontSize { get; set; } = 14;
+        public double FontSize { get; set; } = NotificationConstants.BaseTextSize;
 
         /// <inheritdoc />
         public TextAlignment TextAlignment { get; set; } = TextAlignment.Left;

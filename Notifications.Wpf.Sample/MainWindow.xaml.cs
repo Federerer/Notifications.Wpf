@@ -387,6 +387,12 @@ namespace Notification.Wpf.Sample
 
         public MainWindow()
         {
+            NotificationConstants.FontName = "Segoe";
+            NotificationConstants.BaseTextSize = 10;
+            NotificationConstants.TitleSize = 20;
+            NotificationConstants.MessageSize = 16;
+            NotificationConstants.TitleTextAlignment = TextAlignment.Center;
+            NotificationConstants.MessageTextAlignment = TextAlignment.Center;
             InitializeComponent();
             Icons = GetIcons();
             NotifiTypes = GetTypes();
@@ -412,29 +418,8 @@ namespace Notification.Wpf.Sample
                 Title = "Clicked!",
                 Message = "Window notification was clicked!",
                 Type = NotificationType.Success,
-                TitleTextSettings = !UseTitleSettings ? null :
-                    new TextContentSettings()
-                    {
-                        FontStyle = TitleSettings.FontStyle,
-                        FontFamily = TitleSettings.FontFamily,
-                        FontSize = TitleSettings.FontSize,
-                        FontWeight = TitleSettings.FontWeight,
-                        TextAlignment = TitleSettings.TextAlign,
-                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
-                        VerticalTextAlignment = TitleSettings.VerticalAlignment
-                    },
-                MessageTextSettings = !UseMessageSettings ? null :
-                    new TextContentSettings()
-                    {
-                        FontStyle = MessageSettings.FontStyle,
-                        FontFamily = MessageSettings.FontFamily,
-                        FontSize = MessageSettings.FontSize,
-                        FontWeight = MessageSettings.FontWeight,
-                        TextAlignment = MessageSettings.TextAlign,
-                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
-                        VerticalTextAlignment = MessageSettings.VerticalAlignment
-                    },
             };
+            CustomizeMessage(clickContent);
 
             var content = new NotificationContent
             {
@@ -458,35 +443,60 @@ namespace Notification.Wpf.Sample
                 } :
                     null,
                 Image = new NotificationImage() { Source = Image, Position = SelectedImgPosition },
-                TitleTextSettings = !UseTitleSettings ? null :
-                    new TextContentSettings()
-                    {
-                        FontStyle = TitleSettings.FontStyle,
-                        FontFamily = TitleSettings.FontFamily,
-                        FontSize = TitleSettings.FontSize,
-                        FontWeight = TitleSettings.FontWeight,
-                        TextAlignment = TitleSettings.TextAlign,
-                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
-                        VerticalTextAlignment = TitleSettings.VerticalAlignment
-                    },
-                MessageTextSettings = !UseMessageSettings ? null :
-                    new TextContentSettings()
-                    {
-                        FontStyle = MessageSettings.FontStyle,
-                        FontFamily = MessageSettings.FontFamily,
-                        FontSize = MessageSettings.FontSize,
-                        FontWeight = MessageSettings.FontWeight,
-                        TextAlignment = MessageSettings.TextAlign,
-                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
-                        VerticalTextAlignment = MessageSettings.VerticalAlignment
-                    },
+                //TitleTextSettings = new TextContentSettings()
+                //{
+                //    FontStyle = TitleSettings.FontStyle,
+                //    FontFamily = TitleSettings.FontFamily,
+                //    FontSize = TitleSettings.FontSize,
+                //    FontWeight = TitleSettings.FontWeight,
+                //    TextAlignment = TitleSettings.TextAlign,
+                //    HorizontalAlignment = TitleSettings.HorizontalAlignment,
+                //    VerticalTextAlignment = TitleSettings.VerticalAlignment
+                //},
+                //MessageTextSettings = new TextContentSettings()
+                //{
+                //    FontStyle = MessageSettings.FontStyle,
+                //    FontFamily = MessageSettings.FontFamily,
+                //    FontSize = MessageSettings.FontSize,
+                //    FontWeight = MessageSettings.FontWeight,
+                //    TextAlignment = MessageSettings.TextAlign,
+                //    HorizontalAlignment = MessageSettings.HorizontalAlignment,
+                //    VerticalTextAlignment = MessageSettings.VerticalAlignment
+                //},
             };
+            CustomizeMessage(content);
+
             _notificationManager.Show(content,
                 areaName: GetArea(),
                 expirationTime: TimeSpan.FromSeconds(5),
                 onClick: CloseOnClick ? () => _notificationManager.Show(clickContent) : null);
         }
 
+        private void CustomizeMessage(ICustomizedNotification content)
+        {
+            if (UseTitleSettings)
+            {
+                content.TitleTextSettings.FontStyle = TitleSettings.FontStyle;
+                content.TitleTextSettings.FontFamily = TitleSettings.FontFamily;
+                content.TitleTextSettings.FontSize = TitleSettings.FontSize;
+                content.TitleTextSettings.FontWeight = TitleSettings.FontWeight;
+                content.TitleTextSettings.TextAlignment = TitleSettings.TextAlign;
+                content.TitleTextSettings.HorizontalAlignment = TitleSettings.HorizontalAlignment;
+                content.TitleTextSettings.VerticalTextAlignment = TitleSettings.VerticalAlignment;
+            }
+
+            if (UseMessageSettings)
+            {
+                content.MessageTextSettings.FontStyle = MessageSettings.FontStyle;
+                content.MessageTextSettings.FontFamily = MessageSettings.FontFamily;
+                content.MessageTextSettings.FontSize = MessageSettings.FontSize;
+                content.MessageTextSettings.FontWeight = MessageSettings.FontWeight;
+                content.MessageTextSettings.TextAlignment = MessageSettings.TextAlign;
+                content.MessageTextSettings.HorizontalAlignment = MessageSettings.HorizontalAlignment;
+                content.MessageTextSettings.VerticalTextAlignment = MessageSettings.VerticalAlignment;
+            }
+
+        }
         private async void Progress_Click(object sender, RoutedEventArgs e)
         {
             var iconN = SelectedIcon is null ? 0 : (int)SelectedIcon.Icon;
@@ -529,30 +539,28 @@ namespace Notification.Wpf.Sample
                     Foreground = IconForeground
                 },
                 RowsCount = RowCount,
-                TitleTextSettings = !UseTitleSettings ? null :
-                    new TextContentSettings()
-                    {
-                        FontStyle = TitleSettings.FontStyle,
-                        FontFamily = TitleSettings.FontFamily,
-                        FontSize = TitleSettings.FontSize,
-                        FontWeight = TitleSettings.FontWeight,
-                        TextAlignment = TitleSettings.TextAlign,
-                        HorizontalAlignment = TitleSettings.HorizontalAlignment,
-                        VerticalTextAlignment = TitleSettings.VerticalAlignment
-                    },
-                MessageTextSettings = !UseMessageSettings ? null :
-                    new TextContentSettings()
-                    {
-                        FontStyle = MessageSettings.FontStyle,
-                        FontFamily = MessageSettings.FontFamily,
-                        FontSize = MessageSettings.FontSize,
-                        FontWeight = MessageSettings.FontWeight,
-                        TextAlignment = MessageSettings.TextAlign,
-                        HorizontalAlignment = MessageSettings.HorizontalAlignment,
-                        VerticalTextAlignment = MessageSettings.VerticalAlignment
-                    },
+                //TitleTextSettings = new TextContentSettings()
+                //    {
+                //        FontStyle = TitleSettings.FontStyle,
+                //        FontFamily = TitleSettings.FontFamily,
+                //        FontSize = TitleSettings.FontSize,
+                //        FontWeight = TitleSettings.FontWeight,
+                //        TextAlignment = TitleSettings.TextAlign,
+                //        HorizontalAlignment = TitleSettings.HorizontalAlignment,
+                //        VerticalTextAlignment = TitleSettings.VerticalAlignment
+                //    },
+                //MessageTextSettings = new TextContentSettings()
+                //    {
+                //        FontStyle = MessageSettings.FontStyle,
+                //        FontFamily = MessageSettings.FontFamily,
+                //        FontSize = MessageSettings.FontSize,
+                //        FontWeight = MessageSettings.FontWeight,
+                //        TextAlignment = MessageSettings.TextAlign,
+                //        HorizontalAlignment = MessageSettings.HorizontalAlignment,
+                //        VerticalTextAlignment = MessageSettings.VerticalAlignment
+                //    },
             };
-
+            CustomizeMessage(content);
             using var progress = _notificationManager.ShowProgressBar(
                 content,
                 true,
