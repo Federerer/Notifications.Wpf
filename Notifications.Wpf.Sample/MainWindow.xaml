@@ -11,7 +11,7 @@
         xmlns:constants="clr-namespace:Notification.Wpf.Constants;assembly=Notification.Wpf"
         xmlns:classes="clr-namespace:Notification.Wpf.Classes;assembly=Notification.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Width="800" MinWidth="900" MinHeight="750"
+        Title="MainWindow" Width="800" MinWidth="900" MinHeight="770"
         >
     <Grid>
         <Grid.RowDefinitions>
