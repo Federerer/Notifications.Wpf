@@ -170,8 +170,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Image
-                            Grid.Row="{Binding Image.Position , Converter={converters:ImagePositionGridRowConverter}}"
+                        <Image Grid.Row="{Binding Image.Position , Converter={converters:ImagePositionGridRowConverter}}"
                                Grid.Column="0"
                                Grid.ColumnSpan="2"
                                Visibility="{Binding Image.Position ,
@@ -186,8 +185,16 @@
                             First={wpf:HasVisibleContent},
                             Then={converters:BoolToVisibility Collapse=True}}}">
                             <DockPanel x:Name="LeftPanel">
-                                <ContentControl DockPanel.Dock="Top" x:Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                                <Button x:Name="Attach" DockPanel.Dock="Bottom"
+
+                                <ContentControl DockPanel.Dock="Top" x:Name="Icon" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <ContentControl.Resources>
+                                        <DataTemplate DataType="{x:Type ImageSource}">
+                                            <Image Source="{Binding }"/>
+                                        </DataTemplate>
+                                    </ContentControl.Resources>
+                                </ContentControl>
+
+                                    <Button x:Name="Attach" DockPanel.Dock="Bottom"
                                         HorizontalAlignment="Center" VerticalAlignment="Bottom"
                                         Style="{StaticResource OverButton}"
                                          Visibility="Visible"

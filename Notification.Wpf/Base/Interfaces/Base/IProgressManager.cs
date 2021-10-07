@@ -1,5 +1,6 @@
 ﻿using System.Windows.Media;
 using Notification.Wpf.Classes;
+using Notification.Wpf.Constants;
 
 namespace Notification.Wpf.Base.Interfaces.Base
 {
@@ -35,7 +36,7 @@ namespace Notification.Wpf.Base.Interfaces.Base
             Brush background = null,
             Brush foreground = null,
             Brush progressColor = null,
-            object icon = default, 
+            object icon = null,
             TextContentSettings TitleSettings = null, TextContentSettings MessageSettings = null);
 
         /// <summary> Show ProgressBar </summary>

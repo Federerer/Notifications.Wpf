@@ -67,8 +67,7 @@ namespace Notifications.Wpf.ViewModels
 
             if (trimText)
                 TrimType = NotificationTextTrimType.Trim;
-            if (icon is not null)
-                Icon = icon;
+            Icon = icon;
             if (background is not null)
                 Background = background;
             if (foreground is not null)
@@ -229,8 +228,8 @@ namespace Notifications.Wpf.ViewModels
             set
             {
                 Set(ref _Collapse, value);
-                GeneralPadding = value ? new (1) : new (12);
-                BarMargin = value ? new (1) : new (5);
+                GeneralPadding = value ? new(1) : new(12);
+                BarMargin = value ? new(1) : new(0, 5, 5, 5);
                 BarHeight = value ? 32 : 20;
             }
         }
@@ -238,7 +237,7 @@ namespace Notifications.Wpf.ViewModels
         #region GeneralPadding : int - Отступ элементов от внешней рамки
 
         /// <summary>Отступ элементов от внешней рамки</summary>
-        private Thickness _GeneralPadding = new (12);
+        private Thickness _GeneralPadding = new(12);
 
         /// <summary>Отступ элементов от внешней рамки</summary>
         public Thickness GeneralPadding { get => _GeneralPadding; set => Set(ref _GeneralPadding, value); }
@@ -248,7 +247,7 @@ namespace Notifications.Wpf.ViewModels
         #region BarMargin : Thickness - отступ прогресс бара от рамки строки
 
         /// <summary>Отступ прогресс бара от рамки строки</summary>
-        private Thickness _BarMargin = new (1,1,10,1);
+        private Thickness _BarMargin = new(0, 5, 5, 5);
 
         /// <summary>Отступ прогресс бара от рамки строки</summary>
         public Thickness BarMargin { get => _BarMargin; set => Set(ref _BarMargin, value); }

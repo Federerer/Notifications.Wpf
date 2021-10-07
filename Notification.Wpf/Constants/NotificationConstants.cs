@@ -76,7 +76,7 @@ namespace Notification.Wpf.Constants
         /// <summary> Default Message text size </summary>
         public static double MessageSize { get; set; } = BaseTextSize;
         /// <summary> Default FontName </summary>
-        public static string FontName { get; set; } = "Tahoma";
+        public static string FontName { get; set; } = "Segoe UI";
         /// <summary> Default Title text alignment </summary>
         public static TextAlignment TitleTextAlignment { get; set; } = TextAlignment.Left;
         /// <summary> Default Message text alignment </summary>
@@ -88,7 +88,7 @@ namespace Notification.Wpf.Constants
         public static Brush DefaultProgressColor { get; set; } = (Brush)new BrushConverter().ConvertFrom("#FF01D328");
 
         /// <summary> base progress icon </summary>
-        public static SvgAwesome DefaultProgressIcon { get; set; } = new()
+        public static SvgAwesome DefaultProgressIcon { get; set; } = new SvgAwesome()
         {
             Icon = EFontAwesomeIcon.Solid_Spinner,
             Height = 20,
@@ -96,6 +96,7 @@ namespace Notification.Wpf.Constants
             SpinDuration = 1,
             Foreground = DefaultForegroundColor
         };
+
         /// <summary> Cancel button content </summary>
         public static object DefaultProgressButtonContent { get; set; } = "Cancel";
 

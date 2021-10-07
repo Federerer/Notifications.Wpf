@@ -49,15 +49,28 @@
         <MouseBinding Gesture="LeftClick"  Command="{Binding CollapseWindowCommand}"/>
     </UserControl.InputBindings>
 
-    <Border Padding="{Binding BarMargin}" Background="{Binding Background, UpdateSourceTrigger=PropertyChanged}" MinHeight="20">
+    <Border Padding="{Binding GeneralPadding}" Background="{Binding Background, UpdateSourceTrigger=PropertyChanged}" MinHeight="20">
         <Grid>
             <Grid.ColumnDefinitions>
                 <extensions:ColumnDefinitionCollapsable Width="Auto" Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                 <extensions:ColumnDefinitionCollapsable Width="*"/>
             </Grid.ColumnDefinitions>
-            <ContentControl Margin="0,0,12,0" Width="25" Height="25" VerticalAlignment="Top" Opacity="0.8">
-                <ContentControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{Binding Icon}"/>
+
+            <ContentControl Grid.Column="0" Margin="0,0,12,0" Width="25" VerticalAlignment="Stretch"
+                            Visibility="{Binding Icon,
+                            Converter={wpf:Combine
+                            First={wpf:IsNull},
+                            Then={converters:BoolToVisibility Collapse=True, Inverse=True}}}">
+                <ContentControl HorizontalAlignment="Center" VerticalAlignment="Top" Content="{Binding Icon}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type ImageSource}">
+                            <Image Source="{Binding }"/>
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+
             </ContentControl>
+
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <extensions:RowDefinitionCollapsable Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
@@ -65,7 +78,7 @@
                     <extensions:RowDefinitionCollapsable Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                     <extensions:RowDefinitionCollapsable Visible="{Binding Collapse, Converter={wpf:BoolInverse}}" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Margin="{Binding BarMargin}" 
+                <TextBlock Grid.Row="0" Margin="0,0,20,0" 
                            Foreground="{Binding Foreground, UpdateSourceTrigger=PropertyChanged}" 
                            Text="{Binding Title}"
                            FontWeight="Medium" TextTrimming="CharacterEllipsis">
@@ -154,7 +167,7 @@
                     </TextBlock>
                 </Grid>
                 <TextBlock x:Name="MessageBox" Grid.Row="2"  Text="{Binding Message}" Foreground="{Binding Foreground, UpdateSourceTrigger=PropertyChanged}" 
-                           Margin="{Binding BarMargin}"
+                           Margin="0,0,12,5"
                            TextWrapping="Wrap" Opacity=".8" MinHeight="20" >
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
