@@ -12,7 +12,8 @@ namespace Notification.Wpf.Base.Interfaces.Base
         /// <param name="onClick">what should happen when clicking on the window</param>
         /// <param name="onClose">what should happen when window closing</param>
         /// <param name="CloseOnClick">close window after clicking</param>
-        void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null, Action onClose = null, bool CloseOnClick = true);
+        /// <param name="ShowXbtn">Show X (close) btn</param>
+        void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null, Action onClose = null, bool CloseOnClick = true, bool ShowXbtn = true);
 
         /// <summary> Show message </summary>
         /// <param name="title">window title</param>
@@ -31,12 +32,13 @@ namespace Notification.Wpf.Base.Interfaces.Base
         /// <param name="CloseOnClick">close window after clicking</param>
         /// <param name="TitleSettings">Настройки отображения Title</param>
         /// <param name="MessageSettings">Настройки отображения сообщения</param>
+        /// <param name="ShowXbtn">Show X (close) btn</param>
         void Show(string title, string message, NotificationType type, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
             Action onClose = null, Action LeftButton = null, string LeftButtonText = null, Action RightButton = null, string RightButtonText = null,
             NotificationTextTrimType trim = NotificationTextTrimType.NoTrim,
             uint RowsCountWhenTrim = 2,
             bool CloseOnClick = true,
-            TextContentSettings TitleSettings = null, TextContentSettings MessageSettings = null);
+            TextContentSettings TitleSettings = null, TextContentSettings MessageSettings = null, bool ShowXbtn = true);
 
     }
 }

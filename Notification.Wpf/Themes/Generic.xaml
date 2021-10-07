@@ -301,7 +301,6 @@
                         <Setter TargetName="MessageBox" Property="FontWeight" Value="{Binding MessageTextSettings.FontWeight}"/>
                     </DataTrigger>
 
-
                 </DataTemplate.Triggers>
             </DataTemplate>
         </ControlTemplate.Resources>
@@ -311,7 +310,8 @@
                 Margin="8,8,0,0">
             <Grid>
                 <ContentPresenter/>
-                <Button x:Name="PART_CloseButton" Style="{StaticResource CloseButtonStyle}" Margin="12" Foreground="{TemplateBinding Foreground}" Opacity=".8"/>
+                <Button x:Name="PART_CloseButton" Style="{StaticResource CloseButtonStyle}" Margin="12" Foreground="{TemplateBinding Foreground}" Opacity=".8"
+                        Visibility="{Binding XbtnVisibility, RelativeSource={RelativeSource AncestorType={x:Type controls:Notification}}}"/>
             </Grid>
         </Border>
         <ControlTemplate.Triggers>

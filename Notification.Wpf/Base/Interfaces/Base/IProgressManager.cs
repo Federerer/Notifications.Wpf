@@ -23,6 +23,7 @@ namespace Notification.Wpf.Base.Interfaces.Base
         /// <param name="icon">progress icon</param>
         /// <param name="TitleSettings">Настройки отображения Title</param>
         /// <param name="MessageSettings">Настройки отображения сообщения</param>
+        /// <param name="ShowXbtn">Show X (close) btn</param>
         NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(
             string Title = null,
             bool ShowCancelButton = true,
@@ -37,7 +38,7 @@ namespace Notification.Wpf.Base.Interfaces.Base
             Brush foreground = null,
             Brush progressColor = null,
             object icon = null,
-            TextContentSettings TitleSettings = null, TextContentSettings MessageSettings = null);
+            TextContentSettings TitleSettings = null, TextContentSettings MessageSettings = null, bool ShowXbtn = true);
 
         /// <summary> Show ProgressBar </summary>
         /// <param name="content">Base content settings</param>
@@ -48,6 +49,7 @@ namespace Notification.Wpf.Base.Interfaces.Base
         /// <param name="IsCollapse">Start progress bar in collapsed form</param>
         /// <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
         /// <param name="progressColor">progress line color</param>
+        /// <param name="ShowXbtn">Show X (close) btn</param>
         NotifierProgress<(double? value, string message, string title, bool? showCancel)> ShowProgressBar(
             ICustomizedNotification content,
             bool ShowCancelButton = true,
@@ -56,7 +58,7 @@ namespace Notification.Wpf.Base.Interfaces.Base
             string BaseWaitingMessage = "Calculation time",
             bool IsCollapse = false,
             bool TitleWhenCollapsed = true,
-            Brush progressColor = null);
+            Brush progressColor = null, bool ShowXbtn = true);
 
     }
 }

@@ -426,6 +426,20 @@ namespace Notification.Wpf.Sample
 
         #endregion
 
+        #region ShowXBtn : bool - show x btn in window
+
+        /// <summary>show x btn in window</summary>
+        public static readonly DependencyProperty ShowXBtnProperty =
+            DependencyProperty.Register(
+                nameof(ShowXBtn),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>show x btn in window</summary>
+        public bool ShowXBtn { get => (bool)GetValue(ShowXBtnProperty); set => SetValue(ShowXBtnProperty, value); }
+
+        #endregion
         private readonly NotificationManager _notificationManager = new();
 
         Action ButtonClick(string button) => () => _notificationManager.Show($"{button} button click");
@@ -514,7 +528,8 @@ namespace Notification.Wpf.Sample
             _notificationManager.Show(content,
                 areaName: GetArea(),
                 expirationTime: UseExpirationTime ? TimeSpan.FromSeconds(ExpirationTime) : TimeSpan.MaxValue,
-                onClick: CloseOnClick ? () => _notificationManager.Show(clickContent) : null);
+                onClick: CloseOnClick ? () => _notificationManager.Show(clickContent, ShowXbtn: ShowXBtn) : null,
+                ShowXbtn: ShowXBtn);
         }
 
         private void CustomizeMessage(ICustomizedNotification content)
@@ -546,7 +561,7 @@ namespace Notification.Wpf.Sample
         {
             var iconN = SelectedIcon is null ? 0 : (int)SelectedIcon.Icon;
             var title = "Прогресс бар";
-
+            var ShowX = ShowXBtn;
             //#region First sample
 
             //using var progress = _notificationManager.ShowProgressBar(
@@ -608,11 +623,11 @@ namespace Notification.Wpf.Sample
             CustomizeMessage(content);
             using var progress = _notificationManager.ShowProgressBar(
                 content,
-                true,
+                ShowXBtn,
                 true,
                 GetArea(),
                 IsCollapse: ProgressCollapsed,
-                TitleWhenCollapsed: ProgressTitleOrMessage, progressColor: ProgressColor);
+                TitleWhenCollapsed: ProgressTitleOrMessage, progressColor: ProgressColor, ShowXbtn: ShowX);
 
             #endregion
             try
@@ -657,7 +672,7 @@ namespace Notification.Wpf.Sample
             }
             catch (OperationCanceledException)
             {
-                _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3));
+                _notificationManager.Show("Операция отменена", string.Empty, TimeSpan.FromSeconds(3), ShowXbtn: ShowX);
             }
         }
 

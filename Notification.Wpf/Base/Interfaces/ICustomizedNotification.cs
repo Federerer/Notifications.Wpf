@@ -26,8 +26,6 @@ namespace Notification.Wpf
         public TextContentSettings TitleTextSettings { get; set; }
         /// <summary> Message text style settings </summary>
         public TextContentSettings MessageTextSettings { get; set; }
-
-
         #endregion
 
     }

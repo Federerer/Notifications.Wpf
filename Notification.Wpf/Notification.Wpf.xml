@@ -37,7 +37,7 @@
         <member name="T:Notification.Wpf.Base.Interfaces.Base.IMessageManager">
             <summary> Message manager </summary>
         </member>
-        <member name="M:Notification.Wpf.Base.Interfaces.Base.IMessageManager.Show(System.Object,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Boolean)">
+        <member name="M:Notification.Wpf.Base.Interfaces.Base.IMessageManager.Show(System.Object,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Boolean,System.Boolean)">
             <summary> Show any content </summary>
             <param name="content">window content</param>
             <param name="areaName">window are where show notification</param>
@@ -45,8 +45,9 @@
             <param name="onClick">what should happen when clicking on the window</param>
             <param name="onClose">what should happen when window closing</param>
             <param name="CloseOnClick">close window after clicking</param>
+            <param name="ShowXbtn">Show X (close) btn</param>
         </member>
-        <member name="M:Notification.Wpf.Base.Interfaces.Base.IMessageManager.Show(System.String,System.String,Notification.Wpf.NotificationType,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Action,System.String,System.Action,System.String,Notification.Wpf.NotificationTextTrimType,System.UInt32,System.Boolean,Notification.Wpf.Base.TextContentSettings,Notification.Wpf.Base.TextContentSettings)">
+        <member name="M:Notification.Wpf.Base.Interfaces.Base.IMessageManager.Show(System.String,System.String,Notification.Wpf.NotificationType,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Action,System.String,System.Action,System.String,Notification.Wpf.NotificationTextTrimType,System.UInt32,System.Boolean,Notification.Wpf.Base.TextContentSettings,Notification.Wpf.Base.TextContentSettings,System.Boolean)">
             <summary> Show message </summary>
             <param name="title">window title</param>
             <param name="message">Message in window</param>
@@ -64,11 +65,12 @@
             <param name="CloseOnClick">close window after clicking</param>
             <param name="TitleSettings">Настройки отображения Title</param>
             <param name="MessageSettings">Настройки отображения сообщения</param>
+            <param name="ShowXbtn">Show X (close) btn</param>
         </member>
         <member name="T:Notification.Wpf.Base.Interfaces.Base.IProgressManager">
             <summary> Progress message manager </summary>
         </member>
-        <member name="M:Notification.Wpf.Base.Interfaces.Base.IProgressManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Object,Notification.Wpf.Base.TextContentSettings,Notification.Wpf.Base.TextContentSettings)">
+        <member name="M:Notification.Wpf.Base.Interfaces.Base.IProgressManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Object,Notification.Wpf.Base.TextContentSettings,Notification.Wpf.Base.TextContentSettings,System.Boolean)">
             <summary> Show ProgressBar </summary>
             <param name="Title">Title of window</param>
             <param name="ShowProgress">Show or not progress status</param>
@@ -85,8 +87,9 @@
             <param name="icon">progress icon</param>
             <param name="TitleSettings">Настройки отображения Title</param>
             <param name="MessageSettings">Настройки отображения сообщения</param>
+            <param name="ShowXbtn">Show X (close) btn</param>
         </member>
-        <member name="M:Notification.Wpf.Base.Interfaces.Base.IProgressManager.ShowProgressBar(Notification.Wpf.ICustomizedNotification,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush)">
+        <member name="M:Notification.Wpf.Base.Interfaces.Base.IProgressManager.ShowProgressBar(Notification.Wpf.ICustomizedNotification,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Boolean)">
             <summary> Show ProgressBar </summary>
             <param name="content">Base content settings</param>
             <param name="ShowProgress">Show or not progress status</param>
@@ -96,6 +99,7 @@
             <param name="IsCollapse">Start progress bar in collapsed form</param>
             <param name="TitleWhenCollapsed">When bar collapsed - will show title or message</param>
             <param name="progressColor">progress line color</param>
+            <param name="ShowXbtn">Show X (close) btn</param>
         </member>
         <member name="T:Notification.Wpf.Base.Interfaces.ITextContentSettings">
             <summary> Text content settings </summary>
@@ -252,19 +256,19 @@
             </summary>
             <param name="dispatcher">dispatcher for manager (can be null)</param>
         </member>
-        <member name="M:Notification.Wpf.NotificationManager.Show(System.Object,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Boolean)">
+        <member name="M:Notification.Wpf.NotificationManager.Show(System.Object,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Boolean,System.Boolean)">
             <inheritdoc />
         </member>
-        <member name="M:Notification.Wpf.NotificationManager.Show(System.String,System.String,Notification.Wpf.NotificationType,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Action,System.String,System.Action,System.String,Notification.Wpf.NotificationTextTrimType,System.UInt32,System.Boolean,Notification.Wpf.Base.TextContentSettings,Notification.Wpf.Base.TextContentSettings)">
+        <member name="M:Notification.Wpf.NotificationManager.Show(System.String,System.String,Notification.Wpf.NotificationType,System.String,System.Nullable{System.TimeSpan},System.Action,System.Action,System.Action,System.String,System.Action,System.String,Notification.Wpf.NotificationTextTrimType,System.UInt32,System.Boolean,Notification.Wpf.Base.TextContentSettings,Notification.Wpf.Base.TextContentSettings,System.Boolean)">
             <inheritdoc />
         </member>
-        <member name="M:Notification.Wpf.NotificationManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Object,Notification.Wpf.Base.TextContentSettings,Notification.Wpf.Base.TextContentSettings)">
+        <member name="M:Notification.Wpf.NotificationManager.ShowProgressBar(System.String,System.Boolean,System.Boolean,System.String,System.Boolean,System.UInt32,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Windows.Media.Brush,System.Object,Notification.Wpf.Base.TextContentSettings,Notification.Wpf.Base.TextContentSettings,System.Boolean)">
             <inheritdoc />
         </member>
-        <member name="M:Notification.Wpf.NotificationManager.ShowProgressBar(Notification.Wpf.ICustomizedNotification,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush)">
+        <member name="M:Notification.Wpf.NotificationManager.ShowProgressBar(Notification.Wpf.ICustomizedNotification,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Windows.Media.Brush,System.Boolean)">
             <inheritdoc />
         </member>
-        <member name="M:Notification.Wpf.NotificationManager.ShowContent(System.Object,System.Nullable{System.TimeSpan},System.String,System.Action,System.Action,System.Boolean)">
+        <member name="M:Notification.Wpf.NotificationManager.ShowContent(System.Object,System.Nullable{System.TimeSpan},System.String,System.Action,System.Action,System.Boolean,System.Boolean)">
             <summary>
             Запуск отображения в зависимости от типа контента
             </summary>
@@ -274,6 +278,7 @@
             <param name="onClick">действие при клике</param>
             <param name="onClose">действие при закрытии</param>
             <param name="CloseOnClick">Закрыть сообщение при клике по телу</param>
+            <param name="ShowXbtn">Show X (close) btn</param>
         </member>
         <member name="T:Notification.Wpf.NotificationsOverlayWindow">
             <summary>
@@ -491,13 +496,19 @@
         <member name="P:Notification.Wpf.Constants.NotificationConstants.DefaultProgressButtonContent">
             <summary> Cancel button content </summary>
         </member>
+        <member name="F:Notification.Wpf.Controls.Notification.XbtnVisibilityProperty">
+            <summary>X Button visibility</summary>
+        </member>
+        <member name="P:Notification.Wpf.Controls.Notification.XbtnVisibility">
+            <summary>X Button visibility</summary>
+        </member>
         <member name="F:Notification.Wpf.Controls.NotificationArea.CollapseProgressAutoProperty">
             <summary>Progress bar will automatically collapsed if items count more that max items</summary>
         </member>
         <member name="P:Notification.Wpf.Controls.NotificationArea.CollapseProgressAuto">
             <summary>Progress bar will automatically collapsed if items count more that max items</summary>
         </member>
-        <member name="M:Notification.Wpf.Controls.NotificationArea.Show(System.Object)">
+        <member name="M:Notification.Wpf.Controls.NotificationArea.Show(System.Object,System.Boolean)">
             <summary>
             Отображает окно прогресса
             </summary>

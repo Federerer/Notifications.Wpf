@@ -237,26 +237,43 @@
                             <elements:TextSettings x:Name="MessageSettings"/>
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox VerticalAlignment="Top">
-                        <GroupBox.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Expiration time" />
-                                    <CheckBox
-                                        IsChecked="{Binding UseExpirationTime, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                    <StackPanel>
+                        <GroupBox VerticalAlignment="Top">
+                            <GroupBox.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Expiration time" />
+                                        <CheckBox
+                                            IsChecked="{Binding UseExpirationTime, RelativeSource={RelativeSource AncestorType={x:Type Window}},
                                 UpdateSourceTrigger= PropertyChanged}"
-                                        Margin="5,0" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </GroupBox.HeaderTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <elements:NumericUpDownControl
-                                Value="{Binding ExpirationTime,
+                                            Margin="5,0" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupBox.HeaderTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <elements:NumericUpDownControl
+                                    Value="{Binding ExpirationTime,
                         RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                Minimum="1" Height="25" />
-                        </StackPanel>
-                    </GroupBox>
+                                    Minimum="1" Height="25" />
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox VerticalAlignment="Top">
+                            <GroupBox.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Show X btn" />
+                                        <CheckBox
+                                            IsChecked="{Binding ShowXBtn, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}"
+                                            Margin="5,0" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupBox.HeaderTemplate>
+                            <TextBlock Text="{Binding ShowXBtn, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}"></TextBlock>
+                        </GroupBox>
 
+                    </StackPanel>
                 </StackPanel>
                 <GroupBox Header="Color section">
                     <GroupBox.Resources>

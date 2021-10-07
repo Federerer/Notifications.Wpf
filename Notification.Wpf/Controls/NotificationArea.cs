@@ -67,14 +67,15 @@ namespace Notification.Wpf.Controls
         }
 
 #if NET40
-        public void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose)
+        public void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose, bool ShowXbtn)
 #else
-        public async void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose, bool CloseOnClick)
+        public async void Show(object content, TimeSpan expirationTime, Action onClick, Action onClose, bool CloseOnClick, bool ShowXbtn)
 #endif
         {
             var notification = new Notification
             {
                 Content = content,
+                XbtnVisibility = ShowXbtn ? Visibility.Visible : Visibility.Collapsed
             };
 
             notification.MouseLeftButtonDown += (sender, _) =>
@@ -102,14 +103,15 @@ namespace Notification.Wpf.Controls
         /// Отображает окно прогресса
         /// </summary>
         /// <param name="model">модель прогресс бара</param>
-        public async void Show(object model)
+        public async void Show(object model, bool ShowXbtn)
         {
             var progress = (NotificationProgressViewModel)model;
             var content = new NotificationProgress { DataContext = progress };
             content.Cancel.Click += progress.CancelProgress;
             var notification = new Notification
             {
-                Content = content
+                Content = content,
+                XbtnVisibility = ShowXbtn ? Visibility.Visible : Visibility.Collapsed
             };
             notification.NotificationClosed += progress.CancelProgress;
             notification.NotificationClosed += OnNotificationClosed;
