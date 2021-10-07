@@ -381,18 +381,63 @@ namespace Notification.Wpf.Sample
 
         #endregion
 
+        #region ImageAsIcon : bool - Use image as Icon
+
+        /// <summary>Use image as Icon</summary>
+        public static readonly DependencyProperty ImageAsIconProperty =
+            DependencyProperty.Register(
+                nameof(ImageAsIcon),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(default(bool)));
+
+        /// <summary>Use image as Icon</summary>
+        public bool ImageAsIcon { get => (bool)GetValue(ImageAsIconProperty); set => SetValue(ImageAsIconProperty, value); }
+
+        #endregion
+
+        #region ExpirationTime : int - Время показа сообщения
+
+        /// <summary>Время показа сообщения</summary>
+        public static readonly DependencyProperty ExpirationTimeProperty =
+            DependencyProperty.Register(
+                nameof(ExpirationTime),
+                typeof(int),
+                typeof(MainWindow),
+                new PropertyMetadata(5));
+
+        /// <summary>Время показа сообщения</summary>
+        public int ExpirationTime { get => (int)GetValue(ExpirationTimeProperty); set => SetValue(ExpirationTimeProperty, value); }
+
+        #endregion
+
+        #region UseExpirationTime : bool - Скрывать сообщение по таймеру
+
+        /// <summary>Скрывать сообщение по таймеру</summary>
+        public static readonly DependencyProperty UseExpirationTimeProperty =
+            DependencyProperty.Register(
+                nameof(UseExpirationTime),
+                typeof(bool),
+                typeof(MainWindow),
+                new PropertyMetadata(true));
+
+        /// <summary>Скрывать сообщение по таймеру</summary>
+        public bool UseExpirationTime { get => (bool)GetValue(UseExpirationTimeProperty); set => SetValue(UseExpirationTimeProperty, value); }
+
+        #endregion
+
         private readonly NotificationManager _notificationManager = new();
 
         Action ButtonClick(string button) => () => _notificationManager.Show($"{button} button click");
 
         public MainWindow()
         {
-            NotificationConstants.FontName = "Segoe";
-            NotificationConstants.BaseTextSize = 10;
-            NotificationConstants.TitleSize = 20;
-            NotificationConstants.MessageSize = 16;
-            NotificationConstants.TitleTextAlignment = TextAlignment.Center;
-            NotificationConstants.MessageTextAlignment = TextAlignment.Center;
+            //NotificationConstants.FontName = "Segoe";
+            //NotificationConstants.BaseTextSize = 10;
+            //NotificationConstants.TitleSize = 20;
+            //NotificationConstants.MessageSize = 16;
+            //NotificationConstants.TitleTextAlignment = TextAlignment.Center;
+            //NotificationConstants.MessageTextAlignment = TextAlignment.Center;
             InitializeComponent();
             Icons = GetIcons();
             NotifiTypes = GetTypes();
@@ -435,7 +480,7 @@ namespace Notification.Wpf.Sample
                 RowsCount = RowCount,
                 TrimType = SelectedTrimType,
                 CloseOnClick = CloseOnClick,
-                Icon = isNone ? new SvgAwesome()
+                Icon = ImageAsIcon ? Image : isNone ? new SvgAwesome()
                 {
                     Icon = (EFontAwesomeIcon)(int)(SelectedIcon ?? new SvgAwesome()).Icon,
                     Height = 25,
@@ -468,7 +513,7 @@ namespace Notification.Wpf.Sample
 
             _notificationManager.Show(content,
                 areaName: GetArea(),
-                expirationTime: TimeSpan.FromSeconds(5),
+                expirationTime: UseExpirationTime ? TimeSpan.FromSeconds(ExpirationTime) : TimeSpan.MaxValue,
                 onClick: CloseOnClick ? () => _notificationManager.Show(clickContent) : null);
         }
 
@@ -532,7 +577,7 @@ namespace Notification.Wpf.Sample
                 Background = ContentBackground,
                 Foreground = ContentForeground,
                 TrimType = SelectedTrimType,
-                Icon = iconN == 0 ? null : new SvgAwesome()
+                Icon = ImageAsIcon ? Image : iconN == 0 ? null : new SvgAwesome()
                 {
                     Icon = (EFontAwesomeIcon)iconN,
                     Height = 25,

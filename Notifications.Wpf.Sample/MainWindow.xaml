@@ -237,6 +237,25 @@
                             <elements:TextSettings x:Name="MessageSettings"/>
                         </StackPanel>
                     </GroupBox>
+                    <GroupBox VerticalAlignment="Top">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Expiration time" />
+                                    <CheckBox
+                                        IsChecked="{Binding UseExpirationTime, RelativeSource={RelativeSource AncestorType={x:Type Window}},
+                                UpdateSourceTrigger= PropertyChanged}"
+                                        Margin="5,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <elements:NumericUpDownControl
+                                Value="{Binding ExpirationTime,
+                        RelativeSource={RelativeSource AncestorType={x:Type Window}},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                Minimum="1" Height="25" />
+                        </StackPanel>
+                    </GroupBox>
 
                 </StackPanel>
                 <GroupBox Header="Color section">
@@ -256,6 +275,10 @@
                                         Background="{Binding ContentForeground,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
                             <Button Content="Icon color" Click="IconColorSelect_Click"
                                         Background="{Binding IconForeground,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <CheckBox
+                                IsChecked="{Binding ImageAsIcon,RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                Content="Use image as icon" 
+                                VerticalAlignment="Center"/>
                             <fa5:SvgAwesome
                                     Icon="{Binding SelectedIcon, RelativeSource={RelativeSource AncestorType={x:Type Window}},
                                 Converter={helpers:IconConverter}}"
