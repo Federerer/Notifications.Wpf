@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Notification.Wpf.Utils;
+using Notification.Wpf.View;
 using Notifications.Wpf.View;
 
 namespace Notification.Wpf.Controls
@@ -78,8 +79,9 @@ namespace Notification.Wpf.Controls
         {
             base.OnApplyTemplate();
             if (GetTemplateChild("PART_CloseButton") is Button closeButton)
+            {
                 closeButton.Click += OnCloseButtonOnClick;
-
+            }
             if (GetTemplateChild("PART_AttachButton") is Button AttachButton)
                 AttachButton.Click += OnAttachButtonOnClick;
 
@@ -120,6 +122,20 @@ namespace Notification.Wpf.Controls
 
         }
 
+        #region XbtnVisibility : Visibility - X Button visibility
+
+        /// <summary>X Button visibility</summary>
+        public static readonly DependencyProperty XbtnVisibilityProperty =
+            DependencyProperty.Register(
+                nameof(XbtnVisibility),
+                typeof(Visibility),
+                typeof(Notification),
+                new PropertyMetadata(Visibility.Visible));
+
+        /// <summary>X Button visibility</summary>
+        public Visibility XbtnVisibility { get => (Visibility)GetValue(XbtnVisibilityProperty); set => SetValue(XbtnVisibilityProperty, value); }
+
+        #endregion
 
     }
    

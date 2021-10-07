@@ -32,16 +32,16 @@ namespace Notification.Wpf
 
         /// <inheritdoc />
         public void Show(object content, string areaName = "", TimeSpan? expirationTime = null, Action onClick = null,
-            Action onClose = null, bool CloseOnClick = true)
+            Action onClose = null, bool CloseOnClick = true, bool ShowXbtn = true)
         {
             areaName ??= "";
             if (!_dispatcher.CheckAccess())
             {
                 _dispatcher.BeginInvoke(
-                    new Action(() => Show(content, areaName, expirationTime, onClick, onClose, CloseOnClick)));
+                    new Action(() => Show(content, areaName, expirationTime, onClick, onClose, CloseOnClick,ShowXbtn)));
                 return;
             }
-            ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
+            ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick, ShowXbtn);
         }
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Notification.Wpf
             Action RightButton = null,
             string RightButtonText = null,
             NotificationTextTrimType trim = NotificationTextTrimType.NoTrim, uint RowsCountWhenTrim = 2, bool CloseOnClick = true,
-            TextContentSettings TitleSettings  = null, TextContentSettings MessageSettings = null)
+            TextContentSettings TitleSettings = null, TextContentSettings MessageSettings = null, bool ShowXbtn = true)
         {
             var content = new NotificationContent
             {
@@ -90,10 +90,11 @@ namespace Notification.Wpf
                             RowsCountWhenTrim,
                             CloseOnClick,
                             MessageSettings,
-                            TitleSettings)));
+                            TitleSettings,
+                            ShowXbtn)));
                 return;
             }
-            ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick);
+            ShowContent(content, expirationTime, areaName, onClick, onClose, CloseOnClick, ShowXbtn);
         }
 
         #region Progress
@@ -109,14 +110,14 @@ namespace Notification.Wpf
             bool IsCollapse = false, bool TitleWhenCollapsed = true,
             Brush background = null, Brush foreground = null, Brush progressColor = null,
             object icon = default,
-            TextContentSettings TitleSettings = null, TextContentSettings  MessageSettings= null)
+            TextContentSettings TitleSettings = null, TextContentSettings MessageSettings = null, bool ShowXbtn = true)
         {
             var model = new NotificationProgressViewModel(
                 ShowCancelButton, ShowProgress,
                 TrimText, DefaultRowsCount,
                 BaseWaitingMessage,
                 IsCollapse, TitleWhenCollapsed,
-                background,foreground,progressColor,icon,TitleSettings,MessageSettings);
+                background, foreground, progressColor, icon, TitleSettings, MessageSettings);
 
             if (Title != null) model.Title = Title;
 
@@ -130,10 +131,10 @@ namespace Notification.Wpf
                         TrimText, DefaultRowsCount,
                         BaseWaitingMessage,
                         IsCollapse, TitleWhenCollapsed,
-                        background, foreground, progressColor, icon,TitleSettings,MessageSettings));
+                        background, foreground, progressColor, icon, TitleSettings, MessageSettings,ShowXbtn));
             }
 
-            ShowContent(model, areaName: areaName);
+            ShowContent(model, areaName: areaName, ShowXbtn:ShowXbtn);
             return model.NotifierProgress;
         }
         /// <inheritdoc />
@@ -144,7 +145,7 @@ namespace Notification.Wpf
             string BaseWaitingMessage = "Calculation time",
             bool IsCollapse = false,
             bool TitleWhenCollapsed = true,
-            Brush progressColor = null)
+            Brush progressColor = null, bool ShowXbtn = true)
         {
             var model = new NotificationProgressViewModel(content,
                 ShowCancelButton,
@@ -167,10 +168,10 @@ namespace Notification.Wpf
                         BaseWaitingMessage,
                         IsCollapse,
                         TitleWhenCollapsed,
-                        progressColor));
+                        progressColor,ShowXbtn));
             }
 
-            ShowContent(model, areaName: areaName);
+            ShowContent(model, areaName: areaName,ShowXbtn:ShowXbtn);
             return model.NotifierProgress;
         }
 
@@ -185,8 +186,9 @@ namespace Notification.Wpf
         /// <param name="onClick">действие при клике</param>
         /// <param name="onClose">действие при закрытии</param>
         /// <param name="CloseOnClick">Закрыть сообщение при клике по телу</param>
+        /// <param name="ShowXbtn">Show X (close) btn</param>
         static void ShowContent(object content, TimeSpan? expirationTime = null, string areaName = "",
-            Action onClick = null, Action onClose = null, bool CloseOnClick = true)
+            Action onClick = null, Action onClose = null, bool CloseOnClick = true, bool ShowXbtn = true)
         {
             expirationTime ??= TimeSpan.FromSeconds(5);
 
@@ -219,10 +221,10 @@ namespace Notification.Wpf
                 switch (content)
                 {
                     case NotificationProgressViewModel:
-                        area.Show(content);
+                        area.Show(content, ShowXbtn);
                         break;
                     default:
-                        area.Show(content, (TimeSpan)expirationTime, onClick, onClose, CloseOnClick);
+                        area.Show(content, (TimeSpan)expirationTime, onClick, onClose, CloseOnClick,ShowXbtn);
                         break;
                 }
             }

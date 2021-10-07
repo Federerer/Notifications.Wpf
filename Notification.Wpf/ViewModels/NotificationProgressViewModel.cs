@@ -35,7 +35,8 @@ namespace Notifications.Wpf.ViewModels
                     BaseWaitingMessage,
                     IsCollapse,
                     TitleWhenCollapsed,
-                    notification.Background, notification.Foreground, progressColor, notification.Icon, notification.TitleTextSettings, notification.MessageTextSettings)
+                    notification.Background, notification.Foreground, progressColor, notification.Icon, 
+                    notification.TitleTextSettings, notification.MessageTextSettings)
         {
             Title = notification.Title;
             Message = notification.Message;

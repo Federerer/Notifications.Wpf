@@ -48,5 +48,6 @@ namespace Notification.Wpf
             HorizontalAlignment = HorizontalAlignment.Stretch,
             VerticalTextAlignment = VerticalAlignment.Stretch
         };
+
     }
 }
