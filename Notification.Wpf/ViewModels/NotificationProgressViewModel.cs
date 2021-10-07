@@ -12,9 +12,14 @@ using Notification.Wpf.Constants;
 
 namespace Notifications.Wpf.ViewModels
 {
+    /// <summary>
+    /// progress bar model
+    /// </summary>
     public class NotificationProgressViewModel : ViewModel, ICustomizedNotification
     {
         #region Конструкторы
+
+        /// <inheritdoc />
         public NotificationProgressViewModel(
             ICustomizedNotification notification,
             bool showCancelButton,
@@ -37,6 +42,7 @@ namespace Notifications.Wpf.ViewModels
             OnProgress((null, Message, Title, showCancelButton));
         }
 
+        /// <inheritdoc />
         public NotificationProgressViewModel(
             bool showCancelButton,
             bool showProgress,
